@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Date;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -56,18 +57,40 @@ public class ControladorCliente implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
          if (e.getSource().equals(nuev.getBtnGuardar())){    
-        if (nuev.getTxtDocumento().getText().isEmpty() || nuev.getTxtNombre().getText().isEmpty() || nuev.getTxtCorreo().getText().isEmpty()
+        if (nuev.getBoxDocumento().getSelectedItem().equals("Selecione")||nuev.getTxtDocumento().getText().isEmpty() || nuev.getTxtNombre().getText().isEmpty() || nuev.getTxtCorreo().getText().isEmpty()
                 || nuev.getTxtTelefono().getText().isEmpty()
                 || nuev.getBoxSexo().getSelectedItem().equals("Selecione")
-                || nuev.getDateSexo()== null) {
+                || nuev.getDateFecha()== null) {
               JOptionPane.showMessageDialog(null,"Debes completar los campos requerido..." );
         }else {
          String valorSexo = nuev.getBoxSexo().getSelectedItem().toString();
             int sexo = cli.llenarCombo("sexo").get(valorSexo);
-                   
+           
+            
+             //cambia el formato de la fecha que entiende el msq
+                java.util.Date fech = nuev.getDateFecha().getDate();
+                long fe = fech.getTime();
+                java.sql.Date fecha = new Date(fe);
+               
+                
+                cli.setDoc(Integer.parseInt(nuev.getTxtDocumento().getText()));
+                cli.setNom(nuev.getTxtNombre().getText());
+                cli.setFec(fecha);
+                cli.setTele(nuev.getTxtTelefono().getText());
+                cli.setCorreo(nuev.getTxtCorreo().getText());
+                cli.setDire(nuev.getTxtDireccion().getText());
+                cli.setSex(sexo);
+                
+                
+                
         }
             
         }
+         cli.limpiar(nuev.getjPanelCliente().getComponents());
+        
+     if (e.getSource().equals(nuev.getBtnCancelar())){
+         
+     }
     
     }
     

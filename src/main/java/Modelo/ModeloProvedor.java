@@ -2,6 +2,7 @@
 package Modelo;
 
 import Controlador.Conectar;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 
 public class ModeloProvedor {
         
-              private int doc, Tipo,sex;
+              private int doc, Tipo,sex,nit;
     private String nom, tele,cedu,correo, dire ;
 
     public String getCedu() {
@@ -93,6 +94,14 @@ public class ModeloProvedor {
         this.fec = fec;
     }
 
+    public int getNit() {
+        return nit;
+    }
+
+    public void setNit(int nit) {
+        this.nit = nit;
+    }
+
     
       public Map<String, Integer> llenarCombo(String valor) {
         Conectar conex = new Conectar();
@@ -125,14 +134,15 @@ public class ModeloProvedor {
         try {
             PreparedStatement ps = co.prepareStatement(sql);
             ps.setInt(1, getDoc());
-            ps.setString(2, getCedu());
-            ps.setInt(3, getTipo());
-            ps.setString(4, getNom());
-            ps.setString(5, getTele());
-            ps.setString(6, getCorreo());
-            ps.setString(7, getDire());
-            ps.setInt(8, getSex());
-            ps.setDate(9, getFec());
+            ps.setInt(2, getNit());
+            ps.setString( 3, getCedu());
+            ps.setInt( 4 , getTipo());
+            ps.setString(5, getNom());
+            ps.setString(6, getTele());
+            ps.setString(7, getCorreo());
+            ps.setString(8, getDire());
+            ps.setInt( 9, getSex());
+            ps.setDate(10, getFec());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado");
             co.close();
@@ -140,6 +150,10 @@ public class ModeloProvedor {
             JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void limpiar(Component[] components) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
    

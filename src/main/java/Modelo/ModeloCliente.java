@@ -2,6 +2,7 @@
 package Modelo;
 
 import Controlador.Conectar;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -119,6 +120,10 @@ public class ModeloCliente {
             JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void limpiar(Component[] components) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
