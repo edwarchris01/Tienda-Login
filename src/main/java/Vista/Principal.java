@@ -5,6 +5,9 @@
 package Vista;
 
 import javax.swing.JButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -42,6 +45,46 @@ public class Principal extends javax.swing.JFrame {
     public void setBtnNuevo3(JButton BtnNuevo3) {
         this.BtnNuevo3 = BtnNuevo3;
     }
+
+    public JTabbedPane getJtPrincipal() {
+        return jtPrincipal;
+    }
+
+    public void setJtPrincipal(JTabbedPane jtPrincipal) {
+        this.jtPrincipal = jtPrincipal;
+    }
+
+    public JTable getTableCliente() {
+        return TableCliente;
+    }
+
+    public void setTableCliente(JTable TableCliente) {
+        this.TableCliente = TableCliente;
+    }
+
+    public JTable getTableProvedor() {
+        return TableProvedor;
+    }
+
+    public void setTableProvedor(JTable TableProvedor) {
+        this.TableProvedor = TableProvedor;
+    }
+
+    public JTable getTableUsuario() {
+        return TableUsuario;
+    }
+
+    public void setTableUsuario(JTable TableUsuario) {
+        this.TableUsuario = TableUsuario;
+    }
+
+    public JTextField getJBuscar() {
+        return JBuscar;
+    }
+
+    public void setJBuscar(JTextField JBuscar) {
+        this.JBuscar = JBuscar;
+    }
     
     
    
@@ -54,7 +97,7 @@ public class Principal extends javax.swing.JFrame {
         jtPrincipal = new javax.swing.JTabbedPane();
         Usuario = new javax.swing.JPanel();
         BtnNuevo = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        JBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableUsuario = new javax.swing.JTable();
         Cliente = new javax.swing.JPanel();
@@ -102,11 +145,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setBackground(new java.awt.Color(204, 204, 255));
-        jTextField1.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("Buscar usuario");
-        jTextField1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        JBuscar.setBackground(new java.awt.Color(204, 204, 255));
+        JBuscar.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
+        JBuscar.setForeground(new java.awt.Color(153, 153, 153));
+        JBuscar.setText("Buscar usuario");
+        JBuscar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        JBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBuscarActionPerformed(evt);
+            }
+        });
 
         TableUsuario.setBackground(new java.awt.Color(204, 204, 255));
         TableUsuario.setModel(new javax.swing.table.DefaultTableModel(
@@ -135,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(UsuarioLayout.createSequentialGroup()
                         .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56))))
         );
         UsuarioLayout.setVerticalGroup(
@@ -144,7 +192,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(JBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addContainerGap())
@@ -342,6 +390,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnNuevo3ActionPerformed
 
+    private void JBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBuscarActionPerformed
+
+    }//GEN-LAST:event_JBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -353,6 +405,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton BtnNuevo3;
     private javax.swing.JPanel Cliente;
     private javax.swing.JPanel Factura;
+    private javax.swing.JTextField JBuscar;
     private javax.swing.JPanel Producto;
     private javax.swing.JPanel Provedor;
     private javax.swing.JTable TableCliente;
@@ -364,7 +417,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTabbedPane jtPrincipal;

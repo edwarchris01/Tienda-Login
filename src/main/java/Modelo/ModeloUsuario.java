@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 public class ModeloUsuario {
 
@@ -115,8 +117,8 @@ public class ModeloUsuario {
     
 
     public Map<String, Integer> llenarCombo(String valor) {
-        Conectar conex = new Conectar();
-        Connection co = conex.conex();
+        Conectar conexs = new Conectar();
+        Connection co = conexs.conex();
         String sql = "Select * from mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
@@ -181,13 +183,24 @@ public class ModeloUsuario {
     public void mostrarTablaUsuario (JTable tabla,String valor){
         Conectar conx = new Conectar();
         Connection cx = conx.conex();
-        JButton editar = new JButton();
-        JButton eliminar = new JButton();
         
-        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
-        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
+        JTableHeader encabezado = tabla.getTableHeader();
+                encabezado.setDefaultRenderer(new GestionEncabezado());
+                tabla.setTableHeader(encabezado);
+                
+                tabla.setDefaultRenderer(Object.class, new GestionCeldas() );
+        
+        JButton editar = new JButton("Editar");
+        JButton eliminar = new JButton("Eliminar");
+        
+//        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
+//        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
         String[] titulo = {"tipo de documrnto","documento","nombre","direccion","telefono","sexo","correo","fecha de naciminto","cargo"};
-        DefaultTableModel tablaUsuario = new DefaultTableModel(null, titulo);
+        DefaultTableModel tablaUsuario = new DefaultTableModel(null, titulo){
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         String sqlUsuario;
         if (valor.equals("")){
             sqlUsuario= "Select*from mostrar_usuario";
@@ -208,7 +221,15 @@ public class ModeloUsuario {
        } catch (SQLException e)    {
            
        } 
-       tabla.setModel(tablaUsuario);//darle tamano a cada columna 
+       tabla.setModel(tablaUsuario);
+        //darle tamano a cada columna 
+       int numero_columnas = tabla.getColumnCount();
+       int []tamanos_celdas = {100,150,150,100,100,150,150,100,100,150,100,30,30};
+       for(int i = 0; i <numero_columnas;i++){
+           TableColumn  columna = tabla.getColumnModel().getColumn(i);
+           columna.setPreferredWidth(tamanos_celdas[i]);
+           
+       }
        
     }
 }
