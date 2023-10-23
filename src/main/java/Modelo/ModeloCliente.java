@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 
 public class ModeloCliente {
-    private int doc, sex;
+    private int doc, sex,tipo;
     private String nom, tele, correo, dire ;
     private Date fec;
 
@@ -75,6 +75,14 @@ public class ModeloCliente {
         this.fec = fec;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
     
       public Map<String, Integer> llenarCombo(String valor) {
         Conectar conex = new Conectar();
@@ -106,13 +114,14 @@ public class ModeloCliente {
 
         try {
             PreparedStatement ps = co.prepareStatement(sql);
-            ps.setInt(1, getDoc());
-            ps.setString(2, getNom());
-            ps.setString(3, getTele());
-            ps.setString(4, getCorreo());
-            ps.setString(5, getDire());
-            ps.setInt(6, getSex());
-            ps.setDate(7, getFec());
+             ps.setInt(1, getTipo());
+            ps.setInt(2, getDoc());
+            ps.setString(3, getNom());
+            ps.setString(4, getTele());
+            ps.setString(5, getCorreo());
+            ps.setString(6, getDire());
+            ps.setInt(7, getSex());
+            ps.setDate(8, getFec());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado");
             co.close();

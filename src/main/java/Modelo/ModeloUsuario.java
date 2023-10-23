@@ -12,15 +12,22 @@ import java.sql.Statement;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class ModeloUsuario {
 
-    private int doc, sex, car;
+    private int doc, sex, car,tipo;
     private String nom, tele, correo, dire, log, contra;
     private Date fec;
+
+    public int getSex() {
+        return sex;
+    }
 
     public int getDoc() {
         return doc;
@@ -28,10 +35,6 @@ public class ModeloUsuario {
 
     public void setDoc(int doc) {
         this.doc = doc;
-    }
-
-    public int getSex() {
-        return sex;
     }
 
     public void setSex(int sex) {
@@ -102,6 +105,15 @@ public class ModeloUsuario {
         this.car = car;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
+
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conex = new Conectar();
         Connection co = conex.conex();
@@ -132,16 +144,17 @@ public class ModeloUsuario {
 
         try {
             PreparedStatement ps = co.prepareStatement(sql);
-            ps.setInt(1, getDoc());
-            ps.setString(2, getNom());
-            ps.setString(3, getTele());
-            ps.setString(4, getCorreo());
-            ps.setString(5, getDire());
-            ps.setInt(6, getSex());
-            ps.setDate(7, getFec());
-            ps.setInt(8, getCar());
-            ps.setString(9, getLog());
-            ps.setString(10, getContra());
+             ps.setInt(1, getTipo());
+             ps.setInt(2, getDoc());
+            ps.setString(3, getNom());
+            ps.setString(4, getTele());
+            ps.setString(5, getCorreo());
+            ps.setString(6, getDire());
+            ps.setInt(7, getSex());
+            ps.setDate(8, getFec());
+            ps.setInt(9, getCar());
+            ps.setString(10, getLog());
+            ps.setString(11, getContra());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado");
             co.close();
@@ -164,6 +177,39 @@ public class ModeloUsuario {
                 ((JDateChooser)control).setDate(null);
             }
         }
+    }
+    public void mostrarTablaUsuario (JTable tabla,String valor){
+        Conectar conx = new Conectar();
+        Connection cx = conx.conex();
+        JButton editar = new JButton();
+        JButton eliminar = new JButton();
+        
+        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
+        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
+        String[] titulo = {"tipo de documrnto","documento","nombre","direccion","telefono","sexo","correo","fecha de naciminto","cargo"};
+        DefaultTableModel tablaUsuario = new DefaultTableModel(null, titulo);
+        String sqlUsuario;
+        if (valor.equals("")){
+            sqlUsuario= "Select*from mostrar_usuario";
+        } else {
+            sqlUsuario= "Call *from mostrar_usuario('"+valor+"')"; 
+        }
+       try {
+           String[] dato = new String[titulo.length];
+           Statement st = cx.createStatement();
+           ResultSet rs = st.executeQuery(sqlUsuario);
+           
+           while(rs.next()){
+               for(int i=0;i<titulo.length-2; i++){
+                   dato[i]=rs.getString(i + 1);                   
+               }
+               tablaUsuario.addRow(new Object[]{dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8]});//agrega en el mismo orden de la tabla de usuario
+           }
+       } catch (SQLException e)    {
+           
+       } 
+       tabla.setModel(tablaUsuario);//darle tamano a cada columna 
+       
     }
 }
 

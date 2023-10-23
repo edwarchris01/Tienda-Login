@@ -206,6 +206,8 @@ public class Nuevo_Cliente extends javax.swing.JFrame {
 
         jLabel9.setText("TipoDocumento");
 
+        BoxDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "selecione...", "cedula de ciudania", "cedula extranjera", "pasaporte" }));
+
         javax.swing.GroupLayout jPanelClienteLayout = new javax.swing.GroupLayout(jPanelCliente);
         jPanelCliente.setLayout(jPanelClienteLayout);
         jPanelClienteLayout.setHorizontalGroup(

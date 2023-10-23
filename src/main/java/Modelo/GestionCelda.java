@@ -3,6 +3,7 @@ package Modelo;
 
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -16,6 +17,13 @@ public class GestionCelda extends DefaultTableCellRenderer {
          c.setForeground(Color.red);
          // c.setForeground(new java.awt.color(0,0,0,0);
          c.setFont(new java.awt.Font( "verdana",0,12));
-         return null;
+         
+         if (value instanceof JButton){
+             JButton btn = (JButton)value;
+             btn.setBorderPainted(false);
+             btn.setContentAreaFilled(false);
+             return btn;
+         }
+         return c;
      }
 }

@@ -60,7 +60,7 @@ public class ControladorUsuario implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
      if (e.getSource().equals(nuevo.getBntguardar())){    
-        if (nuevo.getTXTdocumento().getText().isEmpty() || nuevo.getTXTnombre().getText().isEmpty() || nuevo.getTXTcorreo().getText().isEmpty()
+        if (nuevo.getBoxDocu().getSelectedItem().equals("Selecione")||nuevo.getTXTdocumento().getText().isEmpty() || nuevo.getTXTnombre().getText().isEmpty() || nuevo.getTXTcorreo().getText().isEmpty()
                 || nuevo.getTXTdireccion().getText().isEmpty() || nuevo.getTXTlogin2().getText().isEmpty() || nuevo.getTXTtelefono().getText().isEmpty()
                 || nuevo.getBoxSexo().getSelectedItem().equals("Selecione")|| nuevo.getBoxCargo().getSelectedItem().equals("Selecione")
                 || nuevo.getDateFecha().getDate() == null) {

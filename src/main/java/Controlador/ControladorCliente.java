@@ -65,14 +65,15 @@ public class ControladorCliente implements ActionListener {
         }else {
          String valorSexo = nuev.getBoxSexo().getSelectedItem().toString();
             int sexo = cli.llenarCombo("sexo").get(valorSexo);
-           
+           String valorTipo = nuev.getBoxDocumento().getSelectedItem().toString();
+            int tipo = cli.llenarCombo("tipo").get(valorTipo);
             
              //cambia el formato de la fecha que entiende el msq
                 java.util.Date fech = nuev.getDateFecha().getDate();
                 long fe = fech.getTime();
                 java.sql.Date fecha = new Date(fe);
                
-                
+                cli.setTipo(tipo);
                 cli.setDoc(Integer.parseInt(nuev.getTxtDocumento().getText()));
                 cli.setNom(nuev.getTxtNombre().getText());
                 cli.setFec(fecha);
