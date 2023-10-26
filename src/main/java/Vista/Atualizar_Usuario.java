@@ -4,143 +4,18 @@
  */
 package Vista;
 
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 /**
  *
  * @author edwch
  */
-public class Nuevo_Usuario extends javax.swing.JFrame {
+public class Atualizar_Usuario extends javax.swing.JFrame {
 
     /**
-     * Creates new form Vista
+     * Creates new form Atualizar_Usuario
      */
-    public Nuevo_Usuario() {
+    public Atualizar_Usuario() {
         initComponents();
-
     }
-
-    public JComboBox<String> getBoxCargo() {
-        return BoxCargo;
-    }
-
-    public void setBoxCargo(JComboBox<String> BoxCargo) {
-        this.BoxCargo = BoxCargo;
-    }
-
-    public JComboBox<String> getBoxSexo() {
-        return BoxSexo;
-    }
-
-    public void setBoxSexo(JComboBox<String> BoxSexo) {
-        this.BoxSexo = BoxSexo;
-    }
-
-    public JPasswordField getTXTclave() {
-        return TXTclave;
-    }
-
-    public void setTXTclave(JPasswordField TXTclave) {
-        this.TXTclave = TXTclave;
-    }
-
-    public JTextField getTXTcorreo() {
-        return TXTcorreo;
-    }
-
-    public void setTXTcorreo(JTextField TXTcorreo) {
-        this.TXTcorreo = TXTcorreo;
-    }
-
-    public JTextField getTXTdireccion() {
-        return TXTdireccion;
-    }
-
-    public void setTXTdireccion(JTextField TXTdireccion) {
-        this.TXTdireccion = TXTdireccion;
-    }
-
-    public JTextField getTXTdocumento() {
-        return TXTdocumento;
-    }
-
-    public void setTXTdocumento(JTextField TXTdocumento) {
-        this.TXTdocumento = TXTdocumento;
-    }
-
-    public JTextField getTXTlogin2() {
-        return TXTlogin2;
-    }
-
-    public void setTXTlogin2(JTextField TXTlogin2) {
-        this.TXTlogin2 = TXTlogin2;
-    }
-
-    public JTextField getTXTnombre() {
-        return TXTnombre;
-    }
-
-    public void setTXTnombre(JTextField TXTnombre) {
-        this.TXTnombre = TXTnombre;
-    }
-
-    public JTextField getTXTtelefono() {
-        return TXTtelefono;
-    }
-
-    public void setTXTtelefono(JTextField TXTtelefono) {
-        this.TXTtelefono = TXTtelefono;
-    }
-
-    public JButton getBntguardar() {
-        return Bntguardar;
-    }
-
-    public void setBntguardar(JButton Bntguardar) {
-        this.Bntguardar = Bntguardar;
-    }
-
-    public JButton getBtncancelar() {
-        return Btncancelar;
-    }
-
-    public void setBtncancelar(JButton Btncancelar) {
-        this.Btncancelar = Btncancelar;
-    }
-
-    public JDateChooser getDateFecha() {
-        return DateFecha;
-    }
-
-    public void setDateFecha(JDateChooser DateFecha) {
-        this.DateFecha = DateFecha;
-    }
-
-    public JPanel getJpanelUsuario() {
-        return JpanelUsuario;
-    }
-
-    public void setJpanelUsuario(JPanel JpanelUsuario) {
-        this.JpanelUsuario = JpanelUsuario;
-    }
-
-    public JComboBox<String> getBoxDocu() {
-        return BoxDocu;
-    }
-
-    public void setBoxDocu(JComboBox<String> BoxDocu) {
-        this.BoxDocu = BoxDocu;
-    }
-
-   
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,11 +26,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jSeparator11 = new javax.swing.JSeparator();
         JpanelUsuario = new javax.swing.JPanel();
         documento = new javax.swing.JLabel();
         nombre = new javax.swing.JLabel();
@@ -205,25 +75,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         jSeparator10 = new javax.swing.JSeparator();
         jSeparator12 = new javax.swing.JSeparator();
         jTextField1 = new javax.swing.JTextField();
-
-        jPasswordField1.setBackground(new java.awt.Color(112, 145, 255));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(null);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jSeparator11.setBackground(new java.awt.Color(0, 0, 0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -285,7 +136,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         Bntguardar.setBackground(new java.awt.Color(0, 0, 102));
         Bntguardar.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         Bntguardar.setForeground(new java.awt.Color(255, 255, 255));
-        Bntguardar.setText("guardar");
+        Bntguardar.setText("Atualizar");
         Bntguardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153), 3));
         Bntguardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,7 +290,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         jTextField1.setBackground(new java.awt.Color(0, 0, 102));
         jTextField1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 36)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Nuevo Usuario");
+        jTextField1.setText("Atualizar Usuario");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -562,21 +413,22 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
                     .addGroup(JpanelUsuarioLayout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(JpanelUsuarioLayout.createSequentialGroup()
                         .addGap(171, 171, 171)
                         .addComponent(Bntguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(121, 121, 121)
                         .addComponent(Btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelUsuarioLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
         );
         JpanelUsuarioLayout.setVerticalGroup(
             JpanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanelUsuarioLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(36, 36, 36)
                 .addGroup(JpanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BoxDocu, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -670,50 +522,50 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JpanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JpanelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TXTnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTnombreActionPerformed
+    private void BoxSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxSexoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TXTnombreActionPerformed
-
-    private void TXTdocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTdocumentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXTdocumentoActionPerformed
-
-    private void TXTtelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTtelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXTtelefonoActionPerformed
-
-    private void TXTcorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTcorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXTcorreoActionPerformed
-
-    private void TXTdireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTdireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXTdireccionActionPerformed
-
-    private void BtncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtncancelarActionPerformed
+    }//GEN-LAST:event_BoxSexoActionPerformed
 
     private void BntguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BntguardarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BntguardarActionPerformed
 
-    private void BoxSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxSexoActionPerformed
+    private void BtncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BoxSexoActionPerformed
+    }//GEN-LAST:event_BtncancelarActionPerformed
+
+    private void TXTdireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTdireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTdireccionActionPerformed
+
+    private void TXTcorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTcorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTcorreoActionPerformed
+
+    private void TXTtelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTtelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTtelefonoActionPerformed
+
+    private void TXTdocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTdocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTdocumentoActionPerformed
+
+    private void TXTnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTnombreActionPerformed
 
     private void BoxCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxCargoActionPerformed
         // TODO add your handling code here:
@@ -726,7 +578,37 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Atualizar_Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Atualizar_Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Atualizar_Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Atualizar_Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Atualizar_Usuario().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bntguardar;
@@ -761,12 +643,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -776,7 +654,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel login;
     private javax.swing.JLabel nombre;

@@ -105,7 +105,7 @@ public class ModeloProvedor {
     
       public Map<String, Integer> llenarCombo(String valor) {
         Conectar conex = new Conectar();
-        Connection co = conex.conex();
+        Connection co = conex.iniciarConexion();
         String sql = "Select * from mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
@@ -127,7 +127,7 @@ public class ModeloProvedor {
     public void Insertar_Provedor() {
 
         Conectar conex = new Conectar();
-        Connection co = conex.conex();
+        Connection co = conex.iniciarConexion();
 
         String sql = "Call usuario (?,?,?,?,?,?,?,?,?,?)";//colsulta a la base de datos 
 

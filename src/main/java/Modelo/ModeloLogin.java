@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class ModeloLogin {
     
     Conectar conect = new Conectar();
-    Connection cn = conect.conex();
+    Connection cn = conect.iniciarConexion();
     String usuario,contrasena;
     Login lg = new Login();
 

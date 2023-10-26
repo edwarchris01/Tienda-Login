@@ -7,9 +7,12 @@ package Controlador;
 import Modelo.ModeloProvedor;
 import Modelo.ModeloUsuario;
 import Vista.Login;
+import Vista.Nueva_Factura;
+import Vista.Nueva_Producto;
 import Vista.Nuevo_Cliente;
 import Vista.Nuevo_Provedor;
 import Vista.Nuevo_Usuario;
+import Vista.Nuevo_Venta;
 import Vista.Principal;
 import static java.awt.Color.black;
 import java.awt.event.ActionEvent;
@@ -19,10 +22,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /*import java.awt.event.WindowAdapter;*/
 
-public final class ControladorPrincipal implements ActionListener, ChangeListener {
+public final class ControladorPrincipal implements ActionListener {
 
     Principal princi = new Principal();//Instancia(Llama) la ventana principal
     Nuevo_Usuario nuevo = new Nuevo_Usuario();//Instanca (Llama) la ventana(vista) Nuevo usuario
@@ -30,6 +35,9 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     ControladorUsuario controUsu = new ControladorUsuario();
     ControladorCliente controCli = new ControladorCliente();
     Nuevo_Cliente nuev = new Nuevo_Cliente();
+    Nueva_Producto nuePro = new Nueva_Producto();
+    Nuevo_Venta nueVenta = new  Nuevo_Venta();
+    Nueva_Factura  compraF  = new Nueva_Factura();
     Nuevo_Provedor nuep = new Nuevo_Provedor();
     ModeloProvedor modpro = new ModeloProvedor();
     ControladorProvedor conpro = new ControladorProvedor();
@@ -39,9 +47,15 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getBtnNuevo().addActionListener(this);
         princi.getBtnNuevo2().addActionListener(this);//Agrega el boton nuevo para que se escuche cuando se de clic
         princi.getBtnNuevo3().addActionListener(this);
-        princi.getJtPrincipal().addChangeListener(this);
+        princi.getBtnNuevo4().addActionListener(this);
+        princi.getBtnNuevo5().addActionListener(this);
+        princi.getBtnFactura().addActionListener(this);
+        princi.getBtnBuscarUsu().addActionListener(this);
         nuevo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//Desactiva la x que cierrar el programa para que permita abrir o volver a la ventana principal
+         nuePro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          nueVenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          compraF.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         manejoPestana();
     }
@@ -53,25 +67,47 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     }
 
     public void manejoPestana() {
-        if (princi.getJtPrincipal().getSelectedIndex() == 0) {
-              ModeloUsuario modoUSU = new ModeloUsuario(); //instancia el modelo
-            modoUSU.mostrarTablaUsuario(princi.getTableUsuario(), "");
-
-            princi.getJBuscar().addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e){
-                    princi.getJBuscar().setText("");
-                    princi.getJBuscar().setForeground(black);
-                }
-
-            });
-
-        }
-
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+        ModeloUsuario modoUSU = new ModeloUsuario(); //instancia el modelo
+        
+        int selecionar = princi.getJtPrincipal().getSelectedIndex();// indica en que posicion esta la pestaña en la principal
+        System.out.println("La pantalla esta en esta posicion " + selecionar);
+        if (selecionar == 0) {
+            modoUSU.mostrarTablaUsuario(princi.getTableUsuario(), "");//muestra la informacion en las tablasn 
+            
+            
+                  princi.getJtPrincipal().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
             }
         });
+//            borra toto cunado le damos cli a la caja de texto
+            princi.getJBuscar().addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e){
+                    princi.getJBuscar().setText("");
+                    princi.getJBuscar().setForeground(black);
+                }                            
+            });
+           // va hacer una accion cuando se inserte una informacion
+            princi.getJBuscar().getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    
+                    modoUSU.mostrarTablaUsuario(princi.getTableUsuario(),princi.getJBuscar().getText() );
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                modoUSU.mostrarTablaUsuario(princi.getTableUsuario(),princi.getJBuscar().getText() );   
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    modoUSU.mostrarTablaUsuario(princi.getTableUsuario(),princi.getJBuscar().getText() );
+                }
+            });
+                                  
+        }
+        
     }
 
     @Override
@@ -79,7 +115,6 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
             princi.setVisible(false);
             controUsu.controlar_usu();
-
         }
 
         if (e.getSource().equals(princi.getBtnNuevo2())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -94,27 +129,32 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
 
             conpro.controlar_prove();
 
-        }
+        }       
+        
+         if (e.getSource().equals(princi.getBtnNuevo4())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
+            princi.setVisible(false);
 
-    }
+           nuePro.setLocationRelativeTo(null);
+           nuePro.setTitle("Nueva_Producto");
+           nuePro.setVisible(true);
+           
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        int selecionar = princi.getJtPrincipal().getSelectedIndex();// indica en que posicion esta la pestaña en la principal
-        System.out.println("La pantalla esta en esta posicion " + selecionar);
-        if (selecionar == 0) {
-            ModeloUsuario modoUSU = new ModeloUsuario(); //instancia el modelo
-            modoUSU.mostrarTablaUsuario(princi.getTableUsuario(), "");
+        }     
+         
+          if (e.getSource().equals(princi.getBtnNuevo5())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
+            princi.setVisible(false);
 
-            princi.getJBuscar().addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e){
-                    princi.getJBuscar().setText("");
-                    princi.getJBuscar().setForeground(black);
-                }
+           nueVenta .setLocationRelativeTo(null);
+          nueVenta .setTitle("Nuevo_Venta");
+          nueVenta .setVisible(true);
+        }     
+          
+           if (e.getSource().equals(princi.getBtnFactura())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
+            princi.setVisible(false);
 
-            });
-
-        }
-
-    }
+           compraF .setLocationRelativeTo(null);
+          compraF  .setTitle("Nuevo_Factura");
+          compraF  .setVisible(true);
+        }  
+    }  
 }

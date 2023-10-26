@@ -195,14 +195,14 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `mostrar_cliente1`
+-- Temporary view structure for view `mostrar_cliente`
 --
 
-DROP TABLE IF EXISTS `mostrar_cliente1`;
-/*!50001 DROP VIEW IF EXISTS `mostrar_cliente1`*/;
+DROP TABLE IF EXISTS `mostrar_cliente`;
+/*!50001 DROP VIEW IF EXISTS `mostrar_cliente`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `mostrar_cliente1` AS SELECT 
+/*!50001 CREATE VIEW `mostrar_cliente` AS SELECT 
  1 AS `idcliente`,
  1 AS `tipoDocumento`,
  1 AS `nombre`,
@@ -214,14 +214,14 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `mostrar_provedor1`
+-- Temporary view structure for view `mostrar_provedor`
 --
 
-DROP TABLE IF EXISTS `mostrar_provedor1`;
-/*!50001 DROP VIEW IF EXISTS `mostrar_provedor1`*/;
+DROP TABLE IF EXISTS `mostrar_provedor`;
+/*!50001 DROP VIEW IF EXISTS `mostrar_provedor`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `mostrar_provedor1` AS SELECT 
+/*!50001 CREATE VIEW `mostrar_provedor` AS SELECT 
  1 AS `idprovedor`,
  1 AS `tipoDocumento`,
  1 AS `nombre`,
@@ -247,14 +247,14 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `mostrar_usuario1`
+-- Temporary view structure for view `mostrar_usuario`
 --
 
-DROP TABLE IF EXISTS `mostrar_usuario1`;
-/*!50001 DROP VIEW IF EXISTS `mostrar_usuario1`*/;
+DROP TABLE IF EXISTS `mostrar_usuario`;
+/*!50001 DROP VIEW IF EXISTS `mostrar_usuario`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `mostrar_usuario1` AS SELECT 
+/*!50001 CREATE VIEW `mostrar_usuario` AS SELECT 
  1 AS `idusuario`,
  1 AS `tipoDocumento`,
  1 AS `nombre`,
@@ -475,6 +475,25 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'tiendacom'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `Atualizar_Usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Atualizar_Usuario`(in valor int)
+BEGIN
+select * from usuario where idusuario = valor;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `clic` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -494,6 +513,29 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `consul_cliente` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_cliente`(in valor varchar (45))
+BEGIN
+select * from mostrar_cliente where idusuario like concat('%',valor,'%')   
+|| Tipodocumento like concat('%',valor,'%') || nombre like concat('%',valor,'%') 
+|| telefono like concat('%',valor,'%') || correo  like concat('%',valor,'%')
+ || nombre like concat('%',valor,'%') || fecha_nacimiento like concat('%',valor,'%') 
+ || direccion  like concat('%',valor,'%') ;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `consul_cliente1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -506,7 +548,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_cliente1`(in valor varchar (45))
 BEGIN
-select * from mostrar_cliente1 where idusuario like concat('%',valor,'%')   
+select * from mostrar_cliente where idusuario like concat('%',valor,'%')   
 || Tipodocumento like concat('%',valor,'%') || nombre like concat('%',valor,'%') 
 || telefono like concat('%',valor,'%') || correo  like concat('%',valor,'%')
  || nombre like concat('%',valor,'%') || fecha_nacimiento like concat('%',valor,'%') 
@@ -529,7 +571,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_provedor`(in valor varchar(45))
 BEGIN
-select * from mostrar_provedor1 where idusuario like concat('%',valor,'%') || nit like concat('%',valor,'%')   
+select * from mostrar_provedor where idusuario like concat('%',valor,'%') || nit like concat('%',valor,'%')   
 || nombre like concat('%',valor,'%') || cedula like concat('%',valor,'%') 
 || tipoPersona like concat('%',valor,'%') || telefono  like concat('%',valor,'%')
  || fecha_nacimiento like concat('%',valor,'%') || nombre like concat('%',valor,'%') 
@@ -850,10 +892,10 @@ DELIMITER ;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `mostrar_cliente1`
+-- Final view structure for view `mostrar_cliente`
 --
 
-/*!50001 DROP VIEW IF EXISTS `mostrar_cliente1`*/;
+/*!50001 DROP VIEW IF EXISTS `mostrar_cliente`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -862,16 +904,16 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `mostrar_cliente1` AS select `u`.`idcliente` AS `idcliente`,`u`.`tipoDocumento` AS `tipoDocumento`,`u`.`nombre` AS `nombre`,`u`.`telefono` AS `telefono`,`u`.`correo` AS `correo`,`s`.`nombre` AS `sexo`,`u`.`fecha_nacimiento` AS `fecha`,`u`.`direccion` AS `direccion` from ((`cliente` `u` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `u`.`tipoDocumento`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) where (`u`.`condicion` = '1') */;
+/*!50001 VIEW `mostrar_cliente` AS select `u`.`idcliente` AS `idcliente`,`u`.`tipoDocumento` AS `tipoDocumento`,`u`.`nombre` AS `nombre`,`u`.`telefono` AS `telefono`,`u`.`correo` AS `correo`,`s`.`nombre` AS `sexo`,`u`.`fecha_nacimiento` AS `fecha`,`u`.`direccion` AS `direccion` from ((`cliente` `u` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `u`.`tipoDocumento`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) where (`u`.`condicion` = '1') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `mostrar_provedor1`
+-- Final view structure for view `mostrar_provedor`
 --
 
-/*!50001 DROP VIEW IF EXISTS `mostrar_provedor1`*/;
+/*!50001 DROP VIEW IF EXISTS `mostrar_provedor`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -880,7 +922,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `mostrar_provedor1` AS select `p`.`idprovedor` AS `idprovedor`,`p`.`nit` AS `tipoDocumento`,`p`.`nombre` AS `nombre`,`p`.`cedula` AS `cedula`,`p`.`tipoPersona` AS `tipoPersona`,`p`.`telefono` AS `telefono`,`p`.`fecha_nacimiento` AS `fecha`,`s`.`nombre` AS `sexo`,`p`.`direccion` AS `direccion` from ((`provedor` `p` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `p`.`nit`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) where (`p`.`condiccion` = '1') */;
+/*!50001 VIEW `mostrar_provedor` AS select `p`.`idprovedor` AS `idprovedor`,`p`.`nit` AS `tipoDocumento`,`p`.`nombre` AS `nombre`,`p`.`cedula` AS `cedula`,`p`.`tipoPersona` AS `tipoPersona`,`p`.`telefono` AS `telefono`,`p`.`fecha_nacimiento` AS `fecha`,`s`.`nombre` AS `sexo`,`p`.`direccion` AS `direccion` from ((`provedor` `p` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `p`.`nit`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) where (`p`.`condiccion` = '1') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -904,10 +946,10 @@ DELIMITER ;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `mostrar_usuario1`
+-- Final view structure for view `mostrar_usuario`
 --
 
-/*!50001 DROP VIEW IF EXISTS `mostrar_usuario1`*/;
+/*!50001 DROP VIEW IF EXISTS `mostrar_usuario`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -916,7 +958,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `mostrar_usuario1` AS select `u`.`idusuario` AS `idusuario`,`u`.`tipoDocumento` AS `tipoDocumento`,`u`.`nombre` AS `nombre`,`u`.`telefono` AS `telefono`,`u`.`correo` AS `correo`,`u`.`direcion` AS `direcion`,`s`.`nombre` AS `sexo`,`u`.`fecha_nacimiento` AS `fecha`,`r`.`nombre` AS `rol` from (((`usuario` `u` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `u`.`tipoDocumento`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) join `cargo` `r` on((`r`.`idcargo` = `u`.`nombre`))) where (`u`.`condicion` = '1') */;
+/*!50001 VIEW `mostrar_usuario` AS select `u`.`idusuario` AS `idusuario`,`u`.`tipoDocumento` AS `tipoDocumento`,`u`.`nombre` AS `nombre`,`u`.`telefono` AS `telefono`,`u`.`correo` AS `correo`,`u`.`direcion` AS `direcion`,`s`.`nombre` AS `sexo`,`u`.`fecha_nacimiento` AS `fecha`,`r`.`nombre` AS `rol` from (((`usuario` `u` join `tipo_documento` `t` on((`t`.`idTipo_documento` = `u`.`tipoDocumento`))) join `sexo` `s` on((`s`.`idsexo` = `s`.`nombre`))) join `cargo` `r` on((`r`.`idcargo` = `u`.`nombre`))) where (`u`.`condicion` = '1') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -930,4 +972,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-20  0:24:02
+-- Dump completed on 2023-10-26 12:05:41

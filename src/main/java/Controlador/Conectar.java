@@ -14,7 +14,7 @@ public class Conectar {
      
      Connection con = null ;
      
-    public Connection conex(){
+    public Connection iniciarConexion(){
      
         if (con==null){
             try{

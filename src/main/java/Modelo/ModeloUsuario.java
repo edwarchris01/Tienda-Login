@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -118,7 +117,7 @@ public class ModeloUsuario {
 
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
-        Connection co = conexs.conex();
+        Connection co = conexs.iniciarConexion();
         String sql = "Select * from mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
@@ -140,7 +139,7 @@ public class ModeloUsuario {
     public void Insertar_USUARIO() {
 
         Conectar conex = new Conectar();
-        Connection co = conex.conex();
+        Connection co = conex.iniciarConexion();
 
         String sql = "Call usuario (?,?,?,?,?,?,?,?,?,?)";//colsulta a la base de datos 
 
@@ -182,7 +181,7 @@ public class ModeloUsuario {
     }
     public void mostrarTablaUsuario (JTable tabla,String valor){
         Conectar conx = new Conectar();
-        Connection cx = conx.conex();
+        Connection cx = conx.iniciarConexion();
         
         JTableHeader encabezado = tabla.getTableHeader();
                 encabezado.setDefaultRenderer(new GestionEncabezado());
@@ -232,5 +231,44 @@ public class ModeloUsuario {
        }
        
     }
+    public void buscar_usuario(int valor){
+        Conectar cone = new Conectar();
+        Connection cn = cone.iniciarConexion();
+        String sql ="Call Atualizar_Usuario("+valor+")";
+        
+        
+        
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs =st.executeQuery(sql);
+            
+            while (rs.next()){
+                setDoc(rs.getInt(1));
+                setTipo(rs.getInt(2));
+                 setNom(rs.getString(3));
+                 setTele(rs.getString(4));
+                 setCorreo(rs.getString(5));
+                 setDire(rs.getString(6));
+                 setSex(rs.getInt(7));      
+                 setFec(rs.getDate(8));
+                 setCar(rs.getInt(9));
+                 setLog(rs.getString(10));
+                 setContra(rs.getString(11));
+                  
+            }
+            
+        }catch (SQLException e){
+           e.printStackTrace();
+        }
+    }
+        //para que el atualizar me muestre el dato que seleciono el usuario
+        public String obtenerSeleccion(Map<String,Integer>dato, int valor){
+            for (Map.Entry<String,Integer>seleccion:dato.entrySet()){
+                if(seleccion.getValue()==valor){
+                    return seleccion.getKey();
+                }
+            }
+        return null;
+        }
+              
 }
-

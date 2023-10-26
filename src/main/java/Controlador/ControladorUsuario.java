@@ -10,8 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 public class ControladorUsuario implements ActionListener{
       Principal princi = new Principal();//Instancia(Llama) la ventana principal
@@ -54,6 +56,8 @@ public class ControladorUsuario implements ActionListener{
             Map<String,Integer>datos = usu.llenarCombo("cargo");
             for(String cargo:datos.keySet()){
                 nuevo.getBoxCargo().addItem( cargo);
+                
+//                edw te falta el de tipo 
  }      
     }
 
@@ -107,5 +111,36 @@ public class ControladorUsuario implements ActionListener{
      }
     
 }
+
+    void actualizarUsuario(int doc) {
+     usu.buscar_usuario(doc);
+     nuevo.getTXTdocumento().setEnabled(false);
+     nuevo.getTXTlogin2().setEnabled(false);
+     nuevo.getBoxDocu().setEnabled(false);
+     nuevo.getTXTdocumento().setText(String.valueOf(doc));
+     nuevo.getTXTcorreo().setText(usu.getCorreo());
+     nuevo.getTXTnombre().setText(usu.getNom());
+     nuevo.getTXTtelefono().setText(usu.getTele());
+     nuevo.getTXTlogin2().setText(usu.getLog());
+    // nuevo.getTXTclave().setText(usu.getClav);
+     nuevo.getDateFecha().setDate(usu.getFec());
+     
+     Map<String,Integer> dato = usu.llenarCombo("sexo");
+     for(String sexo : dato.keySet()){
+         nuevo.getBoxSexo().addItem(sexo);
+     }
+     //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
+     String valorsexo = usu.obtenerSeleccion(dato, usu.getSex());
+     nuevo.getBoxSexo().setSelectedItem(valorsexo);
+    
+    Map<String,Integer> datos = usu.llenarCombo("cargo");
+     for(String cargo : dato.keySet()){
+         nuevo.getBoxCargo().addItem(cargo);
+     }
+     //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
+     String valorcargo = usu.obtenerSeleccion(datos, usu.getCar());
+     nuevo.getBoxCargo().setSelectedItem(valorcargo);
+     
+    }
 }
 
