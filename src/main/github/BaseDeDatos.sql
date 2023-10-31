@@ -278,7 +278,7 @@ CREATE TABLE `producto` (
   `nombre` varchar(245) NOT NULL,
   `descripcion` varchar(250) NOT NULL,
   `cantidad` int NOT NULL,
-  `imagen` varchar(250) DEFAULT NULL,
+  `imagen` longblob,
   `precio` float NOT NULL,
   `condicion` tinyint NOT NULL,
   PRIMARY KEY (`idproducto`)
@@ -749,9 +749,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `in_produc`(in nom varchar(245),in descrip varchar(250),in imag varchar(250))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `in_produc`(in nom varchar(245),in descrip varchar(250),in imag LONGBLOB)
 BEGIN
-insert into producto (nombre,descripcion,cantidad,imagen,precio, condicion) value(nom,descrip,'0','imagen','0','1' );
+insert into producto (nombre,descripcion,cantidad,imagen,precio, condicion) value(nom,descrip,'0',imag,'0','1' );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -972,4 +972,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-26 12:05:41
+-- Dump completed on 2023-10-31 11:55:16

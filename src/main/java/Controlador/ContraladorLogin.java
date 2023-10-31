@@ -13,7 +13,7 @@ public class ContraladorLogin implements ActionListener {
     ModeloLogin modlogi= new ModeloLogin();
     Login log =new Login();
     Principal princi = new Principal();
-    ControladorPrincipal princ = new   ControladorPrincipal();
+    ControladorPrincipal princ = new ControladorPrincipal();
     
     public ContraladorLogin(){
       log.getBtnIniciarSesion().addActionListener(this);

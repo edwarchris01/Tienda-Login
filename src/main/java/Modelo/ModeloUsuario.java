@@ -118,7 +118,7 @@ public class ModeloUsuario {
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
         Connection co = conexs.iniciarConexion();
-        String sql = "Select * from mostrar_" + valor;
+        String sql = "Select * from  mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
 
