@@ -22,8 +22,8 @@ import javax.swing.table.TableColumn;
 
 public class ModeloUsuario {
 
-    private int doc, sex, car,tipo;
-    private String nom, tele, correo, dire, log, contra;
+    private int doc, sex, car;
+    private String nom, tele, correo, dire, log, contra,tipo;
     private Date fec;
 
     public int getSex() {
@@ -106,19 +106,22 @@ public class ModeloUsuario {
         this.car = car;
     }
 
-    public int getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
 
+   
+    
+    
+//llenar los combos
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
         Connection co = conexs.iniciarConexion();
-        String sql = "Select * from  mostrar_" + valor;
+        String sql = "SELECT * FROM  mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
 
@@ -132,39 +135,41 @@ public class ModeloUsuario {
 
         } catch (SQLException e) {
             e.printStackTrace();
+         
         }
         return llenar_Combo;
     }
 
-    public void Insertar_USUARIO() {
+    public void InsertarUSUARIO() {
 
         Conectar conex = new Conectar();
         Connection co = conex.iniciarConexion();
 
-        String sql = "Call usuario (?,?,?,?,?,?,?,?,?,?)";//colsulta a la base de datos 
+        String sql = "Call INS_usuario (?,?,?,?,?,?,?,?,?,?,?)";//colsulta a la base de datos 
 
         try {
             PreparedStatement ps = co.prepareStatement(sql);
-             ps.setInt(1, getTipo());
+             ps.setString(1, getTipo());
              ps.setInt(2, getDoc());
             ps.setString(3, getNom());
             ps.setString(4, getTele());
             ps.setString(5, getCorreo());
             ps.setString(6, getDire());
-            ps.setInt(7, getSex());
-            ps.setDate(8, getFec());
-            ps.setInt(9, getCar());
+             ps.setInt(7, getCar());
+            ps.setInt(8, getSex());
+            ps.setDate(9,(java.sql.Date) getFec());
             ps.setString(10, getLog());
             ps.setString(11, getContra());
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado");
+            JOptionPane.showMessageDialog(null, "Registro guardado","registro",sex);
             co.close();
         } catch (SQLException ex) {
-            JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
-        }
-      conex.cerrarConexion();
+            ex.printStackTrace();
+            //JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
+        } conex.cerrarConexion();               
     }
-    public void limpiar(Component[]panel) {
+        
+        public void limpiar(Component[]panel) {
         for(Object control: panel){
             if(control instanceof JTextField){
                 ((JTextField)control).setText("");
@@ -179,10 +184,10 @@ public class ModeloUsuario {
             }
         }
     }
-    public void mostrarTablaUsuario (JTable tabla,String valor){
+    public void mostrarTablaUsuario (JTable tabla,String valor,String nomPesta){
         Conectar conx = new Conectar();
         Connection cx = conx.iniciarConexion();
-        
+//        personalizar el  encabezado
         JTableHeader encabezado = tabla.getTableHeader();
                 encabezado.setDefaultRenderer(new GestionEncabezado());
                 tabla.setTableHeader(encabezado);
@@ -194,7 +199,8 @@ public class ModeloUsuario {
         
 //        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
 //        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
-        String[] titulo = {"tipo de documrnto","documento","nombre","direccion","telefono","sexo","correo","fecha de naciminto","cargo"};
+//agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
+        String[] titulo = {"tipo de documento","documento","nombre","telefono","correo","direccion","cargo","sexo","fecha de naciminto",};
         DefaultTableModel tablaUsuario = new DefaultTableModel(null, titulo){
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -243,15 +249,15 @@ public class ModeloUsuario {
             ResultSet rs =st.executeQuery(sql);
             
             while (rs.next()){
-                setDoc(rs.getInt(1));
-                setTipo(rs.getInt(2));
+                setTipo(rs.getString(1));
+                setDoc(rs.getInt(2));                
                  setNom(rs.getString(3));
                  setTele(rs.getString(4));
                  setCorreo(rs.getString(5));
                  setDire(rs.getString(6));
-                 setSex(rs.getInt(7));      
-                 setFec(rs.getDate(8));
-                 setCar(rs.getInt(9));
+                 setCar(rs.getInt(7));
+                 setSex(rs.getInt(8));      
+                 setFec(rs.getDate(9));                
                  setLog(rs.getString(10));
                  setContra(rs.getString(11));
                   
