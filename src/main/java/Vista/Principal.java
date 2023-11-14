@@ -137,6 +137,30 @@ public class Principal extends javax.swing.JFrame {
     public void setBtnFactura(JButton BtnFactura) {
         this.BtnFactura = BtnFactura;
     }
+
+    public JTextField getJbuscarC() {
+        return JbuscarC;
+    }
+
+    public void setJbuscarC(JTextField JbuscarC) {
+        this.JbuscarC = JbuscarC;
+    }
+
+    public JTextField getJbuscarF() {
+        return JbuscarF;
+    }
+
+    public void setJbuscarF(JTextField JbuscarF) {
+        this.JbuscarF = JbuscarF;
+    }
+
+    public JTextField getJbuscarP() {
+        return JbuscarP;
+    }
+
+    public void setJbuscarP(JTextField JbuscarP) {
+        this.JbuscarP = JbuscarP;
+    }
     
     
    

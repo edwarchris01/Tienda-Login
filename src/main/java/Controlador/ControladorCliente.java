@@ -26,17 +26,16 @@ public class ControladorCliente implements ActionListener {
          nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
           nuev.addWindowListener(new WindowAdapter() {
                 @Override
-                public void windowClosed(WindowEvent e) {
-                   
-                    
+                public void windowClosed(WindowEvent e) {                  
              ControladorPrincipal pri = new ControladorPrincipal();
              pri.iniciarSesion();
+//             pri.iniciarSesion(0);
                 }
             });
                    
         }
     
-    public void controlar_cli() {
+    public void controlarclite() {
     
          /*Al cerrar la ventana nuevo no cierra el programa sino que abre la ventana principal*/
           
@@ -57,32 +56,44 @@ public class ControladorCliente implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
          if (e.getSource().equals(nuev.getBtnGuardar())){    
-        if (nuev.getBoxDocumento().getSelectedItem().equals("Selecione")||nuev.getTxtDocumento().getText().isEmpty() || nuev.getTxtNombre().getText().isEmpty() || nuev.getTxtCorreo().getText().isEmpty()
-                || nuev.getTxtTelefono().getText().isEmpty()
-                || nuev.getBoxSexo().getSelectedItem().equals("Selecione")
-                || nuev.getDateFecha()== null) {
+        if ( (nuev.getTxtDocumento().getText().isEmpty() )     
+                ||(nuev.getBoxDocumento().getSelectedItem().equals("Selecione"))
+                ||( nuev.getTxtNombre().getText().isEmpty() )
+                || (nuev.getTxtCorreo().getText().isEmpty())
+                ||( nuev.getTxtTelefono().getText().isEmpty())
+                ||( nuev.getBoxSexo().getSelectedItem().equals("Selecione"))
+                ||( nuev.getDateFecha().getDate()== null)
+                || (nuev.getTxtDireccion().getText().isEmpty())) {
               JOptionPane.showMessageDialog(null,"Debes completar los campos requerido..." );
         }else {
-         String valorSexo = nuev.getBoxSexo().getSelectedItem().toString();
-            int sexo = cli.llenarCombo("sexo").get(valorSexo);
-           String valorTipo = nuev.getBoxDocumento().getSelectedItem().toString();
-            int tipo = cli.llenarCombo("tipo").get(valorTipo);
+        String valorSexo = nuev.getBoxSexo().getSelectedItem().toString();
+           int sexo = cli.llenarCombo("sexo").get(valorSexo);
             
              //cambia el formato de la fecha que entiende el msq
                 java.util.Date fech = nuev.getDateFecha().getDate();
                 long fe = fech.getTime();
                 java.sql.Date fecha = new Date(fe);
                
-                cli.setTipo(tipo);
+                cli.setTipo(nuev.getBoxDocumento().getSelectedItem().toString());
                 cli.setDoc(Integer.parseInt(nuev.getTxtDocumento().getText()));
-                cli.setNom(nuev.getTxtNombre().getText());
-                cli.setFec(fecha);
-                cli.setTele(nuev.getTxtTelefono().getText());
+                cli.setNom(nuev.getTxtNombre().getText());  
                 cli.setCorreo(nuev.getTxtCorreo().getText());
+                cli.setTele(nuev.getTxtTelefono().getText());
+                cli.setSex(sexo);               
+                cli.setFec(fecha);
                 cli.setDire(nuev.getTxtDireccion().getText());
-                cli.setSex(sexo);
+                cli.Insertar_Cliente();
+//               cli.limpiar(cli.ge.getComponents());
                 
-                
+               if (nuev.getBtnGuardar().getText().equals("guardar")){
+                    cli.Insertar_Cliente();
+                    cli.limpiar(nuev.getjPanelCliente().getComponents());
+                }else {
+//                    cli;
+                   nuev.setVisible(false);
+                   princi.setVisible(true);
+                   cli.mostrarTableCliente(princi.getTableCliente(), "", "cliente");
+                }  
                 
         }
             
@@ -92,11 +103,32 @@ public class ControladorCliente implements ActionListener {
      if (e.getSource().equals(nuev.getBtnCancelar())){
          
      }
-    
+     
     }
     
-                 
-            
-           
+     void actualizarCliente(int doc) {
+        cli.buscar_cliente(doc);   
+        nuev.getBoxDocumento().setEnabled(false);
+        nuev.getTxtDireccion().setText(cli.getCorreo());
+        nuev.getTxtDocumento().setText(String.valueOf(doc));
+        nuev.getTxtCorreo().setText(cli.getCorreo());
+        nuev.getTxtNombre().setText(cli.getNom());
+        nuev.getTxtTelefono().setText(cli.getTele());    
+        nuev.getDateFecha().setDate(cli.getFec());
+//llenar sexo 
+        Map<String, Integer> dato = cli.llenarCombo("sexo");
+        for (String sexo : dato.keySet()) {
+            nuev.getBoxSexo().addItem(sexo);
+        }
+        //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
+        String valorsexo = cli.obtenerSeleccion(dato, cli.getSex());
+        nuev.getBoxSexo().setSelectedItem(valorsexo);
+
+        
+//llenar tipo de documento
+       nuev.getBoxDocumento().setSelectedItem(cli.getTipo());
     }
+                              
+    }
+
 

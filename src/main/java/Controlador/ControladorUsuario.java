@@ -57,9 +57,9 @@ public class ControladorUsuario implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(nuevo.getBntguardar())) {
-            if ((nuevo.getBoxDocu().getSelectedItem().equals("Selecione") 
-                    ||( nuevo.getTXTdocumento().getText().isEmpty() )
+        if ( e.getSource().equals(nuevo.getBntguardar())) {
+            if (( nuevo.getTXTdocumento().getText().isEmpty() )
+                    || (nuevo.getBoxDocu().getSelectedItem().equals("Selecione")   
                     || (nuevo.getTXTnombre().getText().isEmpty())
                     ||(nuevo.getTXTtelefono().getText().isEmpty())
                     ||( nuevo.getTXTcorreo().getText().isEmpty())
@@ -67,8 +67,8 @@ public class ControladorUsuario implements ActionListener {
                     ||(nuevo.getBoxCargo().getSelectedItem().equals("Selecione") )
                     ||( nuevo.getBoxSexo().getSelectedItem().equals("Selecione"))
                     ||(nuevo.getDateFecha().getDate() == null))
-                    ||(( nuevo.getTXTlogin2().getText().isEmpty())
-                    ||( nuevo.getTXTclave().getPassword()== null))){
+                    ||( nuevo.getTXTlogin2().getText().isEmpty())
+                    ||( nuevo.getTXTclave().getPassword()== null)){
                 JOptionPane.showMessageDialog(null, "Debes completar los campos requerido...");
             } else {
                 String valorSexo = nuevo.getBoxSexo().getSelectedItem().toString();
@@ -102,6 +102,18 @@ public class ControladorUsuario implements ActionListener {
                 //    usu.Insertar_USUARIO();
                 // } catch (SQLException ex){
                 //Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null,nuevo.g);
+                
+                if (nuevo.getBntguardar().getText().equals("guardar")){
+                    usu.insertarUSUARIO();
+                    usu.limpiar(nuevo.getJpanelUsuario().getComponents());
+                }else {
+                    usu.a;
+                   nuevo.setVisible(false);
+                   princi.setVisible(true);
+                   usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+                }
+                
+             
             }
 
         }
@@ -125,7 +137,7 @@ public class ControladorUsuario implements ActionListener {
         nuevo.getTXTlogin2().setText(usu.getLog());
         // nuevo.getTXTclave().setText(usu.getClav);
         nuevo.getDateFecha().setDate(usu.getFec());
-
+//llenar sexo 
         Map<String, Integer> dato = usu.llenarCombo("sexo");
         for (String sexo : dato.keySet()) {
             nuevo.getBoxSexo().addItem(sexo);
@@ -133,7 +145,7 @@ public class ControladorUsuario implements ActionListener {
         //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
         String valorsexo = usu.obtenerSeleccion(dato, usu.getSex());
         nuevo.getBoxSexo().setSelectedItem(valorsexo);
-
+//llenar cargo
         Map<String, Integer> datos = usu.llenarCombo("cargo");
         for (String cargo : dato.keySet()) {
             nuevo.getBoxCargo().addItem(cargo);
@@ -141,6 +153,7 @@ public class ControladorUsuario implements ActionListener {
         //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
         String valorcargo = usu.obtenerSeleccion(datos, usu.getCar());
         nuevo.getBoxCargo().setSelectedItem(valorcargo);
-
+//llenar tipo de documento
+       nuevo.getBoxDocu().setSelectedItem(usu.getTipo());
     }
 }

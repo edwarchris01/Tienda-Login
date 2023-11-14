@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -120,13 +122,13 @@ public class ModeloUsuario {
 //llenar los combos
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
-        Connection co = conexs.iniciarConexion();
+        Connection con = conexs.iniciarConexion();
         String sql = "SELECT * FROM  mostrar_" + valor;
 
         Map<String, Integer> llenar_Combo = new HashMap<>();
 
         try {
-            Statement sc = co.createStatement();
+            Statement sc = con.createStatement();
             ResultSet rs = sc.executeQuery(sql);
 
             while (rs.next()) {
@@ -140,15 +142,15 @@ public class ModeloUsuario {
         return llenar_Combo;
     }
 
-    public void InsertarUSUARIO() {
+    public void insertarUSUARIO() {
 
-        Conectar conex = new Conectar();
-        Connection co = conex.iniciarConexion();
+        Conectar conexs = new Conectar();
+        Connection con = conexs.iniciarConexion();
 
-        String sql = "Call INS_usuario (?,?,?,?,?,?,?,?,?,?,?)";//colsulta a la base de datos 
+        String sql = "Call inss_usuario(?,?,?,?,?,?,?,?,?,?,?)"; //colsulta a la base de datos 
 
         try {
-            PreparedStatement ps = co.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
              ps.setString(1, getTipo());
              ps.setInt(2, getDoc());
             ps.setString(3, getNom());
@@ -162,11 +164,11 @@ public class ModeloUsuario {
             ps.setString(11, getContra());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado","registro",sex);
-            co.close();
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             //JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
-        } conex.cerrarConexion();               
+        } conexs.cerrarConexion();               
     }
         
         public void limpiar(Component[]panel) {
@@ -210,7 +212,7 @@ public class ModeloUsuario {
         if (valor.equals("")){
             sqlUsuario= "Select*from mostrar_usuario";
         } else {
-            sqlUsuario= "Call *from mostrar_usuario('"+valor+"')"; 
+            sqlUsuario= "Call *from consul_usuario('"+valor+"')"; 
         }
        try {
            String[] dato = new String[titulo.length];
@@ -276,5 +278,51 @@ public class ModeloUsuario {
             }
         return null;
         }
-              
+        //Actualizar usuario
+    public void actualizarUsuario() {
+        Conectar conex = new Conectar();
+        Connection con = conex.iniciarConexion();
+        String sql = "call actualizar_usuario(?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, getDoc());
+            ps.setString(2, getNom());
+            ps.setInt(3, getCar());
+            ps.setString(4, getTele());
+            ps.setString(5, getCorreo());
+            ps.setInt(6, getSex());
+            ps.setString(7, getDire());
+            ps.setDate(8, getFec());
+            ps.setString(9, getContra());
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Información Actualizada");
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        conex.cerrarConexion();
+    }
+
+    //Eliminar usuario
+    public void eliminarUsuario() {
+        Conectar conex = new Conectar();
+        Connection con = conex.iniciarConexion();
+        String sql = "call eliminar_usuario(?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, getDoc());
+            ps.executeUpdate();
+//            Icon elimina = new ImageIcon(getClass().getResource("/img/basura.png"));
+            JOptionPane.showMessageDialog(null, "Registro Eliminado", "Eliminar Usuario", JOptionPane.PLAIN_MESSAGE, (Icon) elimina);
+//            JOptionPane.showMessageDialog(null, "¿Desea Eliminar el Registro?");
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        conex.cerrarConexion();
+    }      
 }

@@ -4,8 +4,10 @@
  */
 package Controlador;
 
+import Modelo.ModeloCliente;
 import Modelo.ModeloProvedor;
 import Modelo.ModeloUsuario;
+import Modelo.ModelorProducto;
 import Vista.Login;
 import Vista.Nueva_Factura;
 import Vista.Nueva_Producto;
@@ -39,6 +41,8 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     Nueva_Factura compraF = new Nueva_Factura();
     Nuevo_Provedor nuep = new Nuevo_Provedor();
     ModeloProvedor modpro = new ModeloProvedor();
+    ModeloCliente modelcli = new  ModeloCliente();
+    ModelorProducto modprod = new ModelorProducto();
     ControladorProvedor conpro = new ControladorProvedor();
     Login log = new Login();
 
@@ -50,6 +54,11 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getBtnNuevo5().addActionListener(this);
         princi.getBtnFactura().addActionListener(this);
         princi.getBtnBuscarUsu().addActionListener(this);
+        princi.getJBuscar().addActionListener(this);
+        princi.getJbuscarC().addActionListener(this);
+        princi.getJbuscarF().addActionListener(this);
+        princi.getJbuscarP().addActionListener(this);
+        
         princi.getJBuscar().getDocument().addDocumentListener(this); //que escuche el txt para buscar
         nuevo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//Desactiva la x que cierrar el programa para que permita abrir o volver a la ventana principal
@@ -76,6 +85,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             public void stateChanged(ChangeEvent e) {
             }
         });
+        
 
         //            borra toto cunado le damos cli a la caja de texto
         princi.getJBuscar().addMouseListener(new MouseAdapter() {
@@ -85,7 +95,60 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             }
         });
     }
-
+    
+    public void gestionCliente() {
+        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+            }          
+        });
+        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(black);
+            }
+        });
+    }
+        public void gestionProvedor() {
+        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+            }
+        });
+        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(black);
+            }
+        });
+        }
+        
+       public void gestionFactura() {
+        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+            }          
+        });
+        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(black);
+            }
+        });
+    }
+       public void gestionCliente() {
+        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+            }          
+        });
+        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(black);
+            }
+        });
+    }
     @Override
     public void actionPerformed(ActionEvent e) { //Valida los eventos
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -96,7 +159,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         if (e.getSource().equals(princi.getBtnNuevo2())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
             princi.setVisible(false);
 
-            controCli.controlar_cli();
+            controCli.controlarclite();
 
         }
 
@@ -140,20 +203,47 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         if (selecionar == 0) {
             gestionUsuario();
         }
+         if (selecionar == 0) {
+            gestionCliente();
+        }
+          if (selecionar == 0) {
+            gestionProvedor();
+        }
+           if (selecionar == 0) {
+            gestionFactura();
+        }
+            if (selecionar == 0) {
+            gestionProducto();
+        }
+             if (selecionar == 0) {
+            gestionVenta();
+        }
     }
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText());
+        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
+        modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
+        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+        modprod.
+        
+        
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText());
+        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
+        modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
+        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText());
+        usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
+        modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
+        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
     }
+     
+    
+    
 }
