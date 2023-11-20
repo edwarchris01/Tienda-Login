@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Icon;
@@ -165,6 +166,7 @@ public class ModeloUsuario {
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado","registro",sex);
             con.close();
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
             //JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
@@ -186,66 +188,93 @@ public class ModeloUsuario {
             }
         }
     }
+        
+       
+        
     public void mostrarTablaUsuario (JTable tabla,String valor,String nomPesta){
         Conectar conx = new Conectar();
-        Connection cx = conx.iniciarConexion();
+        Connection con = conx.iniciarConexion();
+        
 //        personalizar el  encabezado
         JTableHeader encabezado = tabla.getTableHeader();
                 encabezado.setDefaultRenderer(new GestionEncabezado());
                 tabla.setTableHeader(encabezado);
                 
-                tabla.setDefaultRenderer(Object.class, new GestionCeldas() );
+//         PERSONALIZAR CELDAS       
+        tabla.setDefaultRenderer(Object.class, new GestionCeldas());  
+        JButton editar = new JButton();
+        JButton eliminar = new JButton();
+        JButton agregar = new JButton();
         
-        JButton editar = new JButton("Editar");
-        JButton eliminar = new JButton("Eliminar");
+       editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
+     eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
+//      agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
+
+        String[] titulo = {"tipo de documento","documento","nombre","cargo","telefono","correo","sexo","direccion","fecha de naciminto",};
         
-//        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
-//        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
-//agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
-        String[] titulo = {"tipo de documento","documento","nombre","telefono","correo","direccion","cargo","sexo","fecha de naciminto",};
-        DefaultTableModel tablaUsuario = new DefaultTableModel(null, titulo){
+         int opcion = titulo.length;
+
+        if (nomPesta.equals("Usuario")) {
+            titulo = Arrays.copyOf(titulo, titulo.length + 2);
+            titulo[titulo.length - 2] = "";
+            titulo[titulo.length - 1] = "";
+        } else {
+            titulo = Arrays.copyOf(titulo, titulo.length + 1);
+            titulo[titulo.length - 1] = "";
+        }
+
+        DefaultTableModel tableUsuario = new DefaultTableModel(null, titulo){
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
         String sqlUsuario;
         if (valor.equals("")){
-            sqlUsuario= "Select*from mostrar_usuario";
+            sqlUsuario= "Select *from mostrar_usuario";
         } else {
-            sqlUsuario= "Call *from consul_usuario('"+valor+"')"; 
+            sqlUsuario= "Call  consul_usuario('"+valor+"')"; 
         }
        try {
            String[] dato = new String[titulo.length];
-           Statement st = cx.createStatement();
+           Statement st = con.createStatement();//CREA UNA CONSULTA
            ResultSet rs = st.executeQuery(sqlUsuario);
            
            while(rs.next()){
-               for(int i=0;i<titulo.length-2; i++){
-                   dato[i]=rs.getString(i + 1);                   
-               }
-               tablaUsuario.addRow(new Object[]{dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8]});//agrega en el mismo orden de la tabla de usuario
-           }
+                for (int i = 0; i < opcion; i++) {
+                    dato[i] = rs.getString(i + 1);
+                }
+               Object[] fila={dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8]};//agrega en el mismo orden de la tabla de usuario
+          if(nomPesta.equals("Usuario")){
+                    fila= Arrays.copyOf(fila, fila.length+2);
+                    fila[fila.length-2]=editar;
+                    fila[fila.length-1]=eliminar;
+           }else{              
+                    fila[fila.length-1]=agregar;
+                }
+                tableUsuario.addRow(fila);
+            }
+            con.close();
        } catch (SQLException e)    {
-           
+           e.printStackTrace();
        } 
-       tabla.setModel(tablaUsuario);
+       tabla.setModel(tableUsuario);
         //darle tamano a cada columna 
        int numero_columnas = tabla.getColumnCount();
-       int []tamanos_celdas = {100,150,150,100,100,150,150,100,100,150,100,30,30};
+       int []tamanos_celdas = {100,180,100,150,100,160,100,180,170,35,35};
+     
        for(int i = 0; i <numero_columnas;i++){
            TableColumn  columna = tabla.getColumnModel().getColumn(i);
-           columna.setPreferredWidth(tamanos_celdas[i]);
-           
+           columna.setPreferredWidth(tamanos_celdas[i]);          
        }
-       
+       conx.cerrarConexion();
     }
+
+   
     public void buscar_usuario(int valor){
         Conectar cone = new Conectar();
         Connection cn = cone.iniciarConexion();
-        String sql ="Call Atualizar_Usuario("+valor+")";
-        
-        
-        
+        String sql ="Call buscar_usuario("+valor+")";
+              
         try {
             Statement st = cn.createStatement();
             ResultSet rs =st.executeQuery(sql);
@@ -282,21 +311,21 @@ public class ModeloUsuario {
     public void actualizarUsuario() {
         Conectar conex = new Conectar();
         Connection con = conex.iniciarConexion();
-        String sql = "call actualizar_usuario(?,?,?,?,?,?,?,?,?)";
+        String sql = "call Actualizar_Usuario(?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            
             ps.setInt(1, getDoc());
-            ps.setString(2, getNom());
-            ps.setInt(3, getCar());
-            ps.setString(4, getTele());
-            ps.setString(5, getCorreo());
-            ps.setInt(6, getSex());
-            ps.setString(7, getDire());
+            ps.setString(2, getNom());          
+            ps.setString(3, getTele());
+            ps.setString(4, getCorreo());
+             ps.setString(5, getDire());
+            ps.setInt(6, getCar());
+            ps.setInt(7, sex );
             ps.setDate(8, getFec());
             ps.setString(9, getContra());
             ps.executeUpdate();
-
             JOptionPane.showMessageDialog(null, "Información Actualizada");
             con.close();
 
@@ -315,9 +344,9 @@ public class ModeloUsuario {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, getDoc());
             ps.executeUpdate();
-//            Icon elimina = new ImageIcon(getClass().getResource("/img/basura.png"));
+           Icon elimina = new ImageIcon(getClass().getResource("/img/basura.png"));
             JOptionPane.showMessageDialog(null, "Registro Eliminado", "Eliminar Usuario", JOptionPane.PLAIN_MESSAGE, (Icon) elimina);
-//            JOptionPane.showMessageDialog(null, "¿Desea Eliminar el Registro?");
+          JOptionPane.showMessageDialog(null, "¿Desea Eliminar el Registro?");
             con.close();
 
         } catch (SQLException e) {

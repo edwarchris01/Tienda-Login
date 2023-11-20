@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controlador;
 
 import Modelo.ModeloCliente;
 import Modelo.ModeloProvedor;
 import Modelo.ModeloUsuario;
-import Modelo.ModelorProducto;
-import Vista.Login;
+import Modelo.ModeloProducto;
 import Vista.Nueva_Factura;
 import Vista.Nueva_Producto;
 import Vista.Nuevo_Cliente;
@@ -16,12 +12,14 @@ import Vista.Nuevo_Provedor;
 import Vista.Nuevo_Usuario;
 import Vista.Nuevo_Venta;
 import Vista.Principal;
+import java.awt.Color;
 import static java.awt.Color.black;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -42,9 +40,10 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     Nuevo_Provedor nuep = new Nuevo_Provedor();
     ModeloProvedor modpro = new ModeloProvedor();
     ModeloCliente modelcli = new  ModeloCliente();
-    ModelorProducto modprod = new ModelorProducto();
+    ModeloProducto modprod = new ModeloProducto();
+    ControladorProducto controlpro = new ControladorProducto();
     ControladorProvedor conpro = new ControladorProvedor();
-    Login log = new Login();
+    
 
     public ControladorPrincipal() {
         princi.getBtnNuevo().addActionListener(this);
@@ -53,102 +52,171 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getBtnNuevo4().addActionListener(this);
         princi.getBtnNuevo5().addActionListener(this);
         princi.getBtnFactura().addActionListener(this);
-        princi.getBtnBuscarUsu().addActionListener(this);
+//        princi.getBtnBuscarUsu().addActionListener(this);
         princi.getJBuscar().addActionListener(this);
+        princi.getJbuscarProducto().addActionListener(this);
         princi.getJbuscarC().addActionListener(this);
         princi.getJbuscarF().addActionListener(this);
-        princi.getJbuscarP().addActionListener(this);
-        
-        princi.getJBuscar().getDocument().addDocumentListener(this); //que escuche el txt para buscar
+        princi.getJbuscarP().addActionListener(this); 
+       princi.getTablePrincipal().addChangeListener(this);
+        princi.getJbuscarP().getDocument().addDocumentListener(this);
+       princi.getJBuscar().getDocument().addDocumentListener(this);
+        princi.getJbuscarProducto().getDocument().addDocumentListener(this); //que escuche el txt para buscar
+        princi.getJbuscarC().getDocument().addDocumentListener(this);
         nuevo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//Desactiva la x que cierrar el programa para que permita abrir o volver a la ventana principal
         nuePro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nueVenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         compraF.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        manejoPestana();
+        
     }
 
-    public void iniciarSesion() {
+    public void iniciarSesion(int valor) {
         princi.setLocationRelativeTo(null);//Centra la ventana
         princi.setTitle("Principal");//Le da titulo a la ventana
         princi.setVisible(true);//Hace visible la ventana
+        princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        princi.getTablePrincipal().setSelectedIndex(valor);
+        gestionUsuario();
+       
+       gestionCliente();
     }
 
-    public void manejoPestana() {
-
-    }
-
+   
     public void gestionUsuario() {
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-            }
-        });
         
+        usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+        princi.getJBuscar().addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(Color.black);                
+            }
+            
+        });        
 
         //            borra toto cunado le damos cli a la caja de texto
-        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+        princi.getTableUsuario().addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                princi.getJBuscar().setText("");
-                princi.getJBuscar().setForeground(black);
+              int fila = princi.getTableUsuario().rowAtPoint(e.getPoint());
+              int colum = princi.getTableUsuario().columnAtPoint(e.getPoint());
+              usu.setDoc(Integer.parseInt(princi.getTableUsuario().getValueAt(fila, 1).toString()));
+              if (colum == 9) {
+                  princi.setVisible(false);
+                  princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                  controUsu.actualizarUsuario(usu.getDoc());
+                  
+              }
+              if (colum==10){
+                 controUsu.eliminarUsuario(usu.getDoc());
+                  usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+                  
+//                  controUsu.eliminarUsuario(usu.getDoc());
+//                  usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+                          
+              }
             }
-        });
+        });             
     }
     
     public void gestionCliente() {
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+       modelcli.mostrarTableCliente(princi.getTableCliente(), "", "Cliente");
+        princi.getJbuscarC().addMouseListener(new MouseAdapter(){
             @Override
-            public void stateChanged(ChangeEvent e) {
-            }          
-        });
-        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e){
+                princi.getJbuscarC().setText("");
+                princi.getJbuscarC().setForeground( Color.red);
+            }
+            
+        });  
+        princi.getTableCliente().addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                princi.getJBuscar().setText("");
-                princi.getJBuscar().setForeground(black);
+              int fila = princi.getTableCliente().rowAtPoint(e.getPoint());
+              int colum = princi.getTableCliente().columnAtPoint(e.getPoint());
+              modelcli.setDoc(Integer.parseInt(princi.getTableCliente().getValueAt(fila, 1).toString()));
+              
+               if (colum == 8) {
+                  princi.setVisible(false);
+                  princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                  controCli.actualizarCliente(modelcli.getDoc());
+                  
+              }
+              if (colum==9){
+                 controCli.eliminarCliente(modelcli.getDoc());                
+                  modelcli.mostrarTableCliente(princi.getTableCliente(), "", "Cliente");
+                  
+//                  controCli.eliminarCliente(modelcli.getDoc());
+//             modelcli.mostrarTableCliente(princi.getTableCliente(), "", "Cliente");
+                          
+              }
             }
         });
     }
         public void gestionProvedor() {
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
+          
+       modpro.mostrarTableProvedor(princi.getTableProvedor(), "", "Provedor");
+        princi.getJbuscarP().addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                princi.getJbuscarP().setText("");
+                princi.getJbuscarP().setForeground(Color.red);
             }
-        });
-        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            
+        });  
+        princi.getTableProvedor().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                princi.getJBuscar().setText("");
-                princi.getJBuscar().setForeground(black);
+              int fila = princi.getTableProvedor().rowAtPoint(e.getPoint());
+              int colum = princi.getTableProvedor().columnAtPoint(e.getPoint());
+              modpro.setDoc(Integer.parseInt(princi.getTableProvedor().getValueAt(fila, 0).toString()));
+              
+               if (colum == 9) {
+                  princi.setVisible(false);
+//                  princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                  conpro.actualizarProvedor(modpro.getDoc());
+                  
+              }
+              if (colum==10){      
+                   conpro.eliminarProvedor(modpro.getDoc());    
+                  modpro.mostrarTableProvedor(princi.getTableProvedor(), "", "Provedor");
+                  
+                 
+                  
+                          
+              }
             }
         });
         }
-        
-       public void gestionFactura() {
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-            }          
-        });
-        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+       
+        public void gestionProducto() {
+          
+       modprod.mostrarTablaProducto(princi.getTableProducto(), "", "Producto");
+        princi.getJbuscarProducto().addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                princi.getJbuscarProducto().setText("");
+                princi.getJbuscarProducto().setForeground(Color.red);
+            }
+            
+        });  
+        princi.getTableProducto().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                princi.getJBuscar().setText("");
-                princi.getJBuscar().setForeground(black);
+              int fila = princi.getTableProducto().rowAtPoint(e.getPoint());
+              int colum = princi.getTableProducto().columnAtPoint(e.getPoint());
+              modprod.setDoc(Integer.parseInt(princi.getTableProducto().getValueAt(fila, 0).toString()));
+              
+               if (colum == 6) {
+                  princi.setVisible(false);
+//                  princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                  controlpro.actualizarProducto(modprod.getDoc());
+                  
+              }
+              if (colum==7){      
+                   controlpro.eliminarProducto(modprod.getDoc());    
+                  modprod.mostrarTablaProducto(princi.getTableProducto(), "", "Producto");                                                                      
+              }
             }
         });
-    }
-       public void gestionCliente() {
-        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-            }          
-        });
-        princi.getJBuscar().addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                princi.getJBuscar().setText("");
-                princi.getJBuscar().setForeground(black);
-            }
-        });
-    }
+        }
     @Override
     public void actionPerformed(ActionEvent e) { //Valida los eventos
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -173,10 +241,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         if (e.getSource().equals(princi.getBtnNuevo4())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
             princi.setVisible(false);
 
-            nuePro.setLocationRelativeTo(null);
-            nuePro.setTitle("Nueva_Producto");
-            nuePro.setVisible(true);
-
+           controlpro.iniciarProducto();
         }
 
         if (e.getSource().equals(princi.getBtnNuevo5())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -194,8 +259,23 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             compraF.setTitle("Nuevo_Factura");
             compraF.setVisible(true);
         }
+        
     }
-
+ 
+       public void gestionFactura() {
+        princi.getJtPrincipal().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+            }          
+        });
+        princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                princi.getJBuscar().setText("");
+                princi.getJBuscar().setForeground(black);
+            }
+        });
+    }
+       
     @Override
     public void stateChanged(ChangeEvent e) {
         int selecionar = princi.getJtPrincipal().getSelectedIndex();// indica en que posicion esta la pestaña en la principal
@@ -203,20 +283,21 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         if (selecionar == 0) {
             gestionUsuario();
         }
-         if (selecionar == 0) {
-            gestionCliente();
-        }
-          if (selecionar == 0) {
+         if (selecionar == 1) {
             gestionProvedor();
         }
-           if (selecionar == 0) {
-            gestionFactura();
+         if (selecionar == 2) {
+            gestionCliente();
         }
-            if (selecionar == 0) {
-            gestionProducto();
+         
+           if (selecionar == 3) {
+           gestionProducto();
         }
-             if (selecionar == 0) {
-            gestionVenta();
+            if (selecionar == 4) {
+           gestionFactura();
+        }
+             if (selecionar == 5) {
+//            gestionVenta();
         }
     }
 
@@ -224,9 +305,9 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     public void insertUpdate(DocumentEvent e) {
         usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
         modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
-        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
-        modprod.
-        
+        modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+        modprod .mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
+   
         
     }
 
@@ -234,14 +315,16 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     public void removeUpdate(DocumentEvent e) {
         usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
         modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
-        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+        modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+         modprod .mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
         usu.mostrarTablaUsuario(princi.getTableUsuario(), princi.getJBuscar().getText(),"Usuario");
         modelcli.mostrarTableCliente(princi.getTableCliente(), princi.getJbuscarC().getText(), "Cliente");
-        modpro.mostrarTablaProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+        modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
+         modprod .mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
     }
      
     

@@ -26,7 +26,8 @@ public class ControladorProvedor implements ActionListener {
 
     
     public  ControladorProvedor (){
-         prove.getBtnGuardar().addActionListener(this);
+         prove.getBtnGuardarProvedor().addActionListener(this);
+         prove.getBtnCancelarC().addActionListener(this);
          prove.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
           prove.addWindowListener(new WindowAdapter() {
                 @Override
@@ -34,7 +35,7 @@ public class ControladorProvedor implements ActionListener {
                    
                     
              ControladorPrincipal pri = new ControladorPrincipal();
-             pri.iniciarSesion();
+             pri.iniciarSesion(1);
                 }
             });
                    
@@ -54,17 +55,12 @@ public class ControladorProvedor implements ActionListener {
             for(String sexo:dato.keySet()){
                 prove.getBoxSexo().addItem(sexo);
             }
-            //Lleno el combobox de rol
-            prove.getBoxPersona().addItem("Seleccione...");
-            Map<String,Integer>data = mpro.llenarCombo("Persona");
-            for(String tipo_persona:data.keySet()){
-                prove.getBoxPersona().addItem( tipo_persona);
- }
+            
             
      }
     @Override
     public void actionPerformed(ActionEvent e) {
-     if (e.getSource().equals(prove.getBtnGuardar())){    
+     if (e.getSource().equals(prove.getBtnGuardarProvedor())){    
         if((prove.getTxtDocumento().getText().isEmpty())
                 || (prove.getBoxNit().getSelectedItem().equals("Selecione"))
                 ||( prove.getTxtNombre().getText().isEmpty())               
@@ -76,12 +72,9 @@ public class ControladorProvedor implements ActionListener {
                 ||(prove.getTxtDireccion().getText().isEmpty())){
               JOptionPane.showMessageDialog(null,"Debes completar los campos requerido..." );
         }else {
-         String valorSexo = prove.getBoxSexo().getSelectedItem().toString();
-         String valorPersona = prove.getBoxPersona().getSelectedItem().toString();
+         String valorSexo = prove.getBoxSexo().getSelectedItem().toString();     
             int sexo = mpro.llenarCombo("sexo").get(valorSexo);
-            int TipoPersona = mpro.llenarCombo("persona").get(valorPersona);
-            
-                               
+                                                   
              //cambia el formato de la fecha que entiende el msq
                 java.util.Date fech = prove.getDateFecha().getDate();
                 long fe = fech.getTime();
@@ -90,7 +83,7 @@ public class ControladorProvedor implements ActionListener {
                 mpro.setDoc(Integer.parseInt(prove.getTxtDocumento().getText()));
                  mpro.setNit(prove.getBoxNit().getSelectedItem().toString());
                  mpro.setNom(prove.getTxtNombre().getText());                
-                 mpro.setTipo(TipoPersona);
+                 mpro.setTipo(prove.getBoxPersona().getSelectedItem().toString());
                  mpro.setTele(prove.getTxtTelefono().getText());
                  mpro.setCorreo(prove.getTxtCorreo().getText());
                  mpro.setSex(sexo);
@@ -98,25 +91,69 @@ public class ControladorProvedor implements ActionListener {
                  mpro.setDire(prove.getTxtDireccion().getText());
                  
                  
-                  if (prove.getBtnGuardar().getText().equals("Guardar")){
+                  if (prove.getBtnGuardarProvedor().getText().equals("Guardar")){
                   mpro.Insertar_Provedor();
                   mpro.limpiar(prove.getjPanelProvedor().getComponents());
-                }else {                 
+                }else { 
+                   mpro.actualizarProvedor();
                    prove.setVisible(false);
-                   prove.dispose();
-                
-                   mpro.mostrarTablaProvedor(princi.getTableProvedor(), "", "provedor");
+                   prove.dispose();               
+                   mpro.mostrarTableProvedor(princi.getTableProvedor(), "", "Provedor");
                 }
             }
             
          }
      
-        
-     if (e.getSource().equals(prove.getBtnCancelarC())){
-         prove.dispose();
-     }
+        if (e.getSource().equals(prove.getBtnCancelarC())){
+            prove.dispose();
+        }
+  
+    }
+ void actualizarProvedor(int doc) {
+        mpro.buscarProvedor(doc);
+        prove.getTxtDocumento().setEnabled(false);
+        prove.getBoxNit().setEnabled(false);    
+        prove.getTxtDocumento().setText(String.valueOf(doc));
+        prove.getBoxNit().setSelectedItem(mpro.getNit());
+        prove.getTxtNombre().setText( mpro.getNom());
+        prove.getBoxPersona().setSelectedItem(mpro.getTipo());
+         prove.getTxtTelefono().setText( mpro.getTele());
+         prove.getTxtCorreo().setText( mpro.getCorreo());
+         prove.getBoxSexo().setSelectedItem(mpro.getSex());
+        prove.getDateFecha().setDate( mpro.getFec());
+         prove.getTxtDireccion().setText( mpro.getDire());
+//llenar sexo 
+        Map<String, Integer> dato = mpro.llenarCombo("sexo");
+        for (String sexo : dato.keySet()) {
+            prove.getBoxSexo().addItem(sexo);
+        }
+        //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
+        String valorsexo = mpro.obtenerSeleccion(dato, mpro.getSex());
+        prove.getBoxSexo().setSelectedItem(valorsexo);
+
+       
+//llenar tipo de documento
+            prove.getBoxNit().setSelectedItem(mpro.getTipo());
+       
+        prove.getLBprovedor().setText("Actualizar provedor");
+
+        prove.getLBprovedor();
+        princi.setVisible(false);
+        prove.setLocationRelativeTo(null);
+        prove.getBtnGuardarProvedor().setText("Actualizar");
+        prove.setVisible(true);
     }
 
+    //Eliminar usuario
+    public void eliminarProvedor(int doc) {
+        int resp = JOptionPane.showConfirmDialog(null, "¿Desea eliminar al Provedor? " + doc, "Eliminar Provedor", JOptionPane.YES_OPTION);
+
+        if (resp == JOptionPane.YES_OPTION) {
+         mpro.setDoc(doc);
+            mpro.eliminarProvedor();
+            mpro.mostrarTableProvedor(princi.getTableProvedor(), "", "Provedor");
+        }
+    }
     
 }
  

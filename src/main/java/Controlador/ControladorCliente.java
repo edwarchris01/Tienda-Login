@@ -15,21 +15,22 @@ import javax.swing.JOptionPane;
 
 public class ControladorCliente implements ActionListener {
     
-          Principal princi = new Principal();//Instancia(Llama) la ventana principal
+    Principal princi = new Principal();//Instancia(Llama) la ventana principal
     Nuevo_Cliente nuev = new Nuevo_Cliente();
     ModeloCliente cli = new ModeloCliente();//Instancia el modelo de usuario
     
 
     
     public  ControladorCliente(){
-         nuev.getBtnGuardar().addActionListener(this);
+        nuev.getBtnCancelar().addActionListener(this);
+         nuev.getBtnGuardarCliente().addActionListener(this);
          nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
           nuev.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {                  
              ControladorPrincipal pri = new ControladorPrincipal();
-             pri.iniciarSesion();
-//             pri.iniciarSesion(0);
+             pri.iniciarSesion(2);
+//             
                 }
             });
                    
@@ -40,30 +41,30 @@ public class ControladorCliente implements ActionListener {
          /*Al cerrar la ventana nuevo no cierra el programa sino que abre la ventana principal*/
           
             princi.setVisible(false);//Cierra la ventana principal para a que solo se visualice la ventana de nuevo usuario
-            nuev.setLocationRelativeTo(null);
+            nuev.setLocationRelativeTo(null);        
             nuev.setVisible(true);
-            
+          
             //Lleno el combobox de sexo
             nuev.getBoxSexo().addItem("Seleccione...");
             Map<String,Integer>dato = cli.llenarCombo("sexo");
             for(String sexo:dato.keySet()){
                 nuev.getBoxSexo().addItem(sexo);
             }
-            //Lleno el combobox de rol
+           
             
  }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         if (e.getSource().equals(nuev.getBtnGuardar())){    
-        if ( (nuev.getTxtDocumento().getText().isEmpty() )     
-                ||(nuev.getBoxDocumento().getSelectedItem().equals("Selecione"))
+         if (e.getSource().equals(nuev.getBtnGuardarCliente())){    
+             if ((nuev.getBoxDocumento().getSelectedItem().equals("Selecione...")    
+                ||(nuev.getTxtDocumento().getText().isEmpty() )
                 ||( nuev.getTxtNombre().getText().isEmpty() )
-                || (nuev.getTxtCorreo().getText().isEmpty())
                 ||( nuev.getTxtTelefono().getText().isEmpty())
+                || (nuev.getTxtCorreo().getText().isEmpty())               
                 ||( nuev.getBoxSexo().getSelectedItem().equals("Selecione"))
-                ||( nuev.getDateFecha().getDate()== null)
-                || (nuev.getTxtDireccion().getText().isEmpty())) {
+                ||( nuev.getDateFecha().getDate()== null))
+                || (nuev.getTxtDireccion().getText().isEmpty())){
               JOptionPane.showMessageDialog(null,"Debes completar los campos requerido..." );
         }else {
         String valorSexo = nuev.getBoxSexo().getSelectedItem().toString();
@@ -74,7 +75,7 @@ public class ControladorCliente implements ActionListener {
                 long fe = fech.getTime();
                 java.sql.Date fecha = new Date(fe);
                
-                cli.setTipo(nuev.getBoxDocumento().getSelectedItem().toString());
+               cli.setTipo(nuev.getBoxDocumento().getSelectedItem().toString());
                 cli.setDoc(Integer.parseInt(nuev.getTxtDocumento().getText()));
                 cli.setNom(nuev.getTxtNombre().getText());  
                 cli.setCorreo(nuev.getTxtCorreo().getText());
@@ -82,39 +83,40 @@ public class ControladorCliente implements ActionListener {
                 cli.setSex(sexo);               
                 cli.setFec(fecha);
                 cli.setDire(nuev.getTxtDireccion().getText());
-                cli.Insertar_Cliente();
-//               cli.limpiar(cli.ge.getComponents());
+//                cli.Insertar_Cliente();
+//               cli.limpiar(nuev.getjPanelCliente().getComponents());
                 
-               if (nuev.getBtnGuardar().getText().equals("guardar")){
+               if(nuev.getBtnGuardarCliente().getText().equals("Guardar")){
                     cli.Insertar_Cliente();
                     cli.limpiar(nuev.getjPanelCliente().getComponents());
-                }else {
-//                    cli;
-                   nuev.setVisible(false);
-                   princi.setVisible(true);
-                   cli.mostrarTableCliente(princi.getTableCliente(), "", "cliente");
-                }  
+                }else  {
+               
+                    cli.actualizarCliente();
+                   nuev.setVisible(false);                 
+                   cli.mostrarTableCliente(princi.getTableCliente(), "", "Cliente");
+                   nuev.dispose();
                 
         }
-            
         }
-         cli.limpiar(nuev.getjPanelCliente().getComponents());
-        
-     if (e.getSource().equals(nuev.getBtnCancelar())){
-         
+      
      }
-     
+       if (e.getSource().equals(nuev.getBtnCancelar())){
+            nuev.dispose();
+        }
     }
     
      void actualizarCliente(int doc) {
         cli.buscar_cliente(doc);   
-        nuev.getBoxDocumento().setEnabled(false);
-        nuev.getTxtDireccion().setText(cli.getCorreo());
+        nuev.getBoxDocumento().setEnabled(true);
+        nuev.getTxtDocumento().setEnabled(false);
+        nuev.getBoxDocumento().setSelectedItem(cli.getTipo());
         nuev.getTxtDocumento().setText(String.valueOf(doc));
+         nuev.getTxtNombre().setText(cli.getNom());
+         nuev.getTxtTelefono().setText(cli.getTele());  
         nuev.getTxtCorreo().setText(cli.getCorreo());
-        nuev.getTxtNombre().setText(cli.getNom());
-        nuev.getTxtTelefono().setText(cli.getTele());    
         nuev.getDateFecha().setDate(cli.getFec());
+        nuev.getTxtDireccion().setText(cli.getCorreo());   
+         
 //llenar sexo 
         Map<String, Integer> dato = cli.llenarCombo("sexo");
         for (String sexo : dato.keySet()) {
@@ -124,11 +126,23 @@ public class ControladorCliente implements ActionListener {
         String valorsexo = cli.obtenerSeleccion(dato, cli.getSex());
         nuev.getBoxSexo().setSelectedItem(valorsexo);
 
-        
-//llenar tipo de documento
-       nuev.getBoxDocumento().setSelectedItem(cli.getTipo());
+        princi.setVisible(false);
+        nuev.getLblNuevoCLI().setText("Actualizar Cliente");
+        nuev.getLblNuevoCLI();
+        nuev.setLocationRelativeTo(null);
+        nuev.getBtnGuardarCliente().setText("Actualizar");
+        nuev.setVisible(true);
     }
-                              
+           public void eliminarCliente(int doc) {
+        int resp = JOptionPane.showConfirmDialog(null, "Desea Eliminar el  Cliente?" + doc,
+                 "Eliminar Cliente", JOptionPane.YES_OPTION);
+        if (resp == JOptionPane.YES_OPTION) {
+            cli.setDoc(doc);
+            cli.eliminarCliente();
+           cli.mostrarTableCliente(princi.getTableCliente(), "", "Cliente");
+            
+        }                   
     }
+}
 
 

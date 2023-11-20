@@ -20,13 +20,14 @@ public class ControladorUsuario implements ActionListener {
 
     public ControladorUsuario() {
         nuevo.getBntguardar().addActionListener(this);
+        nuevo.getBtncancelar().addActionListener(this);
         nuevo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuevo.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
 
                 ControladorPrincipal pri = new ControladorPrincipal();
-                pri.iniciarSesion();
+                pri.iniciarSesion(0);
             }
         });
 
@@ -57,25 +58,25 @@ public class ControladorUsuario implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if ( e.getSource().equals(nuevo.getBntguardar())) {
-            if (( nuevo.getTXTdocumento().getText().isEmpty() )
-                    || (nuevo.getBoxDocu().getSelectedItem().equals("Selecione")   
+        if (e.getSource().equals(nuevo.getBntguardar())) {
+              if ((nuevo.getBoxDocu().getSelectedItem().equals("Selecione")
+                    || (nuevo.getTXTdocumento().getText().isEmpty())
                     || (nuevo.getTXTnombre().getText().isEmpty())
-                    ||(nuevo.getTXTtelefono().getText().isEmpty())
-                    ||( nuevo.getTXTcorreo().getText().isEmpty())
-                    || (nuevo.getTXTdireccion().getText().isEmpty() )
-                    ||(nuevo.getBoxCargo().getSelectedItem().equals("Selecione") )
-                    ||( nuevo.getBoxSexo().getSelectedItem().equals("Selecione"))
-                    ||(nuevo.getDateFecha().getDate() == null))
-                    ||( nuevo.getTXTlogin2().getText().isEmpty())
-                    ||( nuevo.getTXTclave().getPassword()== null)){
+                    || (nuevo.getTXTtelefono().getText().isEmpty())
+                    || (nuevo.getTXTcorreo().getText().isEmpty())
+                    || (nuevo.getTXTdireccion().getText().isEmpty())
+                    || (nuevo.getBoxCargo().getSelectedItem().equals("Selecione"))
+                    || (nuevo.getBoxSexo().getSelectedItem().equals("Selecione"))
+                    || (nuevo.getDateFecha().getDate() == null))
+                    || (nuevo.getTXTlogin2().getText().isEmpty())
+                    || (nuevo.getTXTclave().getPassword() == null)) {
                 JOptionPane.showMessageDialog(null, "Debes completar los campos requerido...");
             } else {
                 String valorSexo = nuevo.getBoxSexo().getSelectedItem().toString();
                 String valorCargo = nuevo.getBoxCargo().getSelectedItem().toString();
                 int sexo = usu.llenarCombo("sexo").get(valorSexo);
                 int cargo = usu.llenarCombo("cargo").get(valorCargo);
-
+               
                 //cambia el formato de la fecha que entiende el msq
                 java.util.Date fech = nuevo.getDateFecha().getDate();
                 long fe = fech.getTime();
@@ -87,7 +88,7 @@ public class ControladorUsuario implements ActionListener {
 
                 usu.setTipo(nuevo.getBoxDocu().getSelectedItem().toString());
                 usu.setDoc(Integer.parseInt(nuevo.getTXTdocumento().getText()));
-                usu.setNom(nuevo.getTXTnombre().getText());               
+                usu.setNom(nuevo.getTXTnombre().getText());
                 usu.setTele(nuevo.getTXTtelefono().getText());
                 usu.setCorreo(nuevo.getTXTcorreo().getText());
                 usu.setDire(nuevo.getTXTdireccion().getText());
@@ -102,27 +103,22 @@ public class ControladorUsuario implements ActionListener {
                 //    usu.Insertar_USUARIO();
                 // } catch (SQLException ex){
                 //Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null,nuevo.g);
-                
-                if (nuevo.getBntguardar().getText().equals("guardar")){
+                if (nuevo.getBntguardar().getText().equals("guardar")) {
                     usu.insertarUSUARIO();
                     usu.limpiar(nuevo.getJpanelUsuario().getComponents());
-                }else {
-                    usu.a;
-                   nuevo.setVisible(false);
-                   princi.setVisible(true);
-                   usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+                } else {
+                    usu.actualizarUsuario();
+                    nuevo.setVisible(false);
+                    usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
+                    nuevo.dispose();
                 }
-                
-             
+
             }
 
         }
-        usu.limpiar(nuevo.getJpanelUsuario().getComponents());
-
-        if (e.getSource().equals(nuevo.getBtncancelar())) {
-
+       if (e.getSource().equals(nuevo.getBtncancelar())){
+            nuevo.dispose();
         }
-
     }
 
     void actualizarUsuario(int doc) {
@@ -135,8 +131,9 @@ public class ControladorUsuario implements ActionListener {
         nuevo.getTXTnombre().setText(usu.getNom());
         nuevo.getTXTtelefono().setText(usu.getTele());
         nuevo.getTXTlogin2().setText(usu.getLog());
-        // nuevo.getTXTclave().setText(usu.getClav);
+        nuevo.getTXTclave().setText(usu.getContra());
         nuevo.getDateFecha().setDate(usu.getFec());
+        nuevo.getTXTdireccion().setText(usu.getDire());
 //llenar sexo 
         Map<String, Integer> dato = usu.llenarCombo("sexo");
         for (String sexo : dato.keySet()) {
@@ -147,13 +144,31 @@ public class ControladorUsuario implements ActionListener {
         nuevo.getBoxSexo().setSelectedItem(valorsexo);
 //llenar cargo
         Map<String, Integer> datos = usu.llenarCombo("cargo");
-        for (String cargo : dato.keySet()) {
+        for (String cargo : datos.keySet()) {
             nuevo.getBoxCargo().addItem(cargo);
-        }
-        //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
-        String valorcargo = usu.obtenerSeleccion(datos, usu.getCar());
-        nuevo.getBoxCargo().setSelectedItem(valorcargo);
+            //OBTENER EL VALOR GUARDADO EN LA BASE DE DATOS 
+            String valorcargo = usu.obtenerSeleccion(datos, usu.getCar());
+            nuevo.getBoxCargo().setSelectedItem(valorcargo);
 //llenar tipo de documento
-       nuevo.getBoxDocu().setSelectedItem(usu.getTipo());
+            nuevo.getBoxDocu().setSelectedItem(usu.getTipo());
+        }
+        nuevo.getLbTitulo().setText("Atualizar Usuario");
+
+        nuevo.getLbTitulo();
+        princi.setVisible(false);
+        nuevo.setLocationRelativeTo(null);
+        nuevo.getBntguardar().setText("Actualizar");
+        nuevo.setVisible(true);
     }
+
+    //Eliminar usuario
+    public void eliminarUsuario(int doc) {
+        int resp = JOptionPane.showConfirmDialog(null, "¿Desea eliminar al Uauario? n" + doc, "Eliminar Usuario", JOptionPane.YES_OPTION);
+
+        if (resp == JOptionPane.YES_OPTION) {
+            usu.setDoc(doc);
+            usu.eliminarUsuario();
+        }
+    }
+
 }
