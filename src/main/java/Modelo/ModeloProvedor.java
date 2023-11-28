@@ -182,10 +182,14 @@ public class ModeloProvedor {
          tabla.setDefaultRenderer(Object.class, new GestionCeldas() );       
         JButton editar = new JButton();
         JButton eliminar = new JButton();
+        JButton agregar = new JButton();
+        
     
         
      editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
    eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
+   agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
+   
 
         String[] titulo = {"documento","nit","nombre","tipo_persona","telefono","correo","sexo","fecha de naciminto","direccion"};
        
@@ -224,7 +228,10 @@ public class ModeloProvedor {
                     fila = Arrays.copyOf(fila, fila.length + 2);
                     fila[fila.length - 2] = editar;
                     fila[fila.length - 1] = eliminar;
-                } 
+                } else {
+                fila = Arrays.copyOf(fila, fila.length + 1);
+                fila[fila.length - 1] = agregar;
+         }
               
                 tableProvedor.addRow(fila);
             }

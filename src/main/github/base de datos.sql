@@ -67,7 +67,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('selecione...',123,'edw','1212','sdsdsds',1,'2023-01-01','sdsdsds',0),('cedula de ciudania',222,'edw','212','assa',1,'2023-11-02','assa',0),('cedula de ciudania',21212,'edw','2121212','andres@gmail.com',1,'2023-11-09','andres@gmail.com',1),('selecione...',323232323,'edwar chris','3232323','dfdffd',2,'2023-11-02','roma',0);
+INSERT INTO `cliente` VALUES ('selecione...',123,'edw','1212','sdsdsds',1,'2023-01-01','sdsdsds',0),('cedula de ciudania',222,'edw','212','assa',1,'2023-11-02','assa',0),('cedula de ciudania',21212,'edw','2121212','andres@gmail.com',1,'2023-11-09','andres@gmail.com',1),('cedula extranjera',121212212,'edwar','2121213212','edw@gmial.com',1,'2023-11-10','remor',1),('selecione...',323232323,'edwar chris','3232323','dfdffd',2,'2023-11-02','roma',0);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,12 +127,12 @@ DROP TABLE IF EXISTS `factura`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `factura` (
   `idfactura` int NOT NULL,
-  `fecha` datetime NOT NULL,
   `idcliente` int NOT NULL,
   `idusuario` int NOT NULL,
   `tipo_pago` varchar(100) NOT NULL,
   `impuesto` float NOT NULL,
   `total_pagar` float NOT NULL,
+  `fecha` date NOT NULL,
   `condicion` tinyint NOT NULL,
   PRIMARY KEY (`idfactura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -144,7 +144,7 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1231,'2023-01-12 00:00:00',1977408819,9999,'tarjeta',0.5,5000000,1),(4632,'2023-01-12 00:00:00',1079359917,8888,'efectivo',0.8,5000890,0),(6576,'2023-01-12 00:00:00',1977408819,9999,'tarjeta',0.4,2000000,1),(8765,'2023-01-12 00:00:00',1077480019,8888,'efectivo',0.1,1000000,1);
+INSERT INTO `factura` VALUES (1231,1977408819,9999,'tarjeta',0.5,5000000,'2023-01-12',1),(4632,1079359917,8888,'efectivo',0.8,5000890,'2023-01-12',0),(6576,1977408819,9999,'tarjeta',0.4,2000000,'2023-01-12',1),(8765,1077480019,8888,'efectivo',0.1,1000000,'2023-01-12',1);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `factura_compra` (
   KEY `id_usuario_idx` (`id_usuario`),
   CONSTRAINT `id_peovedor` FOREIGN KEY (`id_provedor`) REFERENCES `provedor` (`idprovedor`),
   CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,6 +177,7 @@ CREATE TABLE `factura_compra` (
 
 LOCK TABLES `factura_compra` WRITE;
 /*!40000 ALTER TABLE `factura_compra` DISABLE KEYS */;
+INSERT INTO `factura_compra` VALUES (6,22,12,'sddsdsd',0.19,0,'2023-11-23');
 /*!40000 ALTER TABLE `factura_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,6 +211,41 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `sexo`,
  1 AS `fecha_nacimiento`,
  1 AS `direccion`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `mostrar_factura`
+--
+
+DROP TABLE IF EXISTS `mostrar_factura`;
+/*!50001 DROP VIEW IF EXISTS `mostrar_factura`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `mostrar_factura` AS SELECT 
+ 1 AS `idfactura`,
+ 1 AS `idcliente`,
+ 1 AS `idusuario`,
+ 1 AS `tipo_pago`,
+ 1 AS `total_pagar`,
+ 1 AS `fecha`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `mostrar_factura_compra`
+--
+
+DROP TABLE IF EXISTS `mostrar_factura_compra`;
+/*!50001 DROP VIEW IF EXISTS `mostrar_factura_compra`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `mostrar_factura_compra` AS SELECT 
+ 1 AS `idfactura_compra`,
+ 1 AS `id_provedor`,
+ 1 AS `id_usuario`,
+ 1 AS `tipo_pago`,
+ 1 AS `descuento`,
+ 1 AS `total_compra`,
+ 1 AS `fecha_compra`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -301,7 +337,7 @@ CREATE TABLE `producto` (
   `condicion` tinyint NOT NULL,
   `ruta` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=7782 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7783 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -310,7 +346,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (7779,'TECLADO',' EDWAR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7780,'sdd','dsddsdsds',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7781,'fdfd','fdffdf',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png');
+INSERT INTO `producto` VALUES (7779,'TECLADO',' EDWAR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7780,'sdd','dsddsdsds',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7781,'fdfd','fdffdf',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7782,'EL MAS BONITO','LO  MEJOR DE LO MEJOR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +412,7 @@ CREATE TABLE `provedor` (
 
 LOCK TABLES `provedor` WRITE;
 /*!40000 ALTER TABLE `provedor` DISABLE KEYS */;
-INSERT INTO `provedor` VALUES (22,'cedula extranjera','wee','Juridica','212','wd',1,'2023-11-09','dsds',0),(12212,'cedula de ciudania','edwar chris','Juridica','1426256353','edw@gmail.com',1,'2023-11-01','roma',1);
+INSERT INTO `provedor` VALUES (22,'cedula extranjera','edwar','Juridica','212','wd',1,'2023-11-09','dsds',1),(12212,'cedula de ciudania','edwar chris','Juridica','1426256353','edw@gmail.com',1,'2023-11-01','roma',1),(212121,'cedula de ciudania','edwar','Juridica','2122121','ddsdsd',2,'2023-11-07','dsdsdds',1);
 /*!40000 ALTER TABLE `provedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +474,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('sss',12,'saasa','2232','sdsds1','sdsd',1,1,'2023-01-01','1212','121',0),('cedula de ciudania',12312,'Yuyu','12345678','yuyuarpa@gmail.com','cll 22 ',1,2,'2023-11-08','123','123',0),('cedula de ciudania',12121212,'edw chris','23456445','edw@gmail','andes',2,1,'2023-11-22','2323','2323',1),('cedula de ciudania',12311223,'edw','12333433','edw@gmail.com','estrellas',1,1,'2023-11-10','222','222',0),('cedula',1077380019,'edwar','3105186227','edw@gmail.com','roma',1,1,'2023-01-01','123','123',0);
+INSERT INTO `usuario` VALUES ('sss',12,'saasa','2232','sdsds1','sdsd',1,1,'2023-01-01','1212','121',0),('cedula extranjera',11111,'111','1111','1@gmail.com','1',1,1,'2023-11-10','1','1',1),('cedula de ciudania',12312,'Yuyu','12345678','yuyuarpa@gmail.com','cll 22 ',1,2,'2023-11-08','123','123',0),('cedula de ciudania',12121212,'edw chris','23456445','edw@hot.com','andes',2,1,'2023-11-22','2323','2323',1),('cedula de ciudania',12311223,'edw','12333433','edw@gmail.com','estrellas',1,1,'2023-11-10','222','222',0),('cedula',1077380019,'edwar','3105186227','edw@gmail.com','roma',1,1,'2023-01-01','123','123',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,6 +494,44 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Actualizar_cliente`(in tipo varchar(245),in idcli int,in nom varchar(250),in tel varchar(13),in corre varchar(100),in sex int,in fech date,in direc varchar(45))
 BEGIN
 update cliente set tipoDocumento=tipo,nombre=nom,telefono=tel,correo=corre,sexo2=sex,fecha_nacimiento=fech,direccion=direc where idcliente=idcli;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `actualizar_factuta_compra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizar_factuta_compra`(in idfac int,in idpro int,in idusu int, in tipo varchar(45))
+BEGIN
+update factura_compra set idprovedpor=idpro,idusuario=idusu_tipo_pagar=tipo where idfactura_compra=idfac;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `actualizar_factuta_compra1` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizar_factuta_compra1`(in idfac int,in idpro int,in idusu int, in tipo varchar(100))
+BEGIN
+update factura_compra set id_provedor=idpro,id_usuario=idusu,tipo_pago=tipo where idfactura_compra=idfac;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -559,6 +633,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `buscar_facturacompra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `buscar_facturacompra`(in valor int)
+BEGIN
+select * from Factura_compra where idfactura_compra = valor;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `buscar_producto` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -633,6 +726,59 @@ select * from mostrar_cliente where Tipodocumento like concat('%',valor,'%')
 || telefono like concat('%',valor,'%') || correo  like concat('%',valor,'%')
  || nombre like concat('%',valor,'%') || fecha_nacimiento like concat('%',valor,'%') 
  || direccion  like concat('%',valor,'%') ;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `consul_factura_compra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_factura_compra`(in valor varchar(45))
+BEGIN
+select * from mostrar_factura_compra where idfactura_compra like concat('%',valor,'%') 
+  || id_provedor like concat('%',valor,'%')
+ || id_usuario like concat('%',valor,'%')
+ || tipo_pago like concat('%',valor,'%') 
+ || descuento like concat('%',valor,'%') 
+   || total_compra like concat('%',valor,'%') 
+   || fecha_compra like concat('%',valor,'%') ;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `consul_factura_comptra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_factura_comptra`(in valor varchar(45))
+BEGIN
+select * from mostrar_factura_compra where factura_compra like concat('%',valor,'%') 
+ || idfactura_compra like concat('%',valor,'%') 
+  || idprovedor like concat('%',valor,'%')
+ || idusuario like concat('%',valor,'%')
+ || tipo_pago like concat('%',valor,'%') 
+ || descuento like concat('%',valor,'%') 
+   || total_compra like concat('%',valor,'%') 
+   || fecha_compra like concat('%',valor,'%') ;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -885,6 +1031,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ins_facturacompra` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ins_facturacompra`(in idpro int,in idusu int,in tipo varchar(45))
+BEGIN
+insert into factura_compra(id_provedor,id_usuario,tipo_pago,descuento,total_compra,fecha_compra) values (idpro,idusu,tipo,'0.19','0',current_date());
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `ins_ingreso` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1094,6 +1259,42 @@ DELIMITER ;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `mostrar_factura`
+--
+
+/*!50001 DROP VIEW IF EXISTS `mostrar_factura`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `mostrar_factura` AS select `factura`.`idfactura` AS `idfactura`,`factura`.`idcliente` AS `idcliente`,`factura`.`idusuario` AS `idusuario`,`factura`.`tipo_pago` AS `tipo_pago`,`factura`.`total_pagar` AS `total_pagar`,`factura`.`fecha` AS `fecha` from `factura` where (`factura`.`condicion` = '1') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `mostrar_factura_compra`
+--
+
+/*!50001 DROP VIEW IF EXISTS `mostrar_factura_compra`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `mostrar_factura_compra` AS select `factura_compra`.`idfactura_compra` AS `idfactura_compra`,`factura_compra`.`id_provedor` AS `id_provedor`,`factura_compra`.`id_usuario` AS `id_usuario`,`factura_compra`.`tipo_pago` AS `tipo_pago`,`factura_compra`.`descuento` AS `descuento`,`factura_compra`.`total_compra` AS `total_compra`,`factura_compra`.`fecha_compra` AS `fecha_compra` from `factura_compra` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `mostrar_producto`
 --
 
@@ -1174,4 +1375,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 12:04:06
+-- Dump completed on 2023-11-23 12:55:32

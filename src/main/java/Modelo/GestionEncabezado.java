@@ -21,6 +21,7 @@ public class GestionEncabezado implements TableCellRenderer {
    
     return encabezado;
 }
+//    encabezado.setBorder()
 }
     
 

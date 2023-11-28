@@ -72,6 +72,11 @@ public class ControladorUsuario implements ActionListener {
                     || (nuevo.getTXTclave().getPassword() == null)) {
                 JOptionPane.showMessageDialog(null, "Debes completar los campos requerido...");
             } else {
+                   ControladorPrincipal conprin = new ControladorPrincipal();
+                   if(!conprin.validarcorreo(nuevo.getTXTcorreo().getText())) {
+                JOptionPane.showConfirmDialog(null, "Correo ivalido");                                                 
+                } else {  
+                        
                 String valorSexo = nuevo.getBoxSexo().getSelectedItem().toString();
                 String valorCargo = nuevo.getBoxCargo().getSelectedItem().toString();
                 int sexo = usu.llenarCombo("sexo").get(valorSexo);
@@ -98,11 +103,7 @@ public class ControladorUsuario implements ActionListener {
                 usu.setLog(nuevo.getTXTlogin2().getText());
                 usu.setContra(contrasena);
 
-                //usu.setFec(Integer.parsed(fecha));
-                ///  try {
-                //    usu.Insertar_USUARIO();
-                // } catch (SQLException ex){
-                //Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null,nuevo.g);
+              
                 if (nuevo.getBntguardar().getText().equals("guardar")) {
                     usu.insertarUSUARIO();
                     usu.limpiar(nuevo.getJpanelUsuario().getComponents());
@@ -114,13 +115,15 @@ public class ControladorUsuario implements ActionListener {
                 }
 
             }
-
-        }
+              }
+                    
        if (e.getSource().equals(nuevo.getBtncancelar())){
             nuevo.dispose();
         }
+       
+        }
+    
     }
-
     void actualizarUsuario(int doc) {
         usu.buscar_usuario(doc);
         nuevo.getTXTdocumento().setEnabled(false);

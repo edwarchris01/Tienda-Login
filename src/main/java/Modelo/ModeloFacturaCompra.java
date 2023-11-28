@@ -1,3 +1,4 @@
+
 package Modelo;
 
 import Controlador.Conectar;
@@ -12,8 +13,6 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -23,74 +22,37 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-public class ModeloUsuario {
 
-    private int doc, sex, car;
-    private String nom, tele, correo, dire, log, contra,tipo;
+public class ModeloFacturaCompra {
+     private String tipo;
+    private int id,prove, usuario;
     private Date fec;
+    private float des,total;
 
-    public int getSex() {
-        return sex;
+    public int getProve() {
+        return prove;
     }
 
-    public int getDoc() {
-        return doc;
+    public void setProve(int prove) {
+        this.prove = prove;
     }
 
-    public void setDoc(int doc) {
-        this.doc = doc;
+    public int getUsuario() {
+        return usuario;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 
-    public String getNom() {
-        return nom;
+
+    
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getTele() {
-        return tele;
-    }
-
-    public void setTele(String tele) {
-        this.tele = tele;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getDire() {
-        return dire;
-    }
-
-    public void setDire(String dire) {
-        this.dire = dire;
-    }
-
-    public String getLog() {
-        return log;
-    }
-
-    public void setLog(String log) {
-        this.log = log;
-    }
-
-    public String getContra() {
-        return contra;
-    }
-
-    public void setContra(String contra) {
-        this.contra = contra;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Date getFec() {
@@ -101,25 +63,33 @@ public class ModeloUsuario {
         this.fec = fec;
     }
 
-    public int getCar() {
-        return car;
+    public int getId() {
+        return id;
     }
 
-    public void setCar(int car) {
-        this.car = car;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+ 
+
+    public float getDes() {
+        return des;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDes(float des) {
+        this.des = des;
     }
 
-   
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
     
-    
+      
 //llenar los combos
     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
@@ -143,28 +113,20 @@ public class ModeloUsuario {
         return llenar_Combo;
     }
 
-    public void insertarUSUARIO() {
+    public void insertarFacturaCompra() {
 
         Conectar conexs = new Conectar();
         Connection con = conexs.iniciarConexion();
 
-        String sql = "Call inss_usuario(?,?,?,?,?,?,?,?,?,?,?)"; //colsulta a la base de datos 
+        String sql = "Call ins_facturacompra(?,?,?)"; //colsulta a la base de datos 
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
              ps.setString(1, getTipo());
-             ps.setInt(2, getDoc());
-            ps.setString(3, getNom());
-            ps.setString(4, getTele());
-            ps.setString(5, getCorreo());
-            ps.setString(6, getDire());
-             ps.setInt(7, getCar());
-            ps.setInt(8, getSex());
-            ps.setDate(9,(java.sql.Date) getFec());
-            ps.setString(10, getLog());
-            ps.setString(11, getContra());
+             ps.setInt(2, getProve());
+            ps.setInt(3, getUsuario());        
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado","registro",sex);
+            JOptionPane.showMessageDialog(null, "Registro guardado");
             con.close();
             
         } catch (SQLException ex) {
@@ -191,7 +153,7 @@ public class ModeloUsuario {
         
        
         
-    public void mostrarTablaUsuario (JTable tabla,String valor,String nomPesta){
+    public void mostrarTablaFacturaCompra (JTable tabla,String valor,String nomPesta){
         Conectar conx = new Conectar();
         Connection con = conx.iniciarConexion();
         
@@ -203,65 +165,72 @@ public class ModeloUsuario {
 //         PERSONALIZAR CELDAS       
         tabla.setDefaultRenderer(Object.class, new GestionCeldas());  
         JButton editar = new JButton();
-        JButton eliminar = new JButton();
         JButton agregar = new JButton();
+        JButton imprimir = new JButton();
+        JButton detalle = new JButton();
         
-       editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
-     eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
-     agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
+        
+       editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/actualizar.png")));
+       agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
+      imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/impresora.png")));
+       detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/detalle.png")));
+     
 
-        String[] titulo = {"tipo de documento","documento","nombre","cargo","telefono","correo","sexo","direccion","fecha de naciminto",};
+        String[] titulo = {"IDFACTURA COMPRA","IDPROVEDOR","IDUSUARIO","TIPO DE PAGO","DESCUENTO","TOTAL PAGO","FECHA"};
         
          int opcion = titulo.length;
 
-        if (nomPesta.equals("Usuario")) {
-            titulo = Arrays.copyOf(titulo, titulo.length + 2);
-            titulo[titulo.length - 2] = "Editar";
-            titulo[titulo.length - 1] = "Eliminar";
+        if (nomPesta.equals("Factura")) {
+            titulo = Arrays.copyOf(titulo, titulo.length + 4);
+            titulo[titulo.length - 4] = "Detalles";
+             titulo[titulo.length - 3] = "Imprimir";
+              titulo[titulo.length - 2] = "Agregar";
+               titulo[titulo.length - 1] = "Editar";
+            
         } else {
             titulo = Arrays.copyOf(titulo, titulo.length + 1);
             titulo[titulo.length - 1] = "";
         }
 
-        DefaultTableModel tableUsuario = new DefaultTableModel(null, titulo){
+        DefaultTableModel tableFactura = new DefaultTableModel(null, titulo){
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
-        String sqlUsuario;
+        String sqlFactura;
         if (valor.equals("")){
-            sqlUsuario= "Select *from mostrar_usuario";
+            sqlFactura= "Select *from mostrar_factura_compra";
         } else {
-            sqlUsuario= "Call  consul_usuario('"+valor+"')"; 
+            sqlFactura= "Call  consul_factura_compra('"+valor+"')"; 
         }
        try {
            String[] dato = new String[titulo.length];
            Statement st = con.createStatement();//CREA UNA CONSULTA
-           ResultSet rs = st.executeQuery(sqlUsuario);
+           ResultSet rs = st.executeQuery(sqlFactura);
            
            while(rs.next()){
                 for (int i = 0; i < opcion; i++) {
                     dato[i] = rs.getString(i + 1);
                 }
-               Object[] fila={dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6],dato[7],dato[8]};//agrega en el mismo orden de la tabla de usuario
-          if(nomPesta.equals("Usuario")){
-                    fila= Arrays.copyOf(fila, fila.length+2);
-                    fila[fila.length-2]=editar;
-                    fila[fila.length-1]=eliminar;
-           }else{  
-              fila = Arrays.copyOf(fila, fila.length + 1);            
-                    fila[fila.length-1]=agregar;
-                }
-               tableUsuario.addRow(fila);
+               Object[] fila={dato[0],dato[1],dato[2],dato[3],dato[4],dato[5],dato[6]};//agrega en el mismo orden de la tabla de usuario
+          if(nomPesta.equals("Factura")){
+                    fila= Arrays.copyOf(fila, fila.length + 4);
+                    fila[fila.length - 4]= detalle; 
+                     fila[fila.length - 3]= imprimir;     
+                      fila[fila.length - 2]= agregar;     
+                       fila[fila.length - 1]= editar;     
+           }
+                
+                tableFactura.addRow(fila);
             }
             con.close();
        } catch (SQLException e)    {
            e.printStackTrace();
        } 
-       tabla.setModel(tableUsuario);
+       tabla.setModel(tableFactura);
         //darle tamano a cada columna 
        int numero_columnas = tabla.getColumnCount();
-       int []tamanos_celdas = {100,180,100,150,100,160,100,180,170,35,35};
+       int []tamanos_celdas = {100,180,100,150,100,160,160,20,20,20,20};
      
        for(int i = 0; i <numero_columnas;i++){
            TableColumn  columna = tabla.getColumnModel().getColumn(i);
@@ -271,28 +240,24 @@ public class ModeloUsuario {
     }
 
    
-    public void buscar_usuario(int valor){
+    public void buscar_Factura(int valor){
         Conectar cone = new Conectar();
         Connection cn = cone.iniciarConexion();
-        String sql ="Call buscar_usuario("+valor+")";
+        String sql ="Call buscar_facturacompra("+valor+")";
               
         try {
             Statement st = cn.createStatement();
             ResultSet rs =st.executeQuery(sql);
             
             while (rs.next()){
-                setTipo(rs.getString(1));
-                setDoc(rs.getInt(2));                
-                 setNom(rs.getString(3));
-                 setTele(rs.getString(4));
-                 setCorreo(rs.getString(5));
-                 setDire(rs.getString(6));
-                 setCar(rs.getInt(7));
-                 setSex(rs.getInt(8));      
-                 setFec(rs.getDate(9));                
-                 setLog(rs.getString(10));
-                 setContra(rs.getString(11));
-                  
+                setId(rs.getInt(1));
+                setProve(rs.getInt(2));                
+                 setUsuario(rs.getInt(3));
+                 setTipo(rs.getString(4));
+                 setDes(rs.getFloat(5));
+                 setTotal(rs.getFloat(6));
+                 setFec(rs.getDate(7));
+                 
             }
             
         }catch (SQLException e){
@@ -309,23 +274,18 @@ public class ModeloUsuario {
         return null;
         }
         //Actualizar usuario
-    public void actualizarUsuario() {
+    public void actualizarFacturaCompra() {
         Conectar conex = new Conectar();
         Connection con = conex.iniciarConexion();
-        String sql = "call Actualizar_Usuario(?,?,?,?,?,?,?,?,?)";
+        String sql = "call actualizar_factuta_compra1(?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setInt(1, getDoc());
-            ps.setString(2, getNom());          
-            ps.setString(3, getTele());
-            ps.setString(4, getCorreo());
-             ps.setString(5, getDire());
-            ps.setInt(6, getCar());
-            ps.setInt(7, sex );
-            ps.setDate(8, getFec());
-            ps.setString(9, getContra());
+            ps.setInt(2, getProve());
+            ps.setInt(3, getUsuario());          
+            ps.setString(4, getTipo());
+            
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Información Actualizada");
             con.close();
@@ -337,16 +297,16 @@ public class ModeloUsuario {
     }
 
     //Eliminar usuario
-    public void eliminarUsuario() {
+    public void eliminarFacturaCompra() {
         Conectar conex = new Conectar();
         Connection con = conex.iniciarConexion();
         String sql = "call eliminar_usuario(?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, getDoc());
+            ps.setInt(1, getId());
             ps.executeUpdate();
-           Icon elimina = new ImageIcon(getClass().getResource("/img/basura.png"));
-            JOptionPane.showMessageDialog(null, "Registro Eliminado", "Eliminar Usuario", JOptionPane.PLAIN_MESSAGE, (Icon) elimina);
+        
+            JOptionPane.showMessageDialog(null, "Registro Eliminado", "Eliminar factura compra", JOptionPane.PLAIN_MESSAGE);
           JOptionPane.showMessageDialog(null, "¿Desea Eliminar el Registro?");
             con.close();
 
@@ -354,5 +314,5 @@ public class ModeloUsuario {
             e.printStackTrace();
         }
         conex.cerrarConexion();
-    }      
+    } 
 }

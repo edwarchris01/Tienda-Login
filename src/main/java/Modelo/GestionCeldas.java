@@ -26,11 +26,11 @@ public class GestionCeldas extends DefaultTableCellRenderer {
          }
          if(value instanceof JLabel ){
              JLabel lb = (JLabel)value;
-             table.setRowHeight(50);
+             table.setRowHeight(60);
              lb.setFont(new java.awt.Font("verdana",0,12));
              return lb;
          }
-         table.setRowHeight(50);
+         table.setRowHeight(40);
          return c;
     }
 }

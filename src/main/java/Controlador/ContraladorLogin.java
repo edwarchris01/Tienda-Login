@@ -21,8 +21,19 @@ public class ContraladorLogin implements ActionListener {
      }
     public void iniciarVista(){
         log.setLocationRelativeTo(null);//centrado ña vista
-        log.setTitle("Inicial sesion");// titolo de la vista
+        log.setTitle("Iniciar sesion");// titolo de la vista
         log.setVisible(true);//visible la vista
+    }
+    public void validar(){
+         modlogi.setUsuario(log.getTxtUsuario().getText());
+         String pass = new String(log.getTxtcontrasena().getPassword());
+            modlogi.setContrasena(pass);
+            if(modlogi.validar(modlogi.getUsuario(), modlogi.getContrasena())){
+               princ.iniciarSesion(0);
+                log.setVisible(false);
+           }else {
+                JOptionPane.showMessageDialog(null,"usuario o contraseña incorrecta");
+            }
     }
 
     @Override
@@ -33,21 +44,11 @@ public class ContraladorLogin implements ActionListener {
           
         }else {
                  log.getTxtcontrasena().setEchoChar('\u2022');
-                
-                 
-            }
-            
+                 }           
         }
         if(e.getSource()==(log.getBtnIniciarSesion())){
-            modlogi.setUsuario(log.getTxtUsuario().getText());
-            String pass = new String(log.getTxtcontrasena().getPassword());
-            modlogi.setContrasena(pass);
-            if(modlogi.validar(modlogi.getUsuario(), modlogi.getContrasena())){
-               princ.iniciarSesion(0);
-                log.setVisible(false);
-           }else {
-                JOptionPane.showMessageDialog(null,"usuario o contraseña incorrecta");
-            }
+           
+           validar();
         }
     }
     
