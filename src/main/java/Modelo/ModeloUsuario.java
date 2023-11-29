@@ -210,7 +210,7 @@ public class ModeloUsuario {
      eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
      agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
 
-        String[] titulo = {"tipo de documento","documento","nombre","cargo","telefono","correo","sexo","direccion","fecha de naciminto",};
+        String[] titulo = {"documento","nombre","tipo de documento","cargo","telefono","correo","sexo","direccion","fecha de naciminto",};
         
          int opcion = titulo.length;
 

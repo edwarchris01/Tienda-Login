@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `detalle_factura_compra`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `detalle_factura_compra` (
-  `id_detalle_factura_compra` int NOT NULL,
+  `id_detalle_factura_compra` int NOT NULL AUTO_INCREMENT,
   `id_fact-compra` int NOT NULL,
   `id_producto` int NOT NULL,
   `cantidad_comprado` int NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE `detalle_factura_compra` (
   PRIMARY KEY (`id_detalle_factura_compra`),
   KEY `id_producto_idx` (`id_producto`),
   CONSTRAINT `id_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`idproducto`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,8 +97,25 @@ CREATE TABLE `detalle_factura_compra` (
 
 LOCK TABLES `detalle_factura_compra` WRITE;
 /*!40000 ALTER TABLE `detalle_factura_compra` DISABLE KEYS */;
+INSERT INTO `detalle_factura_compra` VALUES (1,6,7779,10,2000,20000),(2,6,7779,6,1000,6000);
 /*!40000 ALTER TABLE `detalle_factura_compra` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `detalle_factura_compra_BEFORE_INSERT` BEFORE INSERT ON `detalle_factura_compra` FOR EACH ROW begin set new.precio_total_compra= new.cantidad_comprado * new.precio_unitario_compra; 
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -168,7 +185,7 @@ CREATE TABLE `factura_compra` (
   KEY `id_usuario_idx` (`id_usuario`),
   CONSTRAINT `id_peovedor` FOREIGN KEY (`id_provedor`) REFERENCES `provedor` (`idprovedor`),
   CONSTRAINT `id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +194,7 @@ CREATE TABLE `factura_compra` (
 
 LOCK TABLES `factura_compra` WRITE;
 /*!40000 ALTER TABLE `factura_compra` DISABLE KEYS */;
-INSERT INTO `factura_compra` VALUES (6,22,12,'sddsdsd',0.19,0,'2023-11-23');
+INSERT INTO `factura_compra` VALUES (6,22,12,'sddsdsd',0.19,0,'2023-11-23'),(7,22,12,'efetivo',0.19,0,'2023-11-28'),(8,22,12,'efetivo',0.19,0,'2023-11-28'),(9,22,12,'efetivo',0.19,0,'2023-11-28'),(10,22,12,'efetivo',0.19,0,'2023-11-28'),(11,22,12,'efetivo',0.19,0,'2023-11-28'),(12,22,12,'efetivo',0.19,0,'2023-11-28'),(13,22,12,'efetivo',0.19,0,'2023-11-28'),(14,22,12,'efetivo',0.19,0,'2023-11-28'),(15,212121,12121212,'Tarjeta de Debito',0.19,0,'2023-11-29');
 /*!40000 ALTER TABLE `factura_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,9 +299,9 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `tipoPersona`,
  1 AS `telefono`,
  1 AS `correo`,
+ 1 AS `sexo`,
  1 AS `fecha`,
- 1 AS `direccion`,
- 1 AS `sexo`*/;
+ 1 AS `direccion`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -309,8 +326,8 @@ DROP TABLE IF EXISTS `mostrar_usuario`;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `mostrar_usuario` AS SELECT 
- 1 AS `tipoDocumento`,
  1 AS `idusuario`,
+ 1 AS `tipoDocumento`,
  1 AS `nombre`,
  1 AS `cargo`,
  1 AS `telefono`,
@@ -337,7 +354,7 @@ CREATE TABLE `producto` (
   `condicion` tinyint NOT NULL,
   `ruta` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=7783 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7784 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +363,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (7779,'TECLADO',' EDWAR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7780,'sdd','dsddsdsds',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7781,'fdfd','fdffdf',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7782,'EL MAS BONITO','LO  MEJOR DE LO MEJOR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png');
+INSERT INTO `producto` VALUES (7779,'TECLADO',' EDWAR',16,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',1200,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7780,'sdd','dsddsdsds',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7781,'fdfd','fdffdf',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7782,'EL MAS BONITO','LO  MEJOR DE LO MEJOR',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png'),(7783,'luis','lilili',0,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0 \0\0\0 \0\0\0szzô\0\0\0sBIT|dˆ\0\0\0	pHYs\0\0\0\ì\0\0\0\ìy(q½\0\0\0tEXtSoftware\0www.inkscape.org›\î<\Z\0\0IDATX…\í—kl\å†Ÿ\ÏŞ½¾¬7¶c¯\×vl\ìPSDC‰”•4MK# ¤JijQ\ÓDB«\Ğ6M-JB[™¨¤\Ğ6¨ ¨\åGK\Õ?!œb%N\\\Ø\Ä\×8¶²±w\í½\Í^<{ïµ#_6±!ôG¥¾\Òh\æ;\ßy¿ó\Îw\Ş\ÍÀÿ±rÈŸ‘g\0¤\ë-^œü´¤†r\í›š‹R·¹¤d­M\Ü½\">56\ÔKªzdU.úüª\\[•N)”#|\Î5\ïš?©YuÔŸ\á\Ôx5\ÍôJx{Ş¸x8œ›=†€7€²ü·\×4\Ù\Åş\Æ2±(™­\ØK€Ø¼(^\0|À­+]l>YiâŸ€=×˜¿‰¼À\ëÂµ<\à\0\Ü×˜?ô³t‡>7¯—\á÷\ë¯6i..»d4Z\Õ\ÊjW\ĞQY–\r–C\ä[{še\nüh\'o¼tù[€$ğ\ïBd[i\åf«­Ló\ĞÎŸCı§ùğ½·r3ñXf\Ú7©›\Ë“\ÖTˆ\Õ\ë4[\Ôd®gÀ—\ŞHŞµ·\0\Ú5vÍ \Â\æ„\Zg\Âs ŠˆÎŠ¢»úı·\ÕI)õÈªÜ¦¦¢4`™\rKÀ\Ò;gÈ»{Á#&Ë¦—$½¡\Çb±½c±\Ø\ŞA¯¿j»® \É.÷\ßa\Ê6\Ù\Å\è¼pğÊ¢T»,\ë²¬\0öe\Î\ã«Ào—K’»Óµ’ôswÛºö\\Ûºöœ\Ş`\î^¡\0\Ğ<?pÅ„²,\ï\ĞIú§ §[B+€d2QSR\æÓ“iI*\Z_™MJM\Ît¦Tõ\Õù\ì\å*\Ïúöoˆ‚¶×–\"—Í¢„%\×\Ë!›\É\Ğ}\â\ï\é)¯§\nğ\ÍU\ÛPW\ßò\İ\éĞ”fF\Ò2\ì>ƒ³¶‘SşY\Òr\ê\ä	’‰8—F\ÏúğM\\blô<²N\Ã\'g?B\Ğjøøt7\Å\Å&<\ã#TT\Ö\â÷\r\àŸú£#ƒDR\à9w\í\åqR\é4\é™òz\Ş†\Ê¶>ıKÌ¥yO9*«\è\Øı8\Íko¢}\ËV6}}+·ß±™¯|ó\ZšZxlÏ“\Ô:\ëÙ¶ıQj\ë\\\ì}\ê\0š\ÙM(´¬’J*\Ô~\éË¤R	6JzÂ¾‰…\r™=oim»õo\ÕN!¬‘$™\Õ\Õu\\º8H&\"	£“d\Èeó$A ™P1™­Ä¢\n²Á\ÄL<Š\Ål\Åd)¡¤\ÜA*•$¡ÎÉ¤\ÑjE2™Z­¢\"™÷™¬»\ï£;,xe’	²j\ï¤\Å\ïe&Ál)&\"¥\ÓhÈ‘\Ëe\Ñ\"	5$I\Ì\Äc Ñ\ÈE£d \ÜA8\à#\è÷\Ğ\Í$b“”ZÁh«_¸\éó!¿—W^{“\Z§“}‡\ãt\Õó\Â\ÑcÜ°öl{¸ƒ{\ï€m<È½\ÛwrÃmyñ%œ.û¦º¤”“7¢x\Æ\0P\Â~wı§«}‡³¦&\Í\É?Œ¡ø‡¯Ş‚™¸\"\Ø+\r¸iX\Ó\ÂP¿›º†FFG†)³W‹(‚\Ù` äŸ¦\ÆY\ÏÅ‘A\ê«j¨LgøKm\ëúpmü\ZgzN`1›¸0<Hcs+ú{¹Ù©\ábÀˆhY}¥sOAƒ\İQı ¨\Óiÿùs\\¡\ë\å\ãôö\â;»ö!f“<ò\ènD£Ws+}o\étŠ»¶\ï\Â74@·½–û‹óH\Çü^lµ\r(\á\0;8€\ÒC\×\ï\Óÿş¼[öEûC¤Š\äÜ”\×ó\Z0¼Àj,ÂŸ»\Ã\İwš½?\ØI_oqºˆ¦¹8ù\"\Ñhş\í\ìv÷1\Ö\ïf\âòeúG¸½Q`lü­\Í-\É5UxóØ¯ù¸\ï4{&89¶Jc\0‹\Õ\ÆOñ,ü!\ß~d7a5\É}¿yy		\à\İg~\Ì\ß\ï\àW\Ïp_\Ç^^?ú<?zööt\ì\0ÀZlcÿ\Ó\é\ìü•¿E\ê±.‚©\ä’u\æ<°¾©õ\æªk\ê„H\ØO8\Â`4‰F0ZmÄ”6‹E	c0š‰\Ç\"X­Å˜­¥”UT˜š ôT‚ˆ™\éå¢ŒÁQ\ÅØ¤\';x\î\Ì {N€`±–xK\Ê+l¢V\\\î#åºÎ¤si_@	ù@vq±U|ö_°•\"xÿ\Ë5ş‡ğ\é\ZD-\É\è±&\0\0\0\0IEND®B`‚',0,1,'C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\target\\classes\\producto\\teclado.png');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,8 +465,8 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `tipoDocumento` varchar(245) NOT NULL,
   `idusuario` int NOT NULL,
+  `tipoDocumento` varchar(245) NOT NULL,
   `nombre` varchar(250) NOT NULL,
   `telefono` varchar(13) NOT NULL,
   `correo` varchar(100) NOT NULL,
@@ -474,7 +491,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('sss',12,'saasa','2232','sdsds1','sdsd',1,1,'2023-01-01','1212','121',0),('cedula extranjera',11111,'111','1111','1@gmail.com','1',1,1,'2023-11-10','1','1',1),('cedula de ciudania',12312,'Yuyu','12345678','yuyuarpa@gmail.com','cll 22 ',1,2,'2023-11-08','123','123',0),('cedula de ciudania',12121212,'edw chris','23456445','edw@hot.com','andes',2,1,'2023-11-22','2323','2323',1),('cedula de ciudania',12311223,'edw','12333433','edw@gmail.com','estrellas',1,1,'2023-11-10','222','222',0),('cedula',1077380019,'edwar','3105186227','edw@gmail.com','roma',1,1,'2023-01-01','123','123',0);
+INSERT INTO `usuario` VALUES (12,'sss','saasa','2232','sdsds1','sdsd',1,1,'2023-01-01','1212','121',0),(11111,'cedula extranjera','111','1111','1@gmail.com','1',1,1,'2023-11-10','1','1',1),(12312,'cedula de ciudania','Yuyu','12345678','yuyuarpa@gmail.com','cll 22 ',1,2,'2023-11-08','123','123',0),(12121212,'cedula de ciudania','edw chris','23456445','edw@hot.com','andes',2,1,'2023-11-22','2323','2323',1),(12311223,'cedula de ciudania','edw','12333433','edw@gmail.com','estrellas',1,1,'2023-11-10','222','222',0),(1077380019,'cedula','edwar','3105186227','edw@gmail.com','roma',1,1,'2023-01-01','123','123',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,25 +517,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `actualizar_factuta_compra` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizar_factuta_compra`(in idfac int,in idpro int,in idusu int, in tipo varchar(45))
-BEGIN
-update factura_compra set idprovedpor=idpro,idusuario=idusu_tipo_pagar=tipo where idfactura_compra=idfac;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `actualizar_factuta_compra1` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -529,7 +527,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizar_factuta_compra1`(in idfac int,in idpro int,in idusu int, in tipo varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizar_factuta_compra1`(in idfac int, in idpro int,in idusu int, in tipo varchar(100))
 BEGIN
 update factura_compra set id_provedor=idpro,id_usuario=idusu,tipo_pago=tipo where idfactura_compra=idfac;
 END ;;
@@ -849,8 +847,9 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `consul_usuario`(in valor varchar(45))
 BEGIN
-select * from mostrar_usuario where Tipodocumento like concat('%',valor,'%')   
-|| idusuario like concat('%',valor,'%') || nombre like concat('%',valor,'%') 
+select * from mostrar_usuario where   idusuario like concat('%',valor,'%')
+|| Tipodocumento like concat('%',valor,'%') 
+|| nombre like concat('%',valor,'%')  
 || telefono like concat('%',valor,'%') || correo  like concat('%',valor,'%')
  || direccion like concat('%',valor,'%') || nombre like concat('%',valor,'%') 
  || fecha_nacimiento like concat('%',valor,'%') || nombre like concat('%',valor,'%');
@@ -984,9 +983,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `inss_usuario`(in tipo varchar(245),in usu int,in nom varchar(250), in tell varchar(15),in corr varchar(100),in direc varchar(45),in carg int,in sex int,in fech date, in log varchar(100), in contra varchar(45))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `inss_usuario`(in usu int,in tipo varchar(245),in nom varchar(250), in tell varchar(15),in corr varchar(100),in direc varchar(45),in carg int,in sex int,in fech date, in log varchar(100), in contra varchar(45))
 BEGIN
-insert into usuario (tipoDocumento,idusuario,nombre,telefono,correo,direccion,cargo,sexo,fecha_nacimiento,login,contrasena,condicion) values (tipo,usu,nom,tell,corr,direc,carg,sex,fech,log,contra,'1');
+insert into usuario (idusuario,tipoDocumento,nombre,telefono,correo,direccion,cargo,sexo,fecha_nacimiento,login,contrasena,condicion) values (usu,tipo,nom,tell,corr,direc,carg,sex,fech,log,contra,'1');
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1325,7 +1324,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `mostrar_provedor` AS select `provedor`.`idprovedor` AS `idprovedor`,`provedor`.`nit` AS `tipo_nit`,`provedor`.`nombre` AS `nombre`,`provedor`.`tipoPersona` AS `tipoPersona`,`provedor`.`telefono` AS `telefono`,`provedor`.`correo` AS `correo`,`provedor`.`fecha_nacimiento` AS `fecha`,`provedor`.`direccion` AS `direccion`,`sexo`.`nombre` AS `sexo` from (`provedor` join `sexo` on((`provedor`.`sexo1` = `sexo`.`idsexo`))) where (`provedor`.`condicion` = '1') */;
+/*!50001 VIEW `mostrar_provedor` AS select `provedor`.`idprovedor` AS `idprovedor`,`provedor`.`nit` AS `tipo_nit`,`provedor`.`nombre` AS `nombre`,`provedor`.`tipoPersona` AS `tipoPersona`,`provedor`.`telefono` AS `telefono`,`provedor`.`correo` AS `correo`,`sexo`.`nombre` AS `sexo`,`provedor`.`fecha_nacimiento` AS `fecha`,`provedor`.`direccion` AS `direccion` from (`provedor` join `sexo` on((`provedor`.`sexo1` = `sexo`.`idsexo`))) where (`provedor`.`condicion` = '1') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1361,7 +1360,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `mostrar_usuario` AS select `usuario`.`tipoDocumento` AS `tipoDocumento`,`usuario`.`idusuario` AS `idusuario`,`usuario`.`nombre` AS `nombre`,`cargo`.`nombre` AS `cargo`,`usuario`.`telefono` AS `telefono`,`usuario`.`correo` AS `correo`,`sexo`.`nombre` AS `sexo`,`usuario`.`direccion` AS `direccion`,`usuario`.`fecha_nacimiento` AS `fecha_nacimiento` from ((`usuario` join `cargo` on((`cargo`.`idcargo` = `usuario`.`cargo`))) join `sexo` on((`sexo`.`idsexo` = `usuario`.`sexo`))) where (`usuario`.`condicion` = '1') */;
+/*!50001 VIEW `mostrar_usuario` AS select `usuario`.`idusuario` AS `idusuario`,`usuario`.`tipoDocumento` AS `tipoDocumento`,`usuario`.`nombre` AS `nombre`,`cargo`.`nombre` AS `cargo`,`usuario`.`telefono` AS `telefono`,`usuario`.`correo` AS `correo`,`sexo`.`nombre` AS `sexo`,`usuario`.`direccion` AS `direccion`,`usuario`.`fecha_nacimiento` AS `fecha_nacimiento` from ((`usuario` join `cargo` on((`cargo`.`idcargo` = `usuario`.`cargo`))) join `sexo` on((`sexo`.`idsexo` = `usuario`.`sexo`))) where (`usuario`.`condicion` = '1') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1375,4 +1374,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-23 12:55:32
+-- Dump completed on 2023-11-29  8:53:07

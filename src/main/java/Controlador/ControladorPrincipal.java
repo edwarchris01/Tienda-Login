@@ -13,6 +13,7 @@ import Vista.Nuevo_Usuario;
 import Vista.Nuevo_Venta;
 import Vista.Principal;
 import Vista.buscarUsuario;
+import Vista.detalleFacturaCompra;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +48,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     ModeloProducto modprod = new ModeloProducto();
     ControladorProducto controlpro = new ControladorProducto();
     ControladorProvedor conpro = new ControladorProvedor();
-  
+    detalleFacturaCompra detalle = new detalleFacturaCompra();
 
     public ControladorPrincipal() {
         princi.getBtnNuevo().addActionListener(this);
@@ -56,7 +57,6 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getBtnNuevo4().addActionListener(this);
         princi.getBtnNuevo5().addActionListener(this);
         princi.getBtnFactura().addActionListener(this);
-//        princi.getBtnBuscarUsu().addActionListener(this);
         princi.getJBuscar().addActionListener(this);
         princi.getJbuscarProducto().addActionListener(this);
         princi.getJbuscarC().addActionListener(this);
@@ -217,6 +217,44 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         });
     }
 
+    public void gestionFactura() {
+        modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), "", "Factura");
+        princi.getJbuscarF().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                princi.getJbuscarF().setText("");
+                princi.getJbuscarF().setForeground(Color.red);
+            }
+
+        });
+        princi.getTableFactura().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila = princi.getTableFactura().rowAtPoint(e.getPoint());
+                int colum = princi.getTableFactura().columnAtPoint(e.getPoint());
+                modelF.setId(Integer.parseInt(princi.getTableFactura().getValueAt(fila, 0).toString()));
+
+                if (colum == 7) {
+                    princi.setVisible(false);
+                 princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                 detalle.setVisible(true);
+                 detalle.setLocationRelativeTo(null);
+               controlF.modelf.mostrarTablaDetalleFacturaCompra(detalle.getTableDetalle(), "", "agregarfac");
+               detalle.getTxtBusacarDetalle().addMouseListener(new MouseAdapter(){
+                   public void mouseClicked (MouseEvent e){
+                       detalle.getTxtBusacarDetalle().setText("");
+                       detalle.getTxtBusacarDetalle().setForeground(Color.green);
+                   }
+               });
+                   
+
+                }
+
+            }
+        });
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) { //Valida los eventos
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -260,33 +298,6 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
 //            contraFact.modelusu.mostrarTablaUsuario(buscarusu.getTableBuscarUsuario(), "", "Buscar Usuario");
         }
 
-    }
-
-    public void gestionFactura() {
-        modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), "", "Factura");
-        princi.getJbuscarF().addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                princi.getJbuscarF().setText("");
-                princi.getJbuscarF().setForeground(Color.red);
-            }
-
-        });
-        princi.getTableFactura().addMouseListener(new MouseAdapter() {
-
-            public void mouseClicked(MouseEvent e) {
-                int fila = princi.getTableFactura().rowAtPoint(e.getPoint());
-                int colum = princi.getTableFactura().columnAtPoint(e.getPoint());
-                modelF.setId(Integer.parseInt(princi.getTableFactura().getValueAt(fila, 0).toString()));
-
-                if (colum == 7) {
-                    princi.setVisible(false);
-//                  princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                    controlF.actualizar_FacturaCompra(modprod.getDoc());
-
-                }
-
-            }
-        });
     }
 
     @Override
