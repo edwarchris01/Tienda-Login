@@ -1,3 +1,4 @@
+
 package Modelo;
 
 import Controlador.Conectar;
@@ -21,61 +22,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-public class ModeloFacturaCompra {
 
-    private String tipo;
-    private int id, com, prove, usuario,idpro,idusu,can;
-    private Date fec;
-    private float des, total,precio;
-
-    public int getCan() {
-        return can;
-    }
-
-    public void setCan(int can) {
-        this.can = can;
-    }
-
-    public int getIdpro() {
-        return idpro;
-    }
-
-    public void setIdpro(int idpro) {
-        this.idpro = idpro;
-    }
-
-    public int getIdusu() {
-        return idusu;
-    }
-
-    public void setIdusu(int idusu) {
-        this.idusu = idusu;
-    }
-
-    public float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
-
+public class ModeloVenta {
     
-    public int getProve() {
-        return prove;
-    }
-
-    public void setProve(int prove) {
-        this.prove = prove;
-    }
-
-    public int getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(int usuario) {
-        this.usuario = usuario;
-    }
+    
+    
+    private String tipo;
 
     public String getTipo() {
         return tipo;
@@ -83,14 +35,6 @@ public class ModeloFacturaCompra {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public Date getFec() {
-        return fec;
-    }
-
-    public void setFec(Date fec) {
-        this.fec = fec;
     }
 
     public int getId() {
@@ -101,12 +45,44 @@ public class ModeloFacturaCompra {
         this.id = id;
     }
 
-    public float getDes() {
-        return des;
+    public int getCom() {
+        return com;
     }
 
-    public void setDes(float des) {
-        this.des = des;
+    public void setCom(int com) {
+        this.com = com;
+    }
+
+    public int getCli() {
+        return cli;
+    }
+
+    public void setCli(int cli) {
+        this.cli = cli;
+    }
+
+    public int getUsu() {
+        return usu;
+    }
+
+    public void setUsu(int usu) {
+        this.usu = usu;
+    }
+
+    public Date getFec() {
+        return fec;
+    }
+
+    public void setFec(Date fec) {
+        this.fec = fec;
+    }
+
+    public float getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(float impuesto) {
+        this.impuesto = impuesto;
     }
 
     public float getTotal() {
@@ -116,17 +92,14 @@ public class ModeloFacturaCompra {
     public void setTotal(float total) {
         this.total = total;
     }
-
-    public int getCom() {
-        return com;
-    }
-
-    public void setCom(int com) {
-        this.com = com;
-    }
-
-//llenar los combos
-    public Map<String, Integer> llenarCombo(String valor) {
+    
+    private int id,com, cli, usu;
+    private Date fec;
+    private float impuesto, total;
+ 
+   
+    
+     public Map<String, Integer> llenarCombo(String valor) {
         Conectar conexs = new Conectar();
         Connection con = conexs.iniciarConexion();
         String sql = "SELECT * FROM  mostrar_" + valor;
@@ -148,7 +121,7 @@ public class ModeloFacturaCompra {
         return llenar_Combo;
     }
 
-    public void insertarFacturaCompra() {
+    public void insertarFacturaV() {
 
         Conectar conexs = new Conectar();
         Connection con = conexs.iniciarConexion();
@@ -157,38 +130,12 @@ public class ModeloFacturaCompra {
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, getProve());
-            ps.setInt(2, getUsuario());
-            ps.setInt(3, getCom());
+            ps.setInt(1, getCli());
+            ps.setInt(2, getUsu());
+            ps.setInt(3,getCom());
             ps.setString(4, getTipo());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado");
-            con.close();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            //JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
-        }
-        conexs.cerrarConexion();
-    }
-
-    public void insertardetalleFacturaCompra() {
-
-        Conectar conexs = new Conectar();
-        Connection con = conexs.iniciarConexion();
-
-        String sql = "Call insDetalleFactura(?,?,?,?)"; //colsulta a la base de datos 
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, getId());
-            ps.setInt(2, getIdpro());
-            ps.setInt(3, getCan());
-            ps.setFloat(4, getPrecio());
-            
-            
-            ps.executeUpdate();
-            
             con.close();
 
         } catch (SQLException ex) {
@@ -214,8 +161,8 @@ public class ModeloFacturaCompra {
         }
     }
 
-    public void mostrarTablaDetalleFacturaCompra(JTable tabla, String valor, String nomPesta) {
-        Conectar conx = new Conectar();
+    public void mostrarTablaDetalleFacturaVenta(JTable tabla, String valor, String nomPesta) {
+          Conectar conx = new Conectar();
         Connection con = conx.iniciarConexion();
 
 //        personalizar el  encabezado
@@ -235,7 +182,7 @@ public class ModeloFacturaCompra {
         imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/impresora.png")));
         detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/detalle.png")));
 
-        String[] titulo = {"ID DETALLE FACTURA COMPRA", "ID FACTURA COMPRA", "ID PRODUCTO", "CANTIDAD COMPRADO", "PRECIO UNITARIO", "PRECIO TOTAL"};
+        String[] titulo = {"ID DETALLE FACTURA COMPRA", "ID FACTURA COMPRA", "ID PRODUCTO", "CANTIDAD COMPRADO", "PRECIO UNITARIO","PRECIO TOTAL"};
 
         int opcion = titulo.length;
 
@@ -271,7 +218,7 @@ public class ModeloFacturaCompra {
                 for (int i = 0; i < opcion; i++) {
                     dato[i] = rs.getString(i + 1);
                 }
-                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5]};//agrega en el mismo orden de la tabla de usuario
+                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4],dato[5],dato[6],dato[7]};//agrega en el mismo orden de la tabla de usuario
                 if (nomPesta.equals("FacturaDetalle")) {
                     fila = Arrays.copyOf(fila, fila.length + 4);
                     fila[fila.length - 4] = detalle;
@@ -289,7 +236,7 @@ public class ModeloFacturaCompra {
         tabla.setModel(tableFactura);
         //darle tamano a cada columna 
         int numero_columnas = tabla.getColumnCount();
-        int[] tamanos_celdas = {100, 180, 100, 150, 100, 20, 20, 20, 20};
+        int[] tamanos_celdas = {100, 180, 100, 150, 100,100,100,100, 20, 20, 20, 20};
 
         for (int i = 0; i < numero_columnas; i++) {
             TableColumn columna = tabla.getColumnModel().getColumn(i);
@@ -299,7 +246,7 @@ public class ModeloFacturaCompra {
 
     }
 
-    public void mostrarTablaFacturaCompra(JTable tabla, String valor, String nomPesta) {
+    public void mostrarTablaFacturaVenta(JTable tabla, String valor, String nomPesta) {
         Conectar conx = new Conectar();
         Connection con = conx.iniciarConexion();
 
@@ -320,7 +267,7 @@ public class ModeloFacturaCompra {
         imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/impresora.png")));
         detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/detalle.png")));
 
-        String[] titulo = {"ID Factura Compra", "IDProvedor", "IDusuario", "N°Comprobante", "TIPO DE PAGO", "Descuento", "Total PAGO", "Fecha"};
+        String[] titulo = {"ID Factura ","ID Cliente", "ID Usuario","Tipo de Pago","N°Comprobante",  "Impuesto", "Total Pago", "Fecha"};
 
         int opcion = titulo.length;
 
@@ -343,7 +290,7 @@ public class ModeloFacturaCompra {
         };
         String sqlFactura;
         if (valor.equals("")) {
-            sqlFactura = "Select *from mostrar_factura_compra";
+            sqlFactura = "Select *from mostrar_factura";
         } else {
             sqlFactura = "Call  consul_factura_compra('" + valor + "')";
         }
@@ -356,16 +303,16 @@ public class ModeloFacturaCompra {
                 for (int i = 0; i < opcion; i++) {
                     dato[i] = rs.getString(i + 1);
                 }
-                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5], dato[6], dato[7]};//agrega en el mismo orden de la tabla de usuario
-                if (nomPesta.equals("Factura")) {
+                Object[] fila = {dato[0], dato[1], dato[2], dato[3],dato[4],dato[5], dato[6],dato[7]};//agrega en el mismo orden de la tabla de usuario
+                if (nomPesta.equals("Venta")) {
                     fila = Arrays.copyOf(fila, fila.length + 4);
-                    fila[fila.length - 4] = editar;
+                    fila[fila.length - 4] =editar;
                     fila[fila.length - 3] = agregar;
-                    fila[fila.length - 2] = detalle;
+                    fila[fila.length - 2] =  detalle;
                     fila[fila.length - 1] = imprimir;
-                } else {
-                    fila = Arrays.copyOf(fila, fila.length + 1);
-                    fila[fila.length - 1] = agregar;
+                }else{  
+              fila = Arrays.copyOf(fila, fila.length + 1);            
+                    fila[fila.length-1]=agregar;
                 }
 
                 tableFactura.addRow(fila);
@@ -377,7 +324,7 @@ public class ModeloFacturaCompra {
         tabla.setModel(tableFactura);
         //darle tamano a cada columna 
         int numero_columnas = tabla.getColumnCount();
-        int[] tamanos_celdas = {100, 180, 100, 150, 100, 160, 160, 90, 20, 20, 20, 20};
+        int[] tamanos_celdas = {100, 180, 100, 150, 100, 160, 160,90, 20, 20, 20, 20};
 
         for (int i = 0; i < numero_columnas; i++) {
             TableColumn columna = tabla.getColumnModel().getColumn(i);
@@ -385,65 +332,56 @@ public class ModeloFacturaCompra {
         }
         conx.cerrarConexion();
     }
-
-    public boolean validar(JTable tabla) {
-
-        for (int i = 0; i < tabla.getRowCount(); i++) {
-            Boolean selec = (Boolean) tabla.getValueAt(i, 6);
-
-            if (selec != null && selec) {
-                Object can = tabla.getValueAt(i, 4);
-                Object valor = tabla.getValueAt(i, 5);
-
-                if ((can == null || !can.toString().equals("0"))
-                        && (valor == null || !valor.toString().equals("0"))) {
-
-                    return true;
-                }
+    
+    public boolean validar (JTable tabla ){
+        
+        for (int i=0; i<tabla.getRowCount();i++){
+            Boolean selec = (Boolean)tabla.getValueAt(i, 6);
+            
+            if (selec !=null && selec){
+                return true;
             }
         }
         return false;
-    }
-
-    public void agregarDatos(JTable tablaprodu, JTable tablaDeta) {
-
+    }  
+    
+    public void agregarDatos (JTable tablaprodu,JTable tablaDeta ){
+        
         JTableHeader encabezado = tablaDeta.getTableHeader();
         encabezado.setDefaultRenderer(new GestionEncabezado());
         tablaDeta.setTableHeader(encabezado);
         tablaDeta.setDefaultRenderer(Object.class, new GestionCeldas());
-
-        Object[] titulo = {"codigo", "producto", "descripcion", "cantidad", "valor"};
-        DefaultTableModel tabla_addProducto = new DefaultTableModel(null, titulo) {
+        
+        Object[] titulo={"codigo","producto","descripcion","cantidad","valor"};
+         DefaultTableModel tabla_addProducto = new DefaultTableModel(null, titulo) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 3 || column == 4;
+                return column==3 || column==4;
             }
         };
-
-        if (validar(tablaprodu)) {
-
-            for (int i = 0; i < tablaprodu.getRowCount(); i++) {
-                Boolean selec = (Boolean) tablaprodu.getValueAt(i, 6);
-
-                if (selec != null && selec) {
-                    Object dato[] = new Object[titulo.length];
-                    dato[0] = tablaprodu.getValueAt(i, 0);
-                    dato[1] = tablaprodu.getValueAt(i, 2);
-                    dato[2] = tablaprodu.getValueAt(i, 3);
-                    dato[3] = tablaprodu.getValueAt(i, 4);
-                    dato[4] = tablaprodu.getValueAt(i, 5);
-                    Object fila[] = {dato[0], dato[1], dato[2], dato[3], dato[4]};
-                    tabla_addProducto.addRow(fila);
-
-                }
-
+         
+         if (validar(tablaprodu)){
+               
+        for (int i=0; i<tablaprodu.getRowCount();i++){
+            Boolean selec = (Boolean)tablaprodu.getValueAt(i, 6);
+            
+            if (selec !=null && selec){
+                Object dato[] = new Object[titulo.length];
+                dato[0]=tablaprodu.getValueAt(i, 0);
+                 dato[1]=tablaprodu.getValueAt(i, 2);
+                  dato[2]=tablaprodu.getValueAt(i, 3);
+                  Object fila[]= {dato[0],dato[1],dato[2]};
+                  tabla_addProducto.addRow(fila);
+                  
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "debe completar los campos");
+        
         }
-        tablaDeta.setModel(tabla_addProducto);
+         }else {
+                JOptionPane.showMessageDialog(null, "debe completar los campos");
+            }
+         tablaDeta.setModel(tabla_addProducto);
     }
-
+    
     public void buscar_Factura(int valor) {
         Conectar cone = new Conectar();
         Connection cn = cone.iniciarConexion();
@@ -455,10 +393,10 @@ public class ModeloFacturaCompra {
 
             while (rs.next()) {
                 setId(rs.getInt(1));
-                setProve(rs.getInt(2));
-                setUsuario(rs.getInt(3));
+                setCli(rs.getInt(2));
+                setUsu(rs.getInt(3));
                 setTipo(rs.getString(4));
-                setDes(rs.getFloat(5));
+                setImpuesto(rs.getFloat(5));
                 setTotal(rs.getFloat(6));
                 setFec(rs.getDate(7));
 
@@ -480,7 +418,7 @@ public class ModeloFacturaCompra {
     }
     //Actualizar usuario
 
-    public void actualizarFacturaCompra() {
+    public void actualizarFacturaV() {
         Conectar conex = new Conectar();
         Connection con = conex.iniciarConexion();
         String sql = "call actualizar_factuta_compra1(?,?,?,?)";
@@ -488,8 +426,8 @@ public class ModeloFacturaCompra {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, getId());
-            ps.setInt(2, getProve());
-            ps.setInt(3, getUsuario());
+            ps.setInt(2, getCli());
+            ps.setInt(3, getUsu());
             ps.setString(4, getTipo());
 
             ps.executeUpdate();
@@ -503,7 +441,7 @@ public class ModeloFacturaCompra {
     }
 
     //Eliminar usuario
-    public void buscarFacturaC(int valor) {
+    public void buscarFacturaV(int valor) {
         Conectar cone = new Conectar();
         Connection cn = cone.iniciarConexion();
         String sql = "Call buscar_facturacompra(" + valor + ")";
@@ -514,8 +452,8 @@ public class ModeloFacturaCompra {
 
             while (rs.next()) {
                 setId(rs.getInt(1));
-                setProve(rs.getInt(2));
-                setUsuario(rs.getInt(3));
+                setCli(rs.getInt(2));
+                setUsu (rs.getInt(3));
                 setTipo(rs.getString(4));
             }
 

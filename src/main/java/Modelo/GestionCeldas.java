@@ -16,8 +16,10 @@ public class GestionCeldas extends DefaultTableCellRenderer {
         c.setForeground(Color.black);
 //          c.setForeground(new java.awt.Color(0,0,0,0));
          c.setFont(new java.awt.Font( "verdana",0,12));
-         
+//          
+             table.setRowHeight(40);
          if (value instanceof JButton){
+             table.setRowHeight(50);
              JButton btn = (JButton)value;
              btn.setBorderPainted(false);
              btn.setContentAreaFilled(false);
@@ -26,11 +28,11 @@ public class GestionCeldas extends DefaultTableCellRenderer {
          }
          if(value instanceof JLabel ){
              JLabel lb = (JLabel)value;
-             table.setRowHeight(60);
+             table.setRowHeight(70);
              lb.setFont(new java.awt.Font("verdana",0,12));
              return lb;
          }
-         table.setRowHeight(40);
+      
          return c;
     }
 }

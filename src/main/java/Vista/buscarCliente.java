@@ -1,57 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class buscarProveedor extends javax.swing.JFrame {
+public class buscarCliente extends javax.swing.JFrame {
 
-    public buscarProveedor() {
+    
+    public buscarCliente() {
         initComponents();
     }
 
-    public JTable getTableBuscarProveedor() {
-        return tableBuscarProveedor;
+    public JPanel getJpanelBuscarVenta() {
+        return jpanelBuscarVenta;
     }
 
-    public void setTableBuscarProveedor(JTable tableBuscarProveedor) {
-        this.tableBuscarProveedor = tableBuscarProveedor;
+    public void setJpanelBuscarVenta(JPanel jpanelBuscarVenta) {
+        this.jpanelBuscarVenta = jpanelBuscarVenta;
     }
 
-    public JTextField getTxtBuscarProveedor() {
-        return txtBuscarProveedor;
+    public JTable getTableBuscarCliente() {
+        return tableBuscarCliente;
     }
 
-    public void setTxtBuscarProveedor(JTextField txtBuscarProveedor) {
-        this.txtBuscarProveedor = txtBuscarProveedor;
+    public void setTableBuscarCliente(JTable tableBuscarCliente) {
+        this.tableBuscarCliente = tableBuscarCliente;
     }
 
-    
-    
+
+    public JTextField getTxtBuscarVenta() {
+        return txtBuscarVenta;
+    }
+
+    public void setTxtBuscarVenta(JTextField txtBuscarVenta) {
+        this.txtBuscarVenta = txtBuscarVenta;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpanelBuscarUSU = new javax.swing.JPanel();
+        jpanelBuscarVenta = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableBuscarProveedor = new javax.swing.JTable();
+        tableBuscarCliente = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        txtBuscarProveedor = new javax.swing.JTextField();
+        txtBuscarVenta = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jpanelBuscarUSU.setBackground(new java.awt.Color(204, 204, 204));
+        jpanelBuscarVenta.setBackground(new java.awt.Color(204, 204, 204));
 
-        tableBuscarProveedor.setBackground(new java.awt.Color(239, 255, 247));
-        tableBuscarProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
-        tableBuscarProveedor.setModel(new javax.swing.table.DefaultTableModel(
+        tableBuscarCliente.setBackground(new java.awt.Color(239, 255, 247));
+        tableBuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        tableBuscarCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -62,40 +68,41 @@ public class buscarProveedor extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tableBuscarProveedor);
+        jScrollPane1.setViewportView(tableBuscarCliente);
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel1.setBackground(new java.awt.Color(0, 204, 51));
-        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 53)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 49)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel1.setText("Buscar Proveedor");
+        jLabel1.setText("Buscar Cliente");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(278, 278, 278)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(493, Short.MAX_VALUE))
+                .addGap(323, 323, 323)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(525, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(239, 255, 247));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
 
-        txtBuscarProveedor.setBackground(new java.awt.Color(239, 255, 247));
-        txtBuscarProveedor.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        txtBuscarProveedor.setForeground(new java.awt.Color(0, 153, 153));
-        txtBuscarProveedor.setText("Buscar Proveedor");
-        txtBuscarProveedor.setBorder(null);
+        txtBuscarVenta.setEditable(false);
+        txtBuscarVenta.setBackground(new java.awt.Color(239, 255, 247));
+        txtBuscarVenta.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        txtBuscarVenta.setForeground(new java.awt.Color(0, 153, 153));
+        txtBuscarVenta.setText("Buscar Cliente");
+        txtBuscarVenta.setBorder(null);
 
         jButton1.setBackground(new java.awt.Color(239, 255, 247));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
@@ -107,7 +114,7 @@ public class buscarProveedor extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBuscarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -115,7 +122,7 @@ public class buscarProveedor extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(txtBuscarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(txtBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -129,37 +136,37 @@ public class buscarProveedor extends javax.swing.JFrame {
             .addGap(0, 125, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jpanelBuscarUSULayout = new javax.swing.GroupLayout(jpanelBuscarUSU);
-        jpanelBuscarUSU.setLayout(jpanelBuscarUSULayout);
-        jpanelBuscarUSULayout.setHorizontalGroup(
-            jpanelBuscarUSULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jpanelBuscarVentaLayout = new javax.swing.GroupLayout(jpanelBuscarVenta);
+        jpanelBuscarVenta.setLayout(jpanelBuscarVentaLayout);
+        jpanelBuscarVentaLayout.setHorizontalGroup(
+            jpanelBuscarVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
+            .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jpanelBuscarUSULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
+                .addGroup(jpanelBuscarVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
-                        .addGap(290, 290, 290)
+                    .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
+                        .addGap(316, 316, 316)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        jpanelBuscarUSULayout.setVerticalGroup(
-            jpanelBuscarUSULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
-                .addGroup(jpanelBuscarUSULayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
+        jpanelBuscarVentaLayout.setVerticalGroup(
+            jpanelBuscarVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
+                .addGroup(jpanelBuscarVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpanelBuscarUSULayout.createSequentialGroup()
+                    .addGroup(jpanelBuscarVentaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -169,20 +176,23 @@ public class buscarProveedor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpanelBuscarUSU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpanelBuscarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpanelBuscarUSU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jpanelBuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * @param args the command line arguments
+     */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -192,8 +202,8 @@ public class buscarProveedor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel jpanelBuscarUSU;
-    private javax.swing.JTable tableBuscarProveedor;
-    private javax.swing.JTextField txtBuscarProveedor;
+    private javax.swing.JPanel jpanelBuscarVenta;
+    private javax.swing.JTable tableBuscarCliente;
+    private javax.swing.JTextField txtBuscarVenta;
     // End of variables declaration//GEN-END:variables
 }

@@ -76,8 +76,13 @@ public class Principal extends javax.swing.JFrame {
         this.TableCliente = TableCliente;
     }
 
-    
+    public JTextField getBuscarVenta() {
+        return BuscarVenta;
+    }
 
+    public void setBuscarVenta(JTextField BuscarVenta) {
+        this.BuscarVenta = BuscarVenta;
+    }
     public JTable getTableUsuario() {
         return TableUsuario;
     }
@@ -86,6 +91,15 @@ public class Principal extends javax.swing.JFrame {
         this.TableUsuario = TableUsuario;
     }
 
+    public JTable getTablaVenta() {
+        return tablaVenta;
+    }
+
+    public void setTablaVenta(JTable tablaVenta) {
+        this.tablaVenta = tablaVenta;
+    }
+
+    
     public JTextField getJbuscarProducto() {
         return JbuscarProducto;
     }
@@ -212,25 +226,26 @@ public class Principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         panelVenta = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaVenta = new javax.swing.JTable();
         BtnNuevo5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        JbuscarP1 = new javax.swing.JTextField();
+        BuscarVenta = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(239, 255, 247));
 
-        tablePrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        tablePrincipal.setBackground(new java.awt.Color(0, 153, 153));
         tablePrincipal.setForeground(new java.awt.Color(255, 255, 255));
 
-        Usuario.setBackground(new java.awt.Color(102, 102, 102));
-        Usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        Usuario.setBackground(new java.awt.Color(204, 204, 204));
 
-        BtnNuevo.setBackground(new java.awt.Color(0, 204, 0));
+        BtnNuevo.setBackground(new java.awt.Color(0, 102, 102));
         BtnNuevo.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnNuevo.setForeground(new java.awt.Color(255, 255, 255));
         BtnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnNuevo.setText("Nuevo");
         BtnNuevo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -240,6 +255,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        TableUsuario.setBackground(new java.awt.Color(239, 255, 247));
         TableUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -253,12 +269,12 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TableUsuario);
 
-        jPanel8.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        jPanel8.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
 
-        JBuscar.setBackground(new java.awt.Color(0, 0, 0));
+        JBuscar.setBackground(new java.awt.Color(239, 255, 247));
         JBuscar.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        JBuscar.setForeground(new java.awt.Color(0, 255, 51));
+        JBuscar.setForeground(new java.awt.Color(204, 204, 204));
         JBuscar.setText("Buscar usuario");
         JBuscar.setBorder(null);
         JBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -267,7 +283,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(0, 0, 0));
+        jButton6.setBackground(new java.awt.Color(239, 255, 247));
         jButton6.setIcon(new javax.swing.ImageIcon("C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\src\\main\\resources\\img\\buscar.png")); // NOI18N
         jButton6.setBorder(null);
 
@@ -277,9 +293,8 @@ public class Principal extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(JBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,33 +309,34 @@ public class Principal extends javax.swing.JFrame {
             UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UsuarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1442, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1446, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(UsuarioLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+                .addGap(104, 104, 104))
         );
         UsuarioLayout.setVerticalGroup(
             UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UsuarioLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         tablePrincipal.addTab("Usuario", Usuario);
 
-        Provedor.setBackground(new java.awt.Color(102, 102, 102));
+        Provedor.setBackground(new java.awt.Color(204, 204, 204));
 
-        BtnNuevo3.setBackground(new java.awt.Color(0, 204, 0));
+        BtnNuevo3.setBackground(new java.awt.Color(0, 102, 102));
         BtnNuevo3.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnNuevo3.setForeground(new java.awt.Color(255, 255, 255));
         BtnNuevo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnNuevo3.setText("Nuevo");
         BtnNuevo3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -343,16 +359,16 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(TableProvedor);
 
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        jPanel7.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
 
-        JbuscarP.setBackground(new java.awt.Color(0, 0, 0));
+        JbuscarP.setBackground(new java.awt.Color(239, 255, 247));
         JbuscarP.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        JbuscarP.setForeground(new java.awt.Color(0, 255, 0));
+        JbuscarP.setForeground(new java.awt.Color(204, 204, 255));
         JbuscarP.setText("Buscar Proveedor");
         JbuscarP.setBorder(null);
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
+        jButton5.setBackground(new java.awt.Color(239, 255, 247));
         jButton5.setIcon(new javax.swing.ImageIcon("C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\src\\main\\resources\\img\\buscar.png")); // NOI18N
         jButton5.setBorder(null);
 
@@ -369,7 +385,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(JbuscarP)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout ProvedorLayout = new javax.swing.GroupLayout(Provedor);
@@ -382,7 +398,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(ProvedorLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addComponent(BtnNuevo3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BtnNuevo3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(158, 158, 158))
@@ -393,19 +409,20 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(ProvedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnNuevo3, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addComponent(BtnNuevo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tablePrincipal.addTab("Proveedor", Provedor);
 
-        Cliente.setBackground(new java.awt.Color(102, 102, 102));
+        Cliente.setBackground(new java.awt.Color(204, 204, 204));
         Cliente.setForeground(new java.awt.Color(102, 102, 102));
 
-        BtnNuevo2.setBackground(new java.awt.Color(0, 204, 0));
+        BtnNuevo2.setBackground(new java.awt.Color(0, 102, 102));
         BtnNuevo2.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnNuevo2.setForeground(new java.awt.Color(255, 255, 255));
         BtnNuevo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnNuevo2.setText("Nuevo");
         BtnNuevo2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -428,16 +445,16 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(TableCliente);
 
-        jPanel6.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        jPanel6.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
 
-        JbuscarC.setBackground(new java.awt.Color(0, 0, 0));
+        JbuscarC.setBackground(new java.awt.Color(239, 255, 247));
         JbuscarC.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        JbuscarC.setForeground(new java.awt.Color(0, 255, 51));
+        JbuscarC.setForeground(new java.awt.Color(204, 204, 255));
         JbuscarC.setText("Buscar Cliente");
         JbuscarC.setBorder(null);
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 0));
+        jButton4.setBackground(new java.awt.Color(239, 255, 247));
         jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\edwch\\OneDrive\\Documentos\\NetBeansProjects\\Tienda.com\\src\\main\\resources\\img\\buscar.png")); // NOI18N
         jButton4.setBorder(null);
 
@@ -464,8 +481,8 @@ public class Principal extends javax.swing.JFrame {
         ClienteLayout.setHorizontalGroup(
             ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ClienteLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(BtnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(BtnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(180, 180, 180))
@@ -477,24 +494,21 @@ public class Principal extends javax.swing.JFrame {
         ClienteLayout.setVerticalGroup(
             ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ClienteLayout.createSequentialGroup()
-                .addGroup(ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ClienteLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(BtnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ClienteLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(20, 20, 20)
+                .addGroup(ClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE))
         );
 
         tablePrincipal.addTab("Cliente", Cliente);
 
-        Producto.setBackground(new java.awt.Color(102, 102, 102));
+        Producto.setBackground(new java.awt.Color(204, 204, 204));
 
-        BtnNuevo4.setBackground(new java.awt.Color(0, 204, 0));
+        BtnNuevo4.setBackground(new java.awt.Color(0, 102, 102));
         BtnNuevo4.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnNuevo4.setForeground(new java.awt.Color(255, 255, 255));
         BtnNuevo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnNuevo4.setText("Nuevo");
         BtnNuevo4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -517,16 +531,16 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tableProducto);
 
-        jPanel5.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        jPanel5.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
 
-        JbuscarProducto.setBackground(new java.awt.Color(0, 0, 0));
+        JbuscarProducto.setBackground(new java.awt.Color(239, 255, 247));
         JbuscarProducto.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        JbuscarProducto.setForeground(new java.awt.Color(0, 255, 51));
+        JbuscarProducto.setForeground(new java.awt.Color(204, 204, 255));
         JbuscarProducto.setText("Buscar Producto");
         JbuscarProducto.setBorder(null);
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setBackground(new java.awt.Color(239, 255, 247));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
         jButton3.setBorder(null);
 
@@ -551,8 +565,8 @@ public class Principal extends javax.swing.JFrame {
         ProductoLayout.setHorizontalGroup(
             ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ProductoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(BtnNuevo4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(BtnNuevo4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(148, 148, 148))
@@ -572,16 +586,17 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addComponent(BtnNuevo4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
 
         tablePrincipal.addTab("Producto", Producto);
 
-        Factura.setBackground(new java.awt.Color(102, 102, 102));
+        Factura.setBackground(new java.awt.Color(204, 204, 204));
 
-        BtnFactura.setBackground(new java.awt.Color(0, 204, 0));
+        BtnFactura.setBackground(new java.awt.Color(0, 102, 102));
         BtnFactura.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnFactura.setForeground(new java.awt.Color(255, 255, 255));
         BtnFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnFactura.setText("Nuevo");
         BtnFactura.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -604,16 +619,16 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(tableFactura);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0), 2));
+        jPanel2.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
 
-        JbuscarF.setBackground(new java.awt.Color(0, 0, 0));
+        JbuscarF.setBackground(new java.awt.Color(239, 255, 247));
         JbuscarF.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        JbuscarF.setForeground(new java.awt.Color(0, 255, 0));
+        JbuscarF.setForeground(new java.awt.Color(204, 204, 255));
         JbuscarF.setText("Buscar Factura");
         JbuscarF.setBorder(null);
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 0));
+        jButton2.setBackground(new java.awt.Color(239, 255, 247));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
         jButton2.setBorder(null);
 
@@ -643,28 +658,27 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(FacturaLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(BtnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BtnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163))
+                .addGap(155, 155, 155))
         );
         FacturaLayout.setVerticalGroup(
             FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FacturaLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BtnFactura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         tablePrincipal.addTab("Factura", Factura);
 
-        panelVenta.setBackground(new java.awt.Color(102, 102, 102));
+        panelVenta.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -675,10 +689,11 @@ public class Principal extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane6.setViewportView(jTable1);
+        jScrollPane6.setViewportView(tablaVenta);
 
-        BtnNuevo5.setBackground(new java.awt.Color(0, 204, 0));
+        BtnNuevo5.setBackground(new java.awt.Color(0, 102, 102));
         BtnNuevo5.setFont(new java.awt.Font("Lucida Fax", 1, 14)); // NOI18N
+        BtnNuevo5.setForeground(new java.awt.Color(255, 255, 255));
         BtnNuevo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo-usuario (1).png"))); // NOI18N
         BtnNuevo5.setText("Nuevo");
         BtnNuevo5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -688,16 +703,16 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0), 2));
+        jPanel1.setBackground(new java.awt.Color(239, 255, 247));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
 
-        JbuscarP1.setBackground(new java.awt.Color(0, 0, 0));
-        JbuscarP1.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
-        JbuscarP1.setForeground(new java.awt.Color(0, 255, 0));
-        JbuscarP1.setText("Buscar Venta");
-        JbuscarP1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BuscarVenta.setBackground(new java.awt.Color(239, 255, 247));
+        BuscarVenta.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
+        BuscarVenta.setForeground(new java.awt.Color(204, 204, 255));
+        BuscarVenta.setText("Buscar Venta");
+        BuscarVenta.setBorder(null);
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setBackground(new java.awt.Color(239, 255, 247));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
         jButton1.setBorder(null);
 
@@ -706,17 +721,16 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(JbuscarP1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BuscarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(JbuscarP1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(BuscarVenta)
         );
 
         javax.swing.GroupLayout panelVentaLayout = new javax.swing.GroupLayout(panelVenta);
@@ -738,21 +752,21 @@ public class Principal extends javax.swing.JFrame {
             panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVentaLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnNuevo5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BtnNuevo5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
 
         tablePrincipal.addTab("Venta", panelVenta);
 
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel1.setBackground(new java.awt.Color(0, 204, 0));
         jLabel1.setFont(new java.awt.Font("Baskerville Old Face", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
         jLabel1.setText("TIENDA.COM");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -804,9 +818,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tablePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(tablePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -852,13 +865,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton BtnNuevo3;
     private javax.swing.JButton BtnNuevo4;
     private javax.swing.JButton BtnNuevo5;
+    private javax.swing.JTextField BuscarVenta;
     private javax.swing.JPanel Cliente;
     private javax.swing.JPanel Factura;
     private javax.swing.JTextField JBuscar;
     private javax.swing.JTextField JbuscarC;
     private javax.swing.JTextField JbuscarF;
     private javax.swing.JTextField JbuscarP;
-    private javax.swing.JTextField JbuscarP1;
     private javax.swing.JTextField JbuscarProducto;
     private javax.swing.JPanel Producto;
     private javax.swing.JPanel Provedor;
@@ -887,8 +900,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelVenta;
+    private javax.swing.JTable tablaVenta;
     private javax.swing.JTable tableFactura;
     private javax.swing.JTabbedPane tablePrincipal;
     private javax.swing.JTable tableProducto;

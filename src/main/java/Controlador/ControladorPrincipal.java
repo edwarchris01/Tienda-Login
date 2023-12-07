@@ -5,13 +5,17 @@ import Modelo.ModeloFacturaCompra;
 import Modelo.ModeloProvedor;
 import Modelo.ModeloUsuario;
 import Modelo.ModeloProducto;
+import Modelo.ModeloVenta;
 import Vista.Nueva_FacturaCompra;
 import Vista.Nueva_Producto;
+import Vista.NuevoVenta;
 import Vista.Nuevo_Cliente;
 import Vista.Nuevo_Provedor;
 import Vista.Nuevo_Usuario;
-import Vista.Nuevo_Venta;
+
 import Vista.Principal;
+import Vista.agregarFacturaC;
+import Vista.buscarProducto;
 import Vista.buscarUsuario;
 import Vista.detalleFacturaCompra;
 import java.awt.Color;
@@ -19,8 +23,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import javax.swing.event.ChangeEvent;
@@ -38,7 +45,8 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     ControladorCliente controCli = new ControladorCliente();
     Nuevo_Cliente nuev = new Nuevo_Cliente();
     Nueva_Producto nuePro = new Nueva_Producto();
-    Nuevo_Venta nueVenta = new Nuevo_Venta();
+    NuevoVenta nueVenta = new NuevoVenta();
+    ModeloVenta modelventa = new ModeloVenta();
     Nueva_FacturaCompra compraF = new Nueva_FacturaCompra();
     ControladorFacturaCompra controlF = new ControladorFacturaCompra();
     ModeloFacturaCompra modelF = new ModeloFacturaCompra();
@@ -49,6 +57,8 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     ControladorProducto controlpro = new ControladorProducto();
     ControladorProvedor conpro = new ControladorProvedor();
     detalleFacturaCompra detalle = new detalleFacturaCompra();
+    ControladorFactura controlv = new ControladorFactura ();
+    
 
     public ControladorPrincipal() {
         princi.getBtnNuevo().addActionListener(this);
@@ -65,14 +75,18 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getTablePrincipal().addChangeListener(this);
         princi.getJbuscarP().getDocument().addDocumentListener(this);
         princi.getJBuscar().getDocument().addDocumentListener(this);
-        princi.getJbuscarProducto().getDocument().addDocumentListener(this); //que escuche el txt para buscar
+//        princi.getJbuscarProducto().getDocument().addDocumentListener(this); //que escuche el txt para buscar
         princi.getJbuscarC().getDocument().addDocumentListener(this);
+
         nuevo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuev.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//Desactiva la x que cierrar el programa para que permita abrir o volver a la ventana principal
         nuePro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nueVenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         compraF.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+
+        
 
     }
 
@@ -83,14 +97,13 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
         princi.getTablePrincipal().setSelectedIndex(valor);
         gestionUsuario();
-
-        gestionCliente();
     }
 
     public void gestionUsuario() {
 
         usu.mostrarTablaUsuario(princi.getTableUsuario(), "", "Usuario");
         princi.getJBuscar().addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 princi.getJBuscar().setText("");
                 princi.getJBuscar().setForeground(Color.black);
@@ -235,26 +248,70 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
                 int colum = princi.getTableFactura().columnAtPoint(e.getPoint());
                 modelF.setId(Integer.parseInt(princi.getTableFactura().getValueAt(fila, 0).toString()));
 
-                if (colum == 7) {
+                if (colum == 8) {
                     princi.setVisible(false);
-                 princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                 detalle.setVisible(true);
-                 detalle.setLocationRelativeTo(null);
-               controlF.modelf.mostrarTablaDetalleFacturaCompra(detalle.getTableDetalle(), "", "agregarfac");
-               detalle.getTxtBusacarDetalle().addMouseListener(new MouseAdapter(){
-                   public void mouseClicked (MouseEvent e){
-                       detalle.getTxtBusacarDetalle().setText("");
-                       detalle.getTxtBusacarDetalle().setForeground(Color.green);
-                   }
-               });
-                   
+                    princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    controlF.actualizar_FacturaCompra(usu.getDoc());
+                }
 
+                if (colum == 9) {
+                    princi.setVisible(false);
+                    controlF.agreFact(modelF.getId());
+                    
+                }
+
+                if (colum == 10) {
+                    princi.setVisible(false);
+                     detalle.setVisible(true);
+                 controlF.modelf.mostrarTablaDetalleFacturaCompra(detalle.getTableDetalle(), "", "facturaDetalle");
+                   
                 }
 
             }
         });
     }
 
+     public void gestionVenta() {
+        modelventa.mostrarTablaFacturaVenta(princi.getTableFactura(), "", "Venta");
+        princi.getJbuscarF().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                princi.getBuscarVenta().setText("");
+                princi.getBuscarVenta().setForeground(Color.red);
+            }
+
+        });
+        princi.getTablaVenta().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila = princi.getTablaVenta().rowAtPoint(e.getPoint());
+                int colum = princi.getTablaVenta().columnAtPoint(e.getPoint());
+                modelventa.setId(Integer.parseInt(princi.getTablaVenta().getValueAt(fila, 1).toString()));
+
+                if (colum == 9) {
+                    princi.setVisible(false);
+                    princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    controlv.actualizar_FacturaVenta(usu.getDoc());
+                }
+
+                if (colum == 10) {
+                    princi.setVisible(false);
+                    controlv.agreFactV();
+                    
+                }
+
+                if (colum == 11) {
+                    princi.setVisible(false);
+                     detalle.setVisible(true);
+//                 controlv.modelventa.mostrarTablaDetalleFacturaVenta(detalle.getTableDetalle(), "", "facturaDetalle");
+                   
+                }
+
+            }
+        });
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) { //Valida los eventos
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -284,10 +341,9 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
 
         if (e.getSource().equals(princi.getBtnNuevo5())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
             princi.setVisible(false);
-
-            nueVenta.setLocationRelativeTo(null);
-            nueVenta.setTitle("Nuevo_Venta");
-            nueVenta.setVisible(true);
+             ControladorFactura contraFact = new ControladorFactura();
+            contraFact.controlar_FacturaVenta();
+            
         }
 
         if (e.getSource().equals(princi.getBtnFactura())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -321,7 +377,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             gestionFactura();
         }
         if (selecionar == 5) {
-//            gestionVenta();
+            gestionVenta();
         }
     }
 
@@ -339,6 +395,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
+         modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
 
     }
 
@@ -349,6 +406,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
+         modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
     }
 
     @Override
@@ -358,6 +416,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
+        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
     }
 
 }

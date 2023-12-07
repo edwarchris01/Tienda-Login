@@ -146,6 +146,7 @@ private byte imagen[];
         
         JButton editar = new JButton();
         JButton eliminar = new JButton();
+        JButton agregar = new JButton();
 
 
         JTableHeader encabezado = tabla.getTableHeader();
@@ -156,9 +157,11 @@ private byte imagen[];
         
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
         eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
+       agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
 
 
-        String[] titulo = {"Identificador", "IMAGEN","NOMBRE","descripcion", "Cantidad","Precio"};
+        String[] titulo = NomPesta.equals("Producto")? new String[]{"Codigo", "Imagen","Nombre","descripcion", "Cantidad","Precio"}: new String[]{"Codigo","Imagen","Nombre","descripcion", "Cantidad","Precio"};
+        
         int total = titulo.length;
 
         if (NomPesta.equals("Producto")) {
@@ -171,8 +174,13 @@ private byte imagen[];
         }
 
         DefaultTableModel tableProducto = new DefaultTableModel(null, titulo) {
+            @Override
             public boolean isCellEditable(int row, int column) {
+                if (NomPesta.equals("buscar")) {
+                  return column==4 ||column==5 ||column==6 ;
+                }else{
                 return false;
+                }
             }
         };
 
@@ -208,11 +216,21 @@ private byte imagen[];
                 dato[4] = rs.getString(4);
                 dato[5] = rs.getString(6);
                 
-                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5]};
+                Object[] fila;
+                if (NomPesta.equals("Producto")){
+                       fila = new  Object[]{dato[0], dato[1], dato[2], dato[3], dato[4], dato[5]};
+                }else{
+                      fila = new Object[]{dato[0], dato[1], dato[2], dato[3], 0, 0};
+                }
+                
                 if (NomPesta.equals("Producto")) {
                     fila = Arrays.copyOf(fila, fila.length + 2);
                     fila[fila.length - 2] = editar;
                     fila[fila.length - 1] = eliminar;
+                }else{  
+              fila = Arrays.copyOf(fila, fila.length + 1 + 3);            
+                    fila[fila.length-1]= false;
+                    
                 } 
                 tableProducto.addRow(fila);
             }
@@ -224,14 +242,21 @@ private byte imagen[];
         tabla.setModel(tableProducto);
         
         int numColumnas = tabla.getColumnCount();
+        
+        if (!NomPesta.equals("Producto")){
+            int col=numColumnas-1;
+            TableColumn tc = tabla.getColumnModel().getColumn(col);
+            tc.setCellEditor(tabla.getDefaultEditor(Boolean.class));
+            tc.setCellRenderer(tabla.getDefaultRenderer(Boolean.class));
+        }
+        
         int[] tamanos = {100, 100, 100, 100, 100, 100,30,30};
         for (int i = 0; i < numColumnas; i++) {
             TableColumn columna = tabla.getColumnModel().getColumn(i);
             columna.setPreferredWidth(tamanos[i]);
         }
         con.cerrarConexion();
-                    
-
+                   
     }
     
     public void buscarProducto(int valor) {
