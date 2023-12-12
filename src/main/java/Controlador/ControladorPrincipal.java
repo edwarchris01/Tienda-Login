@@ -6,28 +6,23 @@ import Modelo.ModeloProvedor;
 import Modelo.ModeloUsuario;
 import Modelo.ModeloProducto;
 import Modelo.ModeloVenta;
+import Vista.Login;
 import Vista.Nueva_FacturaCompra;
 import Vista.Nueva_Producto;
 import Vista.NuevoVenta;
 import Vista.Nuevo_Cliente;
 import Vista.Nuevo_Provedor;
 import Vista.Nuevo_Usuario;
-
 import Vista.Principal;
-import Vista.agregarFacturaC;
-import Vista.buscarProducto;
-import Vista.buscarUsuario;
+import Vista.VerFactura;
 import Vista.detalleFacturaCompra;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import javax.swing.event.ChangeEvent;
@@ -57,8 +52,10 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
     ControladorProducto controlpro = new ControladorProducto();
     ControladorProvedor conpro = new ControladorProvedor();
     detalleFacturaCompra detalle = new detalleFacturaCompra();
-    ControladorFactura controlv = new ControladorFactura ();
-    
+    ControladorFactura controlv = new ControladorFactura();
+    VerFactura verfactura = new VerFactura();
+    ContraladorLogin logi = new ContraladorLogin();
+    Login logiv = new Login();
 
     public ControladorPrincipal() {
         princi.getBtnNuevo().addActionListener(this);
@@ -68,6 +65,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         princi.getBtnNuevo5().addActionListener(this);
         princi.getBtnFactura().addActionListener(this);
         princi.getJBuscar().addActionListener(this);
+//        princi.getBtnAdministrador().addActionListener(this);
         princi.getJbuscarProducto().addActionListener(this);
         princi.getJbuscarC().addActionListener(this);
         princi.getJbuscarF().addActionListener(this);
@@ -84,9 +82,6 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         nueVenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         compraF.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-
-        
 
     }
 
@@ -117,7 +112,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             public void mouseClicked(MouseEvent e) {
                 int fila = princi.getTableUsuario().rowAtPoint(e.getPoint());
                 int colum = princi.getTableUsuario().columnAtPoint(e.getPoint());
-                usu.setDoc(Integer.parseInt(princi.getTableUsuario().getValueAt(fila, 1).toString()));
+                usu.setDoc(Integer.parseInt(princi.getTableUsuario().getValueAt(fila, 0).toString()));
                 if (colum == 9) {
                     princi.setVisible(false);
                     princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -246,6 +241,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             public void mouseClicked(MouseEvent e) {
                 int fila = princi.getTableFactura().rowAtPoint(e.getPoint());
                 int colum = princi.getTableFactura().columnAtPoint(e.getPoint());
+
                 modelF.setId(Integer.parseInt(princi.getTableFactura().getValueAt(fila, 0).toString()));
 
                 if (colum == 8) {
@@ -257,23 +253,25 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
                 if (colum == 9) {
                     princi.setVisible(false);
                     controlF.agreFact(modelF.getId());
-                    
+
                 }
 
                 if (colum == 10) {
                     princi.setVisible(false);
-                     detalle.setVisible(true);
-                 controlF.modelf.mostrarTablaDetalleFacturaCompra(detalle.getTableDetalle(), "", "facturaDetalle");
-                   
+                    detalle.setVisible(true);
+                    controlF.modelf.mostrarverdettallefactura(detalle.getTableDetalle(), "", "facturaDetalle");
+
                 }
+
+               
 
             }
         });
     }
 
-     public void gestionVenta() {
-        modelventa.mostrarTablaFacturaVenta(princi.getTableFactura(), "", "Venta");
-        princi.getJbuscarF().addMouseListener(new MouseAdapter() {
+    public void gestionVenta() {
+        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), "", "Venta");
+        princi.getBuscarVenta().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 princi.getBuscarVenta().setText("");
@@ -289,29 +287,29 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
                 int colum = princi.getTablaVenta().columnAtPoint(e.getPoint());
                 modelventa.setId(Integer.parseInt(princi.getTablaVenta().getValueAt(fila, 1).toString()));
 
-                if (colum == 9) {
+                if (colum == 7) {
                     princi.setVisible(false);
                     princi.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     controlv.actualizar_FacturaVenta(usu.getDoc());
                 }
 
-                if (colum == 10) {
+                if (colum == 8) {
                     princi.setVisible(false);
                     controlv.agreFactV();
-                    
+
                 }
 
-                if (colum == 11) {
+                if (colum == 9) {
                     princi.setVisible(false);
-                     detalle.setVisible(true);
+                    detalle.setVisible(true);
 //                 controlv.modelventa.mostrarTablaDetalleFacturaVenta(detalle.getTableDetalle(), "", "facturaDetalle");
-                   
+
                 }
 
             }
         });
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) { //Valida los eventos
         if (e.getSource().equals(princi.getBtnNuevo())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -341,9 +339,9 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
 
         if (e.getSource().equals(princi.getBtnNuevo5())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
             princi.setVisible(false);
-             ControladorFactura contraFact = new ControladorFactura();
+            ControladorFactura contraFact = new ControladorFactura();
             contraFact.controlar_FacturaVenta();
-            
+
         }
 
         if (e.getSource().equals(princi.getBtnFactura())) {//Se crea al acción cuando le damos clic en el boton nuevo de la vista princial
@@ -353,7 +351,12 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
             contraFact.controlar_FacturaCompra();
 //            contraFact.modelusu.mostrarTablaUsuario(buscarusu.getTableBuscarUsuario(), "", "Buscar Usuario");
         }
-
+//        if (e.getSource().equals(princi.getBtnAdministrador())) {
+////            princi.setVisible(false);
+////         logi.validar();
+//             logiv.setVisible(true);
+//
+//        }
     }
 
     @Override
@@ -395,7 +398,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
-         modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
+        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(), "Venta");
 
     }
 
@@ -406,7 +409,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
-         modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
+        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(), "Venta");
     }
 
     @Override
@@ -416,7 +419,7 @@ public final class ControladorPrincipal implements ActionListener, ChangeListene
         modpro.mostrarTableProvedor(princi.getTableProvedor(), princi.getJbuscarP().getText(), "Provedor");
         modprod.mostrarTablaProducto(princi.getTableProducto(), princi.getJbuscarProducto().getText(), "Producto");
         modelF.mostrarTablaFacturaCompra(princi.getTableFactura(), princi.getJbuscarF().getText(), "Factura");
-        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(),"Venta");
+        modelventa.mostrarTablaFacturaVenta(princi.getTablaVenta(), princi.getBuscarVenta().getText(), "Venta");
     }
 
 }

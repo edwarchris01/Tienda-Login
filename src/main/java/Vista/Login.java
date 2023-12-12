@@ -5,7 +5,10 @@
 
 package Vista;
 
+import java.awt.Menu;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -20,15 +23,21 @@ public class Login extends javax.swing.JFrame {
          initComponents();
     }
 
+//    public JComboBox<String> getTipo() {
+//        return tipo;
+//    }
+//
+//    public void setTipo(JComboBox<String> tipo) {
+//        this.tipo = tipo;
+//    }
+
     public JButton getBtnIniciarSesion() {
         return BtnIniciarSesion;
     }
 
     public void setBtnIniciarSesion(JButton BtnIniciarSesion) {
         this.BtnIniciarSesion = BtnIniciarSesion;
-    }
-
-   
+    }  
 
     public JButton getBtnMostrar() {
         return BtnMostrar;
@@ -78,6 +87,7 @@ public class Login extends javax.swing.JFrame {
         clave = new javax.swing.JLabel();
         Txtcontrasena = new javax.swing.JPasswordField();
         BtnMostrar = new javax.swing.JButton();
+        tipo = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Iniciar Secion");
 
@@ -173,10 +183,33 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Usuario" }));
+        tipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPcontrasenaLayout = new javax.swing.GroupLayout(jPcontrasena);
         jPcontrasena.setLayout(jPcontrasenaLayout);
         jPcontrasenaLayout.setHorizontalGroup(
             jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
+                        .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logi)
+                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(181, 181, 181))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
+                        .addComponent(iniciar_session, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
+                        .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(141, 141, 141))))
             .addGroup(jPcontrasenaLayout.createSequentialGroup()
                 .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPcontrasenaLayout.createSequentialGroup()
@@ -202,20 +235,6 @@ public class Login extends javax.swing.JFrame {
                         .addGap(194, 194, 194)
                         .addComponent(contraseña)))
                 .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
-                        .addGroup(jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(logi)
-                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(181, 181, 181))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
-                        .addComponent(BtnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(164, 164, 164))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPcontrasenaLayout.createSequentialGroup()
-                        .addComponent(iniciar_session, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(108, 108, 108))))
         );
         jPcontrasenaLayout.setVerticalGroup(
             jPcontrasenaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,9 +266,11 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(Txtcontrasena)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(26, 26, 26)
+                .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(BtnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(169, 169, 169))
+                .addGap(152, 152, 152))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,7 +291,19 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//   void ocultar(){
+//       if (tipo.getSelectedItem().equals("Administrador"))
+//       {
+//          Principal P = new Principal();
+//            P.show();
+//       }else {
+//           if (tipo.getSelectedItem().equals("Usuario")){
+//               Principal p = new Principal();
+//             p.getFactura().setVisible(false);
+//             p.show();         
+//           }
+//       }
+//           }
     private void TxtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUsuarioActionPerformed
@@ -286,6 +319,20 @@ public class Login extends javax.swing.JFrame {
     private void TxtcontrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtcontrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtcontrasenaActionPerformed
+
+    private void tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoActionPerformed
+//        String usu = usuario.getText(),
+//            con = contraseña.getText();
+//        if(usu.equals("1")&& con.equals("1")){
+//             Principal P = new Principal();
+//            JOptionPane.showMessageDialog(null, "Bienvenido" + usu);
+//           
+//            ocultar();
+//        }else {
+//             JOptionPane.showMessageDialog(null, "Error verifique los datos");
+//        }
+//      
+    }//GEN-LAST:event_tipoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,6 +354,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel logi;
+    private javax.swing.JComboBox<String> tipo;
     private javax.swing.JLabel usuario;
     // End of variables declaration//GEN-END:variables
 }

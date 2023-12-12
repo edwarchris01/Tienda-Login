@@ -170,10 +170,13 @@ public class ModeloCliente {
          tabla.setDefaultRenderer(Object.class, new GestionCeldas() );       
         JButton editar = new JButton();
         JButton eliminar = new JButton();
+        JButton agregar = new JButton();
+       
         
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/basura.png")));
-//agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
+       agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-boton.png")));
+       
         String[] titulo = {"tipo de documento","documento","nombre","telefono","correo","sexo","fecha de naciminto","direccion"};
         
         int opcion =titulo.length;
@@ -184,7 +187,7 @@ public class ModeloCliente {
             titulo[titulo.length - 1] = "";
         } else {
             titulo = Arrays.copyOf(titulo, titulo.length + 1);
-            titulo[titulo.length - 1] = "";
+            titulo[titulo.length - 1] = "agregar";
         }
         DefaultTableModel tableCliente = new DefaultTableModel(null, titulo){
             
@@ -208,14 +211,15 @@ public class ModeloCliente {
                 for (int i = 0; i < opcion; i++) {
                     dato[i] = rs.getString(i + 1);
                 }
-                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5], dato[6],dato[7]};
+                Object[] fila = {dato[1], dato[0], dato[2], dato[3], dato[4], dato[5], dato[6],dato[7]};
                 if (nomPeste.equals("Cliente")) {
                     fila = Arrays.copyOf(fila, fila.length + 2);
                     fila[fila.length - 2] = editar;
                     fila[fila.length - 1] = eliminar;
-                } 
-                   
-                
+                }else{
+                    fila = Arrays.copyOf(fila, fila.length + 1);            
+                    fila[fila.length-1]= agregar;
+                }                                
                 tableCliente.addRow(fila);
             }
             co.close();
@@ -228,7 +232,7 @@ public class ModeloCliente {
         tabla.setModel(tableCliente);
         //Darle Tamaño a cada Columna
         int Colum = tabla.getColumnCount();
-        int[] ancho = {120, 180, 100, 150, 100, 160, 100, 180,40, 40};
+        int[] ancho = {120, 180, 100, 150, 100, 160, 100, 180,20,20};
         for (int i = 0; i < Colum; i++) {
             TableColumn columna = tabla.getColumnModel().getColumn(i);
             columna.setPreferredWidth(ancho[i]);

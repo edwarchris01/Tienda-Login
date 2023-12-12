@@ -28,9 +28,10 @@ public class ContraladorLogin implements ActionListener {
          modlogi.setUsuario(log.getTxtUsuario().getText());
          String pass = new String(log.getTxtcontrasena().getPassword());
             modlogi.setContrasena(pass);
-            if(modlogi.validar(modlogi.getUsuario(), modlogi.getContrasena())){
-               princ.iniciarSesion(0);
+            if(modlogi.validar(modlogi.getUsuario(), modlogi.getContrasena())){              
+              
                 log.setVisible(false);
+                  princ.iniciarSesion(0);
            }else {
                 JOptionPane.showMessageDialog(null,"usuario o contraseña incorrecta");
             }

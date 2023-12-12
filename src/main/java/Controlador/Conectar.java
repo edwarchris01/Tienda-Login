@@ -18,7 +18,7 @@ public class Conectar {
      
         if (con==null){
             try{
-        con = DriverManager.getConnection(url,"root","12345");
+        con = DriverManager.getConnection(url,"root","1234");
 //         System.out.println("conexion fue exitosa");
          
          //con.close();

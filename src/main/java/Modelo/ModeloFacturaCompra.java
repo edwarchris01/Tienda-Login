@@ -24,9 +24,9 @@ import javax.swing.table.TableColumn;
 public class ModeloFacturaCompra {
 
     private String tipo;
-    private int id, com, prove, usuario,idpro,idusu,can;
+    private int id, com, prove, usuario, idpro, idusu, can;
     private Date fec;
-    private float des, total,precio;
+    private float des, total, precio;
 
     public int getCan() {
         return can;
@@ -60,7 +60,6 @@ public class ModeloFacturaCompra {
         this.precio = precio;
     }
 
-    
     public int getProve() {
         return prove;
     }
@@ -185,10 +184,9 @@ public class ModeloFacturaCompra {
             ps.setInt(2, getIdpro());
             ps.setInt(3, getCan());
             ps.setFloat(4, getPrecio());
-            
-            
+
             ps.executeUpdate();
-            
+
             con.close();
 
         } catch (SQLException ex) {
@@ -212,6 +210,27 @@ public class ModeloFacturaCompra {
                 ((JDateChooser) control).setDate(null);
             }
         }
+    }
+
+    public void mostrarverdettallefactura(int valor) {
+
+        Conectar conexs = new Conectar();
+        Connection con = conexs.iniciarConexion();
+
+        String sql = "call detalle_factura_mostrar(" + valor + ")";
+
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            //JOptionPane.showInternalMessageDialog(null, "error al guardar", "error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     public void mostrarTablaDetalleFacturaCompra(JTable tabla, String valor, String nomPesta) {
